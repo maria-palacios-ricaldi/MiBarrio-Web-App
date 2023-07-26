@@ -1,11 +1,12 @@
 html, body {
   height: 100%;
   margin:0; text-align: center;
-
 }
 
 
-.header{background: rgb(244,226, 181)}
+.header{
+  height:min-content;
+  background: rgb(244,226, 181)}
 
 
 /**Main Body of the Page**/
