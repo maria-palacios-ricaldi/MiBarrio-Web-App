@@ -1,0 +1,24 @@
+html, body {
+  height: 100%;
+  margin:0; text-align: center;
+
+}
+
+
+.header{background: rgb(244,226, 181)}
+
+
+/**Main Body of the Page**/
+.wrapper{
+  min-height: 100%;
+  background: rgb (215,223,207);
+  margin-bottom: -50px
+}
+
+.footer, .push{
+height: 50px;
+}
+
+.footer{
+  background: rgb(100,100,100)
+}
