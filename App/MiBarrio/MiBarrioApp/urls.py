@@ -10,7 +10,8 @@ app_name = "MiBarrioApp"
 urlpatterns = [
     path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('home/', views.home_view, name='home'),
-    path('register/', auth_views.LoginView.as_view(template_name='register.html'), name='register'),
+    #path('register/', auth_views.LoginView.as_view(template_name='register.html'), name='register'),
+    path('register/', views.register, name='register'),
     path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
     # password control
     path('change-password/', auth_views.PasswordChangeView.as_view(template_name='change_password.html'), name="change-password"),
