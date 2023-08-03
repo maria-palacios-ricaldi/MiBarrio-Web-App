@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MiBarrioApp.apps.MibarrioappConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -143,3 +144,5 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
 LOGIN_URL = 'login'
 
+# Crispy Forms Settings
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
