@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+  <div class="form-container">
+    <div class="row m-4 no-gutters shadow-lg">
+      <div class="col-md-6 d-none d-md-flex align-items-center justify-content-start">
+        <img src="{% static 'house.jpg' %}" alt="Image of a House" class="img-fluid">
+      </div>
+
+      <div class="col-md-6 bg-light p-5">
+        <h3 class="pb-3">Login</h3>
+
+        <div class="form-style vh-90">
+          <form method="post">{% csrf_token %}
+            <div class="form-group pb-3">
+              <input type="text" name= "username" placeholder="Username" class="form-control" id="username" aria-describedby="emailHelp">
+            </div>
+
+            <div class="form-group pb-3">
+              <input type="password" name="passoword" placeholder="Password" class="form-control" id="password">
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center"><input name="" type="checkbox" value="" /> <span
+                  class="pl-2 font-weight-bold">Remember Me</span></div>
+              <div><a href="{% url 'password_reset' %}">Forgot Password?</a></div>
+            </div>
+            <div class="pb-2">
+              <button type="submit" class="btn btn-dark w-100 font-weight-bold mt-2">Login</button>
+              <div class="pt-3 text-center">
+                Don't have an account? <a href="{% url 'register' %}">Register</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {% endblock %}
