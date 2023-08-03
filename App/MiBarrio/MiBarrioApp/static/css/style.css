@@ -1,25 +1,81 @@
-html, body {
-  height: 100%;
-  margin:0; text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background: rgb(214,223,207);
+}
 
 .header{
   height:min-content;
-  background: rgb(244,226, 181)}
-
+  background: rgb(246,226, 181);
+  text-align: left;
+  padding-left: 15px ;
+}
 
 /**Main Body of the Page**/
 .wrapper{
-  min-height: 100%;
-  background: rgb (215,223,207);
-  margin-bottom: -50px
+  flex: 1 0 auto;
+  background: rgb(214,223,207);
 }
 
-.footer, .push{
-height: 50px;
+.form-style {
+  height:fit-content;
 }
 
-.footer{
-  background: rgb(100,100,100)
+.footer {
+  flex-shrink: 0;
+  text-align: center;
+  background: rgb(100,100,100);
+  padding: 1%;
+}
+
+.footer-links {
+  margin-top: 10px;
+  color: white;
+}
+
+.footer-links a {
+  color: inherit;
+}
+
+.footer-logo {
+  width: auto;
+  height: auto;
+  display: block; /* this will make image a block element and remove the white space around it */
+  margin: 0 auto;
+
+}
+
+.form-container{
+  background-color: rgb(214,223,207);
+}
+
+.form-group.pb-3 {
+  margin-bottom: 15px;
+}
+
+.login-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  align-self: start;
+}
+
+.col-md-6.d-none.d-md-block {
+  height: 100%; /* might need to adjust this value */
+}
+
+#mi {
+  color: black;
+}
+
+#barrio{
+  color: rgb(51, 100, 34)
 }
