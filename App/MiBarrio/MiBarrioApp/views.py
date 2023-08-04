@@ -22,3 +22,6 @@ def register(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
+
+def about_us_view(request):
+    return render(request, 'aboutUs.html', {})
