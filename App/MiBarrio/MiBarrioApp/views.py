@@ -37,3 +37,6 @@ def view_past_searches_view(request):
 
 def feedback_view(request):
     return render(request, 'feedback.html', {})
+
+def contact_us_view(request):
+    return render(request, 'feedback.html', {})
