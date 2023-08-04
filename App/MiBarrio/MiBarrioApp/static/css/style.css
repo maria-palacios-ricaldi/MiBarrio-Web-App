@@ -72,6 +72,33 @@ html, body {
   height: 100%; /* might need to adjust this value */
 }
 
+.carousel-item {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.carousel-item .card {
+  margin: auto;
+}
+
+.carousel-item .card-img-top {
+  width: 50px; /* adjust based on your icon size */
+  height: 50px;
+  object-fit: cover;
+  margin: 20px auto 10px;
+}
+
+header img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
 #mi {
   color: black;
 }
@@ -79,6 +106,10 @@ html, body {
 #barrio{
   color: rgb(51, 100, 34)
 }
+
+
+
+/* for About Us Page*/
 
 #header_aboutus {
   position: relative;
