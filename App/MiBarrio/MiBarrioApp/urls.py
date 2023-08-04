@@ -27,6 +27,7 @@ urlpatterns = [
     path('newSearch', views.new_search_view, name = "newSearch"),
     path('viewPastSearches', views.view_past_searches_view, name = "viewPastSearches"),
     path('feedback', views.feedback_view, name ="feedback" ),
+    path('contactUs', views.contact_us_view, name='contactUs'),
 ]
 
 
