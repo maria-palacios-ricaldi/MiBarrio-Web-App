@@ -79,3 +79,10 @@ html, body {
 #barrio{
   color: rgb(51, 100, 34)
 }
+
+#header_aboutus {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  overflow: hidden;
+}
