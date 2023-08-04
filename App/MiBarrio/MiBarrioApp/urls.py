@@ -22,7 +22,11 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
 
     #other web app pages
-    path('aboutUs'), 
+    path('aboutUs', views.about_us_view, name ='aboutUs'),
+    path('profile', views.profile_view, name = "profile"),
+    path('newSearch', views.new_search_view, name = "newSearch"),
+    path('viewPastSearches', views.view_past_searches_view, name = "viewPastSearches"),
+    path('feedback', views.feedback_view, name ="feedback" ),
 ]
 
 
