@@ -25,3 +25,15 @@ def register(request):
 
 def about_us_view(request):
     return render(request, 'aboutUs.html', {})
+
+def profile_view(request):
+    return render(request, 'profile.html', {})
+
+def new_search_view(request):
+    return render(request, 'newSearch.html', {})
+
+def view_past_searches_view(request):
+    return render(request, 'viewPastSearches.html', {})
+
+def feedback_view(request):
+    return render(request, 'feedback.html', {})
