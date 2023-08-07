@@ -83,14 +83,38 @@ html, body {
 }
 
 .carousel-item .card-img-top {
-  width: 50px; /* adjust based on your icon size */
-  height: 50px;
+  width: 15px !important;;   /* adjust these values */
+  /*height: 15px; /* adjust these values */
   object-fit: cover;
   margin: 20px auto 10px;
 }
 
+.carousel-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+}
+
+.carousel-item .card {
+  margin: 20px;
+}
+
+.carousel-item.active,
+.carousel-item-next,
+.carousel-item-prev {
+  display: flex;
+}
+
+.carousel-inner {
+  display: flex;
+  align-items: center; /* vertical centering */
+  justify-content: center; /* horizontal centering */
+  height: 100%; /* occupy full height */
+}
+
+
 header img {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -98,7 +122,6 @@ header img {
   object-fit: cover;
   opacity: 0.8;
 }
-
 #mi {
   color: black;
 }
@@ -108,12 +131,48 @@ header img {
 }
 
 
-
 /* for About Us Page*/
 
 #header_aboutus {
-  position: relative;
-  width: 100%;
-  min-height: 400px;
-  overflow: hidden;
+  width: 100vw;    /* take up full viewport width */
+ /* counteract any bootstrap container paddings */
+  padding-left: 0; /* reset any padding */
+  padding-right: 0;
+  display: flex;
+  align-items: center;  /* vertical centering */
+  justify-content: center; /* horizontal centering */
+}
+
+#header_aboutus h1 {
+  z-index: 1;  /* make sure it's above the image */
+}
+
+
+/* Responsive card styling */
+@media (max-width: 576px) { /* mobile screens */
+  .row-cols-1 > * {
+      flex: 0 0 100%;
+      max-width: 100%;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) { /* small screens/tablets */
+  .row-cols-sm-2 > * {
+      flex: 0 0 50%;
+      max-width: 50%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) { /* medium screens/laptops */
+  .row-cols-md-2 > * {
+      flex: 0 0 50%;
+      max-width: 50%;
+  }
+}
+
+@media (min-width: 993px) { /* large screens/desktops */
+  .row-cols-lg-4 > * {
+      flex: 0 0 25%;
+      max-width: 25%;
+  }
 }
