@@ -2,47 +2,59 @@
 {% load static %}
 {% block content %}
 
-<header id =#header_aboutus>
-  <div class="container text-center">
-      <img src="{% static 'abous_us_header_pic.jpg' %}" class="img-fluid" alt="Aerial view of Suburbs">
-      <h1 class="pb-3">About Us</h1>
+<header id="header_aboutus">
+  <div class="container d-flex align-items-center justify-content-center">
+    <img src="{% static 'about_us_header_pic.jpg' %}" class="img-fluid" alt="Aerial view of Suburbs">
+    <h1 class="text-white position-absolute">About Us</h1>
   </div>
 </header>
 
 <div class="container my-5">
-  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-
-          <!-- create four items for the carousel -->
-          {% for i in "1234"|make_list %}
-          <div class="carousel-item {% if forloop.first %}active{% endif %}">
-              <div class="d-flex flex-wrap justify-content-around">
-
-                  <!-- create four cards for each item -->
-                  {% for j in "1234"|make_list %}
-                  <div class="card m-2" style="width: 18rem;">
-                      <img class="card-img-top mx-auto" src="{% static 'images/icon.jpg' %}" alt="Card image cap">
-                      <div class="card-body">
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      </div>
-                  </div>
-                  {% endfor %}
-
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
+      <!-- create the first card -->
+      <div class="col">
+          <div class="card h-100">
+              <img class="card-img-top mx-auto" src="{% static 'icons/icons8-search-90.png' %}" alt="Personalised Search">
+              <div class="card-body">
+                  <h5 class="card-title">Personalised Search</h5>
+                  <p class="card-text">Our powerful search engine allows you to find properties based on various factors that are important to you. Whether you're looking for a property within a certain price range, in a specific location, or with certain amenities, our search tool allows you to customize your search parameters to match your needs.</p>
               </div>
           </div>
-          {% endfor %}
-
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-      </button>
+
+      <!-- create the second card -->
+      <div class="col">
+          <div class="card h-100">
+              <img class="card-img-top mx-auto" src="{% static 'icons/icons8-explore-100.png' %}" alt="Explore Suburbs">
+              <div class="card-body">
+                  <h5 class="card-title">Explore Suburbs</h5>
+                  <p class="card-text">Interested in learning more about a certain suburb? Our platform provides comprehensive data about different suburbs in South Africa, including proximity to points of interest, access to transportation, safety and security, and much more.</p>
+              </div>
+          </div>
+      </div>
+
+      <!-- create the third card -->
+      <div class="col">
+          <div class="card h-100">
+              <img class="card-img-top mx-auto" src="{% static 'icons/icons8-update-100.png' %}" alt="Stay Updated">
+              <div class="card-body">
+                  <h5 class="card-title">Stay Updated</h5>
+                  <p class="card-text">Our database is constantly updated with the latest listings from reputable South African property websites, ensuring you have access to the most current properties on the market.</p>
+              </div>
+          </div>
+      </div>
+
+      <!-- create the fourth card -->
+      <div class="col">
+          <div class="card h-100">
+              <img class="card-img-top mx-auto" src="{% static 'icons/icons8-here-100.png' %}" alt="Your Journey Starts Here">
+              <div class="card-body">
+                  <h5 class="card-title">Your Journey Starts Here</h5>
+                  <p class="card-text">Start exploring and find your dream home with MiBarrio today.</p>
+              </div>
+          </div>
+      </div>
   </div>
 </div>
-
 
 {% endblock %}
