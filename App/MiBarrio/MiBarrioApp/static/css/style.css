@@ -113,6 +113,28 @@ html, body {
   height: 100%; /* occupy full height */
 }
 
+.navbar-nav {
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  width:max-content;
+}
+
+.nav-item {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.nav-item a {
+  white-space: nowrap;
+  color: black;
+}
+
+.d-flex {
+  flex: 1; /* This will make sure your flex container occupies the remaining space between header and footer */
+  display: flex;
+  flex-direction: row;
+}
+
 
 header img {
   top: 0;
@@ -146,6 +168,12 @@ header img {
 #header_aboutus h1 {
   z-index: 1;  /* make sure it's above the image */
 }
+
+#content {
+  background-image: url('/static/MiBarrioApp/homepage_image.jpg');
+  background-size: cover;
+}
+
 
 
 /* Responsive card styling */
