@@ -12,21 +12,20 @@ html, body {
   background: rgb(214,223,207);
 }
 
-.header{
-  height:min-content;
+.header {
+  height: min-content;
   background: rgb(246,226, 181);
   text-align: left;
   padding-left: 15px ;
 }
 
-/**Main Body of the Page**/
-.wrapper{
+.wrapper {
   flex: 1 0 auto;
   background: rgb(214,223,207);
 }
 
 .form-style {
-  height:fit-content;
+  height: fit-content;
 }
 
 .footer {
@@ -48,12 +47,11 @@ html, body {
 .footer-logo {
   width: auto;
   height: auto;
-  display: block; /* this will make image a block element and remove the white space around it */
+  display: block;
   margin: 0 auto;
-
 }
 
-.form-container{
+.form-container {
   background-color: rgb(214,223,207);
 }
 
@@ -69,7 +67,7 @@ html, body {
 }
 
 .col-md-6.d-none.d-md-block {
-  height: 100%; /* might need to adjust this value */
+  height: 100%;
 }
 
 .carousel-item {
@@ -83,8 +81,7 @@ html, body {
 }
 
 .carousel-item .card-img-top {
-  width: 15px !important;;   /* adjust these values */
-  /*height: 15px; /* adjust these values */
+  width: 15px !important;
   object-fit: cover;
   margin: 20px auto 10px;
 }
@@ -92,8 +89,8 @@ html, body {
 .carousel-item {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Horizontal centering */
-  align-items: center; /* Vertical centering */
+  justify-content: center;
+  align-items: center;
 }
 
 .carousel-item .card {
@@ -108,15 +105,15 @@ html, body {
 
 .carousel-inner {
   display: flex;
-  align-items: center; /* vertical centering */
-  justify-content: center; /* horizontal centering */
-  height: 100%; /* occupy full height */
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .navbar-nav {
   align-items: flex-start;
   flex-wrap: nowrap;
-  width:max-content;
+  width: max-content;
 }
 
 .nav-item {
@@ -130,11 +127,20 @@ html, body {
 }
 
 .d-flex {
-  flex: 1; /* This will make sure your flex container occupies the remaining space between header and footer */
   display: flex;
+  flex-grow: 1;
   flex-direction: row;
 }
 
+.nav-link img {
+  margin-right: 10px;
+  vertical-align: middle;
+  transition: margin 0.3s;
+}
+
+#sidebar, #content {
+  flex-grow: 1;
+}
 
 header img {
   top: 0;
@@ -144,63 +150,82 @@ header img {
   object-fit: cover;
   opacity: 0.8;
 }
+
 #mi {
   color: black;
 }
 
-#barrio{
-  color: rgb(51, 100, 34)
+#barrio {
+  color: rgb(51, 100, 34);
 }
 
-
-/* for About Us Page*/
+.welcome-section {
+  background: rgb(245,246,248);
+  padding: 10px;
+ 
+}
 
 #header_aboutus {
-  width: 100vw;    /* take up full viewport width */
- /* counteract any bootstrap container paddings */
-  padding-left: 0; /* reset any padding */
+  width: 100vw;
+  padding-left: 0;
   padding-right: 0;
   display: flex;
-  align-items: center;  /* vertical centering */
-  justify-content: center; /* horizontal centering */
+  align-items: center;
+  justify-content: center;
 }
 
 #header_aboutus h1 {
-  z-index: 1;  /* make sure it's above the image */
+  z-index: 1;
 }
 
 #content {
-  background-image: url('/static/MiBarrioApp/homepage_image.jpg');
   background-size: cover;
 }
 
+#sidebar {
+  transition: width 0.5s;
+}
 
+#sidebar.collapsed {
+ width:1em;
+}
 
-/* Responsive card styling */
-@media (max-width: 576px) { /* mobile screens */
+#sidebar.collapsed .nav-text {
+  display: none;
+}
+
+#sidebar.collapsed .nav-link img {
+  margin-right: 0;
+}
+
+#sidebar.collapsed .nav-item {
+  text-align: left;
+}
+
+@media (max-width: 576px) {
   .row-cols-1 > * {
-      flex: 0 0 100%;
-      max-width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 }
 
-@media (min-width: 577px) and (max-width: 768px) { /* small screens/tablets */
+@media (min-width: 577px) and (max-width: 768px) {
   .row-cols-sm-2 > * {
-      flex: 0 0 50%;
-      max-width: 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
   }
 }
 
-@media (min-width: 769px) and (max-width: 992px) { /* medium screens/laptops */
+@media (min-width: 769px) and (max-width: 992px) {
   .row-cols-md-2 > * {
-      flex: 0 0 50%;
-      max-width: 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
   }
 }
 
-@media (min-width: 993px) { /* large screens/desktops */
+@media (min-width: 993px) {
   .row-cols-lg-4 > * {
-      flex: 0 0 25%;
-      max-width: 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
   }
 }
