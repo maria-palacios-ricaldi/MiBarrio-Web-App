@@ -6,47 +6,60 @@
   <!-- Sidebar -->
   <div id="sidebar" class="p-3 bg-light">
     <ul class="nav flex-column">
+<!-- Arrow icon always visible -->
       <li class="nav-item">
-        <a class="nav-link active" href="#">
+        <a id="toggleSidebar" class="nav-link" href="#">
           <img src="{% static 'icons/icons8-left-arrow-100.png' %}" alt="Reduce" height="20px">
-        </a>
-      </li>
-      <li class="nav-item">
+      </a>
+    </li>
+
+    <!-- Wrapped sidebar items in a div for toggle functionality -->
+
+    <div id="sidebarMenu" class="show">
+      <li class="nav-item" >
         <a class="nav-link" href="{% url 'MiBarrioApp:home' %}">
-          <img src="{% static 'icons/icons8-home-96.png' %}" alt="Home" height="20px"> Home
+          <img src="{% static 'icons/icons8-home-96.png' %}" alt="Home" height="20px">
+          <span class="nav-text"> Home</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'MiBarrioApp:profile' %}">
-          <img src="{% static 'icons/icons8-customer-90.png' %}" alt="Profile" height="20px"> Profile
+          <img src="{% static 'icons/icons8-customer-90.png' %}" alt="Profile" height="20px">
+          <span class="nav-text"> Profile</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'MiBarrioApp:newSearch' %}">
-          <img src="{% static 'icons/icons8-search-90.png' %}" alt="New Search" height="20px"> New Search
+          <img src="{% static 'icons/icons8-search-90.png' %}" alt="New Search" height="20px">
+          <span class="nav-text"> New Search</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'MiBarrioApp:viewPastSearches' %}">
-          <img src="{% static 'icons/icons8-time-machine-90.png' %}" alt="View Past Searches" height="20px"> View Past Searches
+          <img src="{% static 'icons/icons8-time-machine-90.png' %}" alt="View Past Searches" height="20px">
+          <span class="nav-text"> View Past Searches</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'MiBarrioApp:feedback' %}">
-          <img src="{% static 'icons/icons8-thumbs-up-down-90.png' %}" alt="Give Us Feedback" height="20px"> Give Us Feedback
+          <img src="{% static 'icons/icons8-thumbs-up-down-90.png' %}" alt="Give Us Feedback" height="20px">
+          <span class="nav-text"> Give Us Feedback</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'MiBarrioApp:logout' %}">
-          <img src="{% static 'icons/icons8-logout-96.png' %}" alt="Logout" height="20px"> Logout
+          <img src="{% static 'icons/icons8-logout-96.png' %}" alt="Logout" height="20px">
+          <span class="nav-text"> Logout</span>
         </a>
       </li>
+      </div>
     </ul>
   </div>
 
+
   <!-- Page Content -->
-  <div id="content" class="p-3">
-    <div class="welcome-section">
+  <div id="content" class="p-3 col-md-8">
+    <div class="welcome-section" style="background-color: rgb(245,246,248); padding: 2em; width: 50%;">
       <h1>Welcome, {{ user.first_name }}!</h1>
       <p>We're thrilled to have you back!</p>
       <p>Our mission is to simplify your residential property search and provide you with personalised results that fit your unique preferences.</p>
