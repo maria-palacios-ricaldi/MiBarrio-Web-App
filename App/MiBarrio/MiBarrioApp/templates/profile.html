@@ -60,16 +60,63 @@
   <!-- PROFILE SECTION -->
 
   <div class="container-fluid p-3">
-    <div>
+    <div class="row">
 
-      
+      <!-- Account Details Section -->
+      <div class="col-md-6">
+        <h2>Account Details</h2>
+        <form id="accountDetailsForm">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="firstname" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstname" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="lastname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastname" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" disabled>
+            </div>
+            <div class="mb-3" id="repasswordDiv" style="display: none;">
+                <label for="repassword" class="form-label">Re-enter Password</label>
+                <input type="password" class="form-control" id="repassword" disabled>
+            </div>
+            <div class="mb-3">
+                <button type="button" class="btn btn-primary" id="editSaveBtn">Edit</button>
+                <button type="button" class="btn btn-secondary disabled" id="cancelBtn">Cancel</button>
+            </div>
+        </form>
     </div>
 
+    <!-- Search Profiles Section -->
+    <div class="col-md-6">
+      <h2>Search Profiles</h2>
+
+      <!-- List of search profiles (you'll populate this from the database later) -->
+      <div id="searchProfilesList">
+        <!-- Sample profile (you can repeat this structure for all profiles) -->
+        <!-- <div class="search-profile">
+            <p>Profile Name - Age Group</p>
+        </div> -->
+    </div>
+
+    <!-- Create New Button triggering the Modal -->
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createProfileModal">Create New</button>
 
 
 
+    </div>
 
-
+    </div>
 
   </div>
 
