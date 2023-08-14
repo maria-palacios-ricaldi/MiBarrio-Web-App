@@ -112,6 +112,92 @@
     <!-- Create New Button triggering the Modal -->
     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createProfileModal">Create New</button>
 
+    <!-- Modal -->
+    <div class="modal fade" id="createProfileModal" tabindex="-1" aria-labelledby="createProfileModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="createProfileModalLabel">Create Search Profile</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="searchProfileForm">
+                      <div class="mb-3">
+                          <label for="searchProfileName" class="form-label">Enter Search Profile</label>
+                          <input type="text" class="form-control" id="searchProfileName">
+                      </div>
+                      <div class="mb-3">
+                          <label for="ageGroup" class="form-label">Age Group</label>
+                          <select class="form-select" id="ageGroup">
+                              <!-- Add age groups here -->
+                              <option value="18-24">18-24</option>
+                              <option value="25-34">26-34</option>
+                              <option value="35-44">18-24</option>
+                              <option value="45-54">26-34</option>
+                              <option value="55-64">18-24</option>
+                              <option value="65+">65+</option>
+                              <!-- ... -->
+                          </select>
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label">Proximity Factors - Level of Importance</label>
+                          <p>Rate from 1 (not important) to 5 (very important)</p>
+                          <div class="d-flex justify-content-between">
+                              <span>1</span>
+                              <span>2</span>
+                              <span>3</span>
+                              <span>4</span>
+                              <span>5</span>
+                          </div>
+                          <!-- ... sliders for Indoor, Outdoor, etc. -->
+                          <!-- Example for Indoor Social Activities -->
+                          <div class="mb-3">
+                              <label for="indoorSlider" class="form-label">Indoor Social Activities</label>
+                              <input type="range" class="form-range" min="1" max="5" step="1" id="indoorSlider">
+                          </div>
+
+                          <div class="mb-3">
+                            <label for="outdoorSlider" class="form-label">Outdoor Social Activities</label>
+                            <input type="range" class="form-range" min="1" max="5" step="1" id="outdoorSlider">
+                          </div>
+
+                          <div class="mb-3">
+                            <label for="outdoorSlider" class="form-label">Outdoor Social Activities</label>
+                            <input type="range" class="form-range" min="1" max="5" step="1" id="outdoorSlider">
+                          </div>
+
+
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label">Select Transportation Preference:</label>
+                          <!-- Checkboxes with icons (add your icons paths) -->
+                          <div>
+                              <input class="form-check-input" type="checkbox" value="Active" id="activeTransportation">
+                              <label class="form-check-label" for="activeTransportation">
+                                  <img src="{% static 'icons/active-icon-path.png' %}" alt="Active"> Active
+                              </label>
+                          </div>
+                          <!-- ... similar for Private and Public ... -->
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label">Other Preferences:</label>
+                          <!-- Larger checkboxes -->
+                          <div>
+                              <input class="form-check-input" type="checkbox" value="PowerSupply" id="powerSupply">
+                              <label class="form-check-label" for="powerSupply">Back-up Power Supply</label>
+                          </div>
+                          <!-- ... similar for Water Supply ... -->
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" id="saveProfileBtn">Save</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
 
 
     </div>
