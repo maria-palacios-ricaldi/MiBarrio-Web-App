@@ -15,3 +15,8 @@ $(document).ready(function() {
 
 
 //toggle navbar - collapse
+
+$(document).ready(function() {
+  console.log("Script loaded!");  // This should appear in your browser's console
+  // ... rest of the code ...
+});
