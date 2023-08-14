@@ -32,7 +32,7 @@ html, body {
   flex-shrink: 0;
   text-align: center;
   background: rgb(100,100,100);
-  padding: 1%;
+  padding: 1.5%;
 }
 
 .footer-links {
@@ -113,12 +113,12 @@ html, body {
 .navbar-nav {
   align-items: flex-start;
   flex-wrap: nowrap;
-  width: max-content;
 }
 
 .nav-item {
-  flex-grow: 1;
+  flex-grow: 1; /* This ensures that nav items don't expand beyond their content's width */
   text-align: left;
+  min-width: 0;
 }
 
 .nav-item a {
@@ -140,6 +140,7 @@ html, body {
 
 #sidebar, #content {
   flex-grow: 1;
+  flex-shrink: 0;
 }
 
 header img {
@@ -162,7 +163,7 @@ header img {
 .welcome-section {
   background: rgb(245,246,248);
   padding: 10px;
- 
+
 }
 
 #header_aboutus {
@@ -184,10 +185,12 @@ header img {
 
 #sidebar {
   transition: width 0.5s;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 #sidebar.collapsed {
- width:1em;
+  width: min-content; /* Collapsed width */
 }
 
 #sidebar.collapsed .nav-text {
