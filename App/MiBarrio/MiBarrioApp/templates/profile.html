@@ -114,8 +114,8 @@
 
     <!-- Modal -->
     <div class="modal fade" id="createProfileModal" tabindex="-1" aria-labelledby="createProfileModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
+      <div class="modal-dialog modal-lg" >
+          <div class="modal-content p-3">
               <div class="modal-header">
                   <h5 class="modal-title" id="createProfileModalLabel">Create Search Profile</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -128,7 +128,8 @@
                       </div>
                       <div class="mb-3">
                           <label for="ageGroup" class="form-label">Age Group</label>
-                          <select class="form-select" id="ageGroup">
+                          <div class="d-flex justify-content-center">
+                            <select class="form-select" id="ageGroup" style="max-width: 100px; width: 100%;">
                               <!-- Add age groups here -->
                               <option value="18-24">18-24</option>
                               <option value="25-34">26-34</option>
@@ -137,56 +138,92 @@
                               <option value="55-64">18-24</option>
                               <option value="65+">65+</option>
                               <!-- ... -->
-                          </select>
+                            </select>
+                          </div>
                       </div>
+                      <hr class="my-4"> <!-- Faint line separator -->
                       <div class="mb-3">
-                          <label class="form-label">Proximity Factors - Level of Importance</label>
+                          <label class="form-label fw-bold">Proximity Factors - Level of Importance</label>
                           <p>Rate from 1 (not important) to 5 (very important)</p>
-                          <div class="d-flex justify-content-between">
+                          <div class="d-flex justify-content-between" style="border: 1px solid rgba(0,0,0,0.1); padding: 10px; border-radius: 5px; background:rgb(222, 220, 220);">
                               <span>1</span>
                               <span>2</span>
                               <span>3</span>
                               <span>4</span>
                               <span>5</span>
                           </div>
+                          <br>
                           <!-- ... sliders for Indoor, Outdoor, etc. -->
-                          <!-- Example for Indoor Social Activities -->
+                          <!-- Indoor Social Activities -->
                           <div class="mb-3">
                               <label for="indoorSlider" class="form-label">Indoor Social Activities</label>
                               <input type="range" class="form-range" min="1" max="5" step="1" id="indoorSlider">
                           </div>
 
+                          <!-- Outdoor Social Activities -->
                           <div class="mb-3">
                             <label for="outdoorSlider" class="form-label">Outdoor Social Activities</label>
                             <input type="range" class="form-range" min="1" max="5" step="1" id="outdoorSlider">
                           </div>
 
+                          <!-- Healthcare Services -->
                           <div class="mb-3">
-                            <label for="outdoorSlider" class="form-label">Outdoor Social Activities</label>
-                            <input type="range" class="form-range" min="1" max="5" step="1" id="outdoorSlider">
+                            <label for="healthcareSlider" class="form-label">Healthcare Services</label>
+                            <input type="range" class="form-range" min="1" max="5" step="1" id="healthcareSlider">
                           </div>
 
+                          <!-- Educational Institutions -->
+                          <div class="mb-3">
+                            <label for="educationalSlider" class="form-label">Educational Institutions</label>
+                            <input type="range" class="form-range" min="1" max="5" step="1" id="educationalSlider">
+                          </div>
 
                       </div>
+                      <hr class="my-4"> <!-- Faint line separator -->
                       <div class="mb-3">
-                          <label class="form-label">Select Transportation Preference:</label>
-                          <!-- Checkboxes with icons (add your icons paths) -->
-                          <div>
-                              <input class="form-check-input" type="checkbox" value="Active" id="activeTransportation">
+                        <label class="form-label fw-bold">Select Transportation Preference:</label>
+                        <div class=" horizontal-checkboxes mb-3">
+
+                          <!-- Checkboxes with icons -->
+                          <!-- Active Transportation -->
+                          <div class="d-inline-block mr-3">
+                              <input class="form-check-input" type="checkbox" value="Active" id="activeTransportation" style=" margin-left: 15px ;">
                               <label class="form-check-label" for="activeTransportation">
-                                  <img src="{% static 'icons/active-icon-path.png' %}" alt="Active"> Active
+                                  Active<img src="{% static 'icons/icons8-cycling-100.png' %}" alt="" style ="height: 15px; margin-left:5px;">
                               </label>
                           </div>
-                          <!-- ... similar for Private and Public ... -->
+
+                          <!-- Private Transportation -->
+                          <div class="d-inline-block mr-3">
+                            <input class="form-check-input" type="checkbox" value="Private" id="privateTransportation" style=" margin-left: 15px ;">
+                            <label class="form-check-label" for="privateTransportation">
+                                Private<img src="{% static 'icons/icons8-car-90.png' %}" alt="" style ="height: 15px; margin-left:5px;">
+                            </label>
+                          </div>
+
+                          <!-- Public Transportation -->
+                          <div class="d-inline-block mr-3">
+                            <input class="form-check-input" type="checkbox" value="Private" id="publicTransportation" style=" margin-left: 15px ;">
+                            <label class="form-check-label" for="publicTransportation">
+                                Public<img src="{% static 'icons/icons8-bus-100.png' %}" alt="" style ="height: 15px; margin-left:5px;">
+                            </label>
+                          </div>
+                        </div>
                       </div>
+                      <hr class="my-4"> <!-- Faint line separator -->
                       <div class="mb-3">
-                          <label class="form-label">Other Preferences:</label>
+                          <label class="form-label fw-bold">Other Preferences:</label>
                           <!-- Larger checkboxes -->
-                          <div>
+                          <!-- Back-up Power Supply checkbox -->
+                          <div style="margin-bottom: 10px;">
                               <input class="form-check-input" type="checkbox" value="PowerSupply" id="powerSupply">
                               <label class="form-check-label" for="powerSupply">Back-up Power Supply</label>
                           </div>
-                          <!-- ... similar for Water Supply ... -->
+                          <!-- Water Supply checkbox -->
+                          <div>
+                            <input class="form-check-input" type="checkbox" value="WaterSupply" id="waterSupply">
+                            <label class="form-check-label" for="waterSupply">Back-up Water Supply</label>
+                        </div>
                       </div>
                   </form>
               </div>
