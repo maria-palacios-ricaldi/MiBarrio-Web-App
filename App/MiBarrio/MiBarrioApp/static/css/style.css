@@ -12,6 +12,16 @@ html, body {
   background: rgb(214,223,207);
 }
 
+.breadcrumb {
+  background-color: #f5f5f5; /* light grey background for the breadcrumb container */
+  padding: 10px 15px;
+  border-radius: 5px;
+  list-style-type: none;
+  margin: 0;
+  display: flex;
+  overflow: hidden; /* to ensure triangle shapes are correctly displayed */
+}
+
 .header {
   height: min-content;
   background: rgb(246,226, 181);
