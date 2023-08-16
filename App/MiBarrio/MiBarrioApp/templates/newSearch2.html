@@ -64,7 +64,8 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch' %}">Step 1: Find the Suburb</a></li>
         <li class="breadcrumb-item active" aria-current="page">Step 2: Select Property Filters</li>
-        <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch3' %}"> Step 3: View Property Listings</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch3' %}"> Step 3: View Property Listings</a>
+        </li>
       </ol>
     </nav>
 
@@ -119,38 +120,116 @@
               <option value="12000">R12000</option>
               <option value="13000">R13000</option>
               <option value="14000">R14000</option>
-              <option value="150000">R150000</option>
-
+              <option value="15000">R15000</option>
+              <option value="16000">R16000</option>
+              <option value="17000">R17000</option>
+              <option value="18000">R18000</option>
+              <option value="19000">R19000</option>
+              <option value="20000">R20000</option>
+              <option value="25000">R25000</option>
+              <option value="30000">R30000</option>
+              <option value="35000">R35000</option>
+              <option value="40000">R40000</option>
+              <option value="50000">R50000</option>
+              <option value="60000">R60000</option>
+              <option value="70000">R70000</option>
+              <option value="80000">R80000</option>
 
               <!-- Buy options (These would be hidden/shown based on the user's Rent/Buy selection) -->
+              <option value="100000">R100000</option>
+              <option value="150000">R150000</option>
+              <option value="200000">R200000</option>
+              <option value="250000">R250000</option>
+              <option value="300000">R300000</option>
+              <option value="350000">R350000</option>
+              <option value="400000">R400000</option>
+              <option value="450000">R450000</option>
+              <option value="500000">R500000</option>
+              <option value="600000">R600000</option>
+              <option value="700000">R700000</option>
+              <option value="800000">R800000</option>
+              <option value="900000">R900000</option>
+              <option value="1000000">R1000000</option>
+              <option value="1250000">R1250000</option>
+              <option value="1500000">R1500000</option>
+              <option value="2000000">R2000000</option>
+              <option value="2500000">R2500000</option>
+              <option value="3000000">R3000000</option>
+              <option value="3500000">R3500000</option>
+              <option value="4000000">R4000000</option>
+              <option value="4500000">R4500000</option>
+              <option value="5000000">R5000000</option>
+              <option value="6000000">R6000000</option>
+              <option value="7000000">R7000000</option>
+              <option value="8000000">R8000000</option>
+              <option value="9000000">R9000000</option>
+              <option value="10000000">R10000000</option>
+              <option value="15000000">R15000000</option>
+
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="max-price" class="form-label">Max-price</label>
+            <select id="max-price" name="max-price">
+              <!-- Rent and Buy options here -->
+              <!-- Rent options -->
+              <option value="any">Any</option>
+              <option value="1000">R1000</option>
+              <option value="1500">R1500</option>
+              <option value="2000">R2000</option>
+              <option value="2500">R2500</option>
+              <option value="3000">R3000</option>
+              <option value="3500">R3500</option>
+              <option value="4000">R4000</option>
+              <option value="4500">R4500</option>
+              <option value="5000">R5000</option>
+              <option value="6000">R6000</option>
+              <option value="7000">R7000</option>
+              <option value="8000">R8000</option>
+              <option value="9000">R9000</option>
+              <option value="10000">R10000</option>
+              <option value="11000">R11000</option>
+              <option value="12000">R12000</option>
+              <option value="13000">R13000</option>
+              <option value="14000">R14000</option>
+              <option value="15000">R15000</option>
+              <option value="16000">R16000</option>
+              <option value="17000">R17000</option>
+              <option value="18000">R18000</option>
+              <option value="19000">R19000</option>
+              <option value="20000">R20000</option>
+              <option value="25000">R25000</option>
+              <option value="30000">R30000</option>
+              <option value="35000">R35000</option>
+              <option value="40000">R40000</option>
+              <option value="50000">R50000</option>
+              <option value="60000">R60000</option>
+              <option value="70000">R70000</option>
+              <option value="80000">R80000</option>
+
+              <!-- Buy options -->
               <option value="100000">R100000</option>
 
             </select>
           </div>
 
-            <div class="mb-3">
-              <label for="max-price" class="form-label">Max-price</label>
-              <select id="max-price" name="max-price">
-                <!-- Rent and Buy options here -->
-              </select>
+          <div class="mb-3">
+            <!-- Back-up Power Supply checkbox -->
+            <div style="margin-bottom: 10px;">
+              <input class="form-check-input" type="checkbox" value="PowerSupply" id="powerSupply">
+              <label class="form-check-label" for="powerSupply">Back-up Power Supply</label>
             </div>
+            <!-- Water Supply checkbox -->
+            <div>
+              <input class="form-check-input" type="checkbox" value="WaterSupply" id="waterSupply">
+              <label class="form-check-label" for="waterSupply">Back-up Water Supply</label>
+            </div>
+          </div>
 
-            <div class="mb-3">
-              <!-- Back-up Power Supply checkbox -->
-              <div style="margin-bottom: 10px;">
-                <input class="form-check-input" type="checkbox" value="PowerSupply" id="powerSupply">
-                <label class="form-check-label" for="powerSupply">Back-up Power Supply</label>
-              </div>
-              <!-- Water Supply checkbox -->
-              <div>
-                <input class="form-check-input" type="checkbox" value="WaterSupply" id="waterSupply">
-                <label class="form-check-label" for="waterSupply">Back-up Water Supply</label>
-              </div>
-            </div>
-
-            <div class="mt-4">
-              <button type="submit" class="btn btn-primary">Search</button>
-            </div>
+          <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
         </form>
 
       </div>
