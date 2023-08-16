@@ -7,52 +7,52 @@
   <!-- Sidebar -->
   <div id="sidebar" class="p-3 bg-light">
     <ul class="nav flex-column">
-<!-- Arrow icon always visible -->
+      <!-- Arrow icon always visible -->
       <li class="nav-item">
         <a id="toggleSidebar" class="nav-link" href="#">
           <img src="{% static 'icons/icons8-left-arrow-100.png' %}" alt="Reduce" height="20px">
-      </a>
-    </li>
+        </a>
+      </li>
 
-    <!-- Wrapped sidebar items in a div for toggle functionality -->
+      <!-- Wrapped sidebar items in a div for toggle functionality -->
 
-    <div id="sidebarMenu" class="show">
-      <li class="nav-item" >
-        <a class="nav-link" href="{% url 'MiBarrioApp:home' %}">
-          <img src="{% static 'icons/icons8-home-96.png' %}" alt="Home" height="20px">
-          <span class="nav-text"> Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:profile' %}">
-          <img src="{% static 'icons/icons8-customer-90.png' %}" alt="Profile" height="20px">
-          <span class="nav-text"> Profile</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:newSearch' %}">
-          <img src="{% static 'icons/icons8-search-90.png' %}" alt="New Search" height="20px">
-          <span class="nav-text"> New Search</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:viewPastSearches' %}">
-          <img src="{% static 'icons/icons8-time-machine-90.png' %}" alt="View Past Searches" height="20px">
-          <span class="nav-text"> View Past Searches</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:feedback' %}">
-          <img src="{% static 'icons/icons8-thumbs-up-down-90.png' %}" alt="Give Us Feedback" height="20px">
-          <span class="nav-text"> Give Us Feedback</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:logout' %}">
-          <img src="{% static 'icons/icons8-logout-96.png' %}" alt="Logout" height="20px">
-          <span class="nav-text"> Logout</span>
-        </a>
-      </li>
+      <div id="sidebarMenu" class="show">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:home' %}">
+            <img src="{% static 'icons/icons8-home-96.png' %}" alt="Home" height="20px">
+            <span class="nav-text"> Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:profile' %}">
+            <img src="{% static 'icons/icons8-customer-90.png' %}" alt="Profile" height="20px">
+            <span class="nav-text"> Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:newSearch' %}">
+            <img src="{% static 'icons/icons8-search-90.png' %}" alt="New Search" height="20px">
+            <span class="nav-text"> New Search</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:viewPastSearches' %}">
+            <img src="{% static 'icons/icons8-time-machine-90.png' %}" alt="View Past Searches" height="20px">
+            <span class="nav-text"> View Past Searches</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:feedback' %}">
+            <img src="{% static 'icons/icons8-thumbs-up-down-90.png' %}" alt="Give Us Feedback" height="20px">
+            <span class="nav-text"> Give Us Feedback</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:logout' %}">
+            <img src="{% static 'icons/icons8-logout-96.png' %}" alt="Logout" height="20px">
+            <span class="nav-text"> Logout</span>
+          </a>
+        </li>
       </div>
     </ul>
   </div>
@@ -63,8 +63,8 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">Step 1: Find the Suburb</li>
-        <li class="breadcrumb-item">Step 2: Select Property Filters</li>
-        <li class="breadcrumb-item">Step 3: View Property Listings</li>
+        <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch2' %}">Step 2: Select Property Filters</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch3' %}"> Step 3: View Property Listings</a></li>
       </ol>
     </nav>
 
@@ -110,24 +110,25 @@
                 <!-- ... -->
               </select>
             </div>
-        </div>
-        <hr class="my-4"> <!-- Faint line separator -->
-        <div class="mb-3">
+          </div>
+          <hr class="my-4"> <!-- Faint line separator -->
+          <div class="mb-3">
             <label class="form-label fw-bold">Proximity Factors - Level of Importance</label>
             <p>Rate from 1 (not important) to 5 (very important)</p>
-            <div class="d-flex justify-content-between" style="border: 1px solid rgba(0,0,0,0.1); padding: 5px; border-radius: 5px; background:rgb(222, 220, 220);">
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-                <span>5</span>
+            <div class="d-flex justify-content-between"
+              style="border: 1px solid rgba(0,0,0,0.1); padding: 5px; border-radius: 5px; background:rgb(222, 220, 220);">
+              <span>1</span>
+              <span>2</span>
+              <span>3</span>
+              <span>4</span>
+              <span>5</span>
             </div>
             <br>
             <!-- ... sliders for Indoor, Outdoor, etc. -->
             <!-- Indoor Social Activities -->
             <div class="mb-3">
-                <label for="indoorSlider" class="form-label">Indoor Social Activities</label>
-                <input type="range" class="form-range" min="1" max="5" step="1" id="indoorSlider">
+              <label for="indoorSlider" class="form-label">Indoor Social Activities</label>
+              <input type="range" class="form-range" min="1" max="5" step="1" id="indoorSlider">
             </div>
 
             <!-- Outdoor Social Activities -->
@@ -148,43 +149,49 @@
               <input type="range" class="form-range" min="1" max="5" step="1" id="educationalSlider">
             </div>
 
-        </div>
-        <hr class="my-4"> <!-- Faint line separator -->
-        <div class="mb-3">
-          <label class="form-label fw-bold">Select Transportation Preference:</label>
-          <div class=" horizontal-checkboxes mb-3">
+          </div>
+          <hr class="my-4"> <!-- Faint line separator -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Select Transportation Preference:</label>
+            <div class=" horizontal-checkboxes mb-3">
 
-            <!-- Checkboxes with icons -->
-            <!-- Active Transportation -->
-            <div class="d-inline-block mr-3">
-                <input class="form-check-input" type="checkbox" value="Active" id="activeTransportation" style=" margin-left: 15px ;">
+              <!-- Checkboxes with icons -->
+              <!-- Active Transportation -->
+              <div class="d-inline-block mr-3">
+                <input class="form-check-input" type="checkbox" value="Active" id="activeTransportation"
+                  style=" margin-left: 15px ;">
                 <label class="form-check-label" for="activeTransportation">
-                    Active<img src="{% static 'icons/icons8-cycling-100.png' %}" alt="" style ="height: 15px; margin-left:5px;">
+                  Active<img src="{% static 'icons/icons8-cycling-100.png' %}" alt=""
+                    style="height: 15px; margin-left:5px;">
                 </label>
-            </div>
+              </div>
 
-            <!-- Private Transportation -->
-            <div class="d-inline-block mr-3">
-              <input class="form-check-input" type="checkbox" value="Private" id="privateTransportation" style=" margin-left: 15px ;">
-              <label class="form-check-label" for="privateTransportation">
-                  Private<img src="{% static 'icons/icons8-car-90.png' %}" alt="" style ="height: 15px; margin-left:5px;">
-              </label>
-            </div>
+              <!-- Private Transportation -->
+              <div class="d-inline-block mr-3">
+                <input class="form-check-input" type="checkbox" value="Private" id="privateTransportation"
+                  style=" margin-left: 15px ;">
+                <label class="form-check-label" for="privateTransportation">
+                  Private<img src="{% static 'icons/icons8-car-90.png' %}" alt=""
+                    style="height: 15px; margin-left:5px;">
+                </label>
+              </div>
 
-            <!-- Public Transportation -->
-            <div class="d-inline-block mr-3">
-              <input class="form-check-input" type="checkbox" value="Private" id="publicTransportation" style=" margin-left: 15px ;">
-              <label class="form-check-label" for="publicTransportation">
-                  Public<img src="{% static 'icons/icons8-bus-100.png' %}" alt="" style ="height: 15px; margin-left:5px;">
-              </label>
+              <!-- Public Transportation -->
+              <div class="d-inline-block mr-3">
+                <input class="form-check-input" type="checkbox" value="Private" id="publicTransportation"
+                  style=" margin-left: 15px ;">
+                <label class="form-check-label" for="publicTransportation">
+                  Public<img src="{% static 'icons/icons8-bus-100.png' %}" alt=""
+                    style="height: 15px; margin-left:5px;">
+                </label>
+              </div>
             </div>
           </div>
-        </div>
-        
 
-        <div class="mt-4">
-          <button type="submit" class="btn btn-primary">Search</button>
-        </div>
+
+          <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
 
         </form>
 
