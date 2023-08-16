@@ -32,6 +32,12 @@ def profile_view(request):
 def new_search_view(request):
     return render(request, 'newSearch.html', {})
 
+def new_search_2_view(request):
+    return render(request, 'newSearch2.html', {})
+
+def new_search_3_view(request):
+    return render(request, 'newSearch3.html', {})
+
 def view_past_searches_view(request):
     return render(request, 'viewPastSearches.html', {})
 
