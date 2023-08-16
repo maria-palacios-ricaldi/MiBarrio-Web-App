@@ -7,52 +7,52 @@
   <!-- Sidebar -->
   <div id="sidebar" class="p-3 bg-light">
     <ul class="nav flex-column">
-<!-- Arrow icon always visible -->
+      <!-- Arrow icon always visible -->
       <li class="nav-item">
         <a id="toggleSidebar" class="nav-link" href="#">
           <img src="{% static 'icons/icons8-left-arrow-100.png' %}" alt="Reduce" height="20px">
-      </a>
-    </li>
+        </a>
+      </li>
 
-    <!-- Wrapped sidebar items in a div for toggle functionality -->
+      <!-- Wrapped sidebar items in a div for toggle functionality -->
 
-    <div id="sidebarMenu" class="show">
-      <li class="nav-item" >
-        <a class="nav-link" href="{% url 'MiBarrioApp:home' %}">
-          <img src="{% static 'icons/icons8-home-96.png' %}" alt="Home" height="20px">
-          <span class="nav-text"> Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:profile' %}">
-          <img src="{% static 'icons/icons8-customer-90.png' %}" alt="Profile" height="20px">
-          <span class="nav-text"> Profile</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:newSearch' %}">
-          <img src="{% static 'icons/icons8-search-90.png' %}" alt="New Search" height="20px">
-          <span class="nav-text"> New Search</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:viewPastSearches' %}">
-          <img src="{% static 'icons/icons8-time-machine-90.png' %}" alt="View Past Searches" height="20px">
-          <span class="nav-text"> View Past Searches</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:feedback' %}">
-          <img src="{% static 'icons/icons8-thumbs-up-down-90.png' %}" alt="Give Us Feedback" height="20px">
-          <span class="nav-text"> Give Us Feedback</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:logout' %}">
-          <img src="{% static 'icons/icons8-logout-96.png' %}" alt="Logout" height="20px">
-          <span class="nav-text"> Logout</span>
-        </a>
-      </li>
+      <div id="sidebarMenu" class="show">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:home' %}">
+            <img src="{% static 'icons/icons8-home-96.png' %}" alt="Home" height="20px">
+            <span class="nav-text"> Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:profile' %}">
+            <img src="{% static 'icons/icons8-customer-90.png' %}" alt="Profile" height="20px">
+            <span class="nav-text"> Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:newSearch' %}">
+            <img src="{% static 'icons/icons8-search-90.png' %}" alt="New Search" height="20px">
+            <span class="nav-text"> New Search</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:viewPastSearches' %}">
+            <img src="{% static 'icons/icons8-time-machine-90.png' %}" alt="View Past Searches" height="20px">
+            <span class="nav-text"> View Past Searches</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:feedback' %}">
+            <img src="{% static 'icons/icons8-thumbs-up-down-90.png' %}" alt="Give Us Feedback" height="20px">
+            <span class="nav-text"> Give Us Feedback</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:logout' %}">
+            <img src="{% static 'icons/icons8-logout-96.png' %}" alt="Logout" height="20px">
+            <span class="nav-text"> Logout</span>
+          </a>
+        </li>
       </div>
     </ul>
   </div>
@@ -62,15 +62,15 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item">Step 1: Find the Suburb</li>
+        <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch' %}">Step 1: Find the Suburb</a></li>
         <li class="breadcrumb-item active" aria-current="page">Step 2: Select Property Filters</li>
-        <li class="breadcrumb-item">Step 3: View Property Listings</li>
+        <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch3' %}"> Step 3: View Property Listings</a></li>
       </ol>
     </nav>
 
     <div class="row">
 
-      <!-- Step 1 Form -->
+      <!-- Step 2 Form -->
       <div class="col-md-6">
         <h3>Select Property Filters</h3>
         <form id="propertyFiltersForm">
@@ -99,31 +99,58 @@
             <label for="min-price" class="form-label">Min-price</label>
             <select id="min-price" name="min-price">
               <!-- Rent and Buy options here -->
-          </select>
+              <!-- Rent options -->
+              <option value="any">Any</option>
+              <option value="1000">R1000</option>
+              <option value="1500">R1500</option>
+              <option value="2000">R2000</option>
+              <option value="2500">R2500</option>
+              <option value="3000">R3000</option>
+              <option value="3500">R3500</option>
+              <option value="4000">R4000</option>
+              <option value="4500">R4500</option>
+              <option value="5000">R5000</option>
+              <option value="6000">R6000</option>
+              <option value="7000">R7000</option>
+              <option value="8000">R8000</option>
+              <option value="9000">R9000</option>
+              <option value="10000">R10000</option>
+              <option value="11000">R11000</option>
+              <option value="12000">R12000</option>
+              <option value="13000">R13000</option>
+              <option value="14000">R14000</option>
+              <option value="150000">R150000</option>
 
-          <div class="mb-3">
-            <label for="max-price" class="form-label">Max-price</label>
-            <select id="max-price" name="max-price">
-              <!-- Rent and Buy options here -->
+
+              <!-- Buy options (These would be hidden/shown based on the user's Rent/Buy selection) -->
+              <option value="100000">R100000</option>
+
             </select>
           </div>
 
-          <div class="mb-3">
-            <!-- Back-up Power Supply checkbox -->
-            <div style="margin-bottom: 10px;">
+            <div class="mb-3">
+              <label for="max-price" class="form-label">Max-price</label>
+              <select id="max-price" name="max-price">
+                <!-- Rent and Buy options here -->
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <!-- Back-up Power Supply checkbox -->
+              <div style="margin-bottom: 10px;">
                 <input class="form-check-input" type="checkbox" value="PowerSupply" id="powerSupply">
                 <label class="form-check-label" for="powerSupply">Back-up Power Supply</label>
+              </div>
+              <!-- Water Supply checkbox -->
+              <div>
+                <input class="form-check-input" type="checkbox" value="WaterSupply" id="waterSupply">
+                <label class="form-check-label" for="waterSupply">Back-up Water Supply</label>
+              </div>
             </div>
-            <!-- Water Supply checkbox -->
-            <div>
-              <input class="form-check-input" type="checkbox" value="WaterSupply" id="waterSupply">
-              <label class="form-check-label" for="waterSupply">Back-up Water Supply</label>
-            </div>
-          </div>
 
-          <div class="mt-4">
-            <button type="submit" class="btn btn-primary">Search</button>
-          </div>
+            <div class="mt-4">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
         </form>
 
       </div>
