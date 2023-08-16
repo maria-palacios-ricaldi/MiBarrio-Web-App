@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="d-flex">
+
+  <!-- Sidebar -->
+  <div id="sidebar" class="p-3 bg-light">
+    <ul class="nav flex-column">
+      <!-- Arrow icon always visible -->
+      <li class="nav-item">
+        <a id="toggleSidebar" class="nav-link" href="#">
+          <img src="{% static 'icons/icons8-left-arrow-100.png' %}" alt="Reduce" height="20px">
+        </a>
+      </li>
+
+      <!-- Wrapped sidebar items in a div for toggle functionality -->
+
+      <div id="sidebarMenu" class="show">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:home' %}">
+            <img src="{% static 'icons/icons8-home-96.png' %}" alt="Home" height="20px">
+            <span class="nav-text"> Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:profile' %}">
+            <img src="{% static 'icons/icons8-customer-90.png' %}" alt="Profile" height="20px">
+            <span class="nav-text"> Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:newSearch' %}">
+            <img src="{% static 'icons/icons8-search-90.png' %}" alt="New Search" height="20px">
+            <span class="nav-text"> New Search</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:viewPastSearches' %}">
+            <img src="{% static 'icons/icons8-time-machine-90.png' %}" alt="View Past Searches" height="20px">
+            <span class="nav-text"> View Past Searches</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:feedback' %}">
+            <img src="{% static 'icons/icons8-thumbs-up-down-90.png' %}" alt="Give Us Feedback" height="20px">
+            <span class="nav-text"> Give Us Feedback</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:logout' %}">
+            <img src="{% static 'icons/icons8-logout-96.png' %}" alt="Logout" height="20px">
+            <span class="nav-text"> Logout</span>
+          </a>
+        </li>
+      </div>
+    </ul>
+  </div>
+
+  <div class="container-fluid p-3">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch' %}">Step 1: Find the Suburb</a></li>
+        <li class="breadcrumb-item active" >Step 2: Select Property Filters</li>
+        <li class="breadcrumb-item" aria-current="page"><a href="{% url 'MiBarrioApp:newSearch3' %}"> Step 3: View Property Listings</a></li>
+      </ol>
+    </nav>
+
+    <div class="row">
+
+      <!-- Step 2 Form -->
+      <div class="col-md-6">
+        <h3>Select Property Filters</h3>
+        <form id="propertyFiltersForm">
+
+          <!--Set up search profile - get list of search profile names from database-->
+          <div class="mb-3">
+            <label for="suburbSelect" class="form-label">Select a Suburb</label>
+            <div class="d-flex justify-content-center">
+              <select class="form-select" id="suburbSelect" style="max-width: 350px; width: 100%;">
+                <option value="1">Suburb 1</option>
+                <option value="2">Suburb 2</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Rent and Buy Buttons -->
+          <div class="mb-3">
+            <input type="radio" id="rent" name="type" value="rent">
+            <label for="rentSelect" class="form-label">Rent</label>
+
+            <input type="radio" id="buy" name="type" value="buy">
+            <label for="buySelect" class="form-label">Buy</label>
+          </div>
+
+          <div class="mb-3">
+            <label for="min-price" class="form-label">Min-price</label>
+            <select id="min-price" name="min-price">
+              <!-- Rent and Buy options here -->
+            </select>
+          </div>
+
+            <div class="mb-3">
+              <label for="max-price" class="form-label">Max-price</label>
+              <select id="max-price" name="max-price">
+                <!-- Rent and Buy options here -->
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <!-- Back-up Power Supply checkbox -->
+              <div style="margin-bottom: 10px;">
+                <input class="form-check-input" type="checkbox" value="PowerSupply" id="powerSupply">
+                <label class="form-check-label" for="powerSupply">Back-up Power Supply</label>
+              </div>
+              <!-- Water Supply checkbox -->
+              <div>
+                <input class="form-check-input" type="checkbox" value="WaterSupply" id="waterSupply">
+                <label class="form-check-label" for="waterSupply">Back-up Water Supply</label>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+
+      </div>
+
+      <div class="col-md-6">
+        <h3>Images</h3>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}
