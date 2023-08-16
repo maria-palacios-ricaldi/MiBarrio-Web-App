@@ -14,7 +14,7 @@ html, body {
 
 .breadcrumb {
   background-color: #f5f5f5; /* light grey background for the breadcrumb container */
-  padding: 10px 15px;
+  padding: 5px 10px;
   border-radius: 5px;
   list-style-type: none;
   margin: 0;
