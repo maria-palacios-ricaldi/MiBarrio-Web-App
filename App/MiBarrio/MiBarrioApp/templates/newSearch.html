@@ -79,10 +79,12 @@
           <!--Set up search profile - get list of search profile names from database-->
           <div class="mb-3">
             <label for="searchProfileSelect" class="form-label">Select a Search Profile</label>
-            <select class="form-select" id="searchProfileSelect">
-              <option value="1">Search Profile 1</option>
-              <option value="2">Search Profile 2</option>
-            </select>
+            <div class="d-flex justify-content-center">
+              <select class="form-select" id="searchProfileSelect" style="max-width: 350px; width: 100%;">
+                <option value="1">Search Profile 1</option>
+                <option value="2">Search Profile 2</option>
+              </select>
+            </div>
           </div>
 
           <div class="mb-3">
@@ -114,7 +116,7 @@
         <div class="mb-3">
             <label class="form-label fw-bold">Proximity Factors - Level of Importance</label>
             <p>Rate from 1 (not important) to 5 (very important)</p>
-            <div class="d-flex justify-content-between" style="border: 1px solid rgba(0,0,0,0.1); padding: 10px; border-radius: 5px; background:rgb(222, 220, 220);">
+            <div class="d-flex justify-content-between" style="border: 1px solid rgba(0,0,0,0.1); padding: 5px; border-radius: 5px; background:rgb(222, 220, 220);">
                 <span>1</span>
                 <span>2</span>
                 <span>3</span>
@@ -201,7 +203,6 @@
 
         </form>
 
-
       </div>
 
       <div class="col-md-6">
@@ -214,14 +215,7 @@
 
     </div>
 
-
   </div>
-
-
-
-
-
-
 
 </div>
 
