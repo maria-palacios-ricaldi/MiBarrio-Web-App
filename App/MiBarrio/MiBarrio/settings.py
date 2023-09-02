@@ -141,7 +141,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # User Authentication - re-used from tutorial
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'MiBarrioApp:home'
 LOGOUT_REDIRECT_URL = 'login'
 LOGIN_URL = 'login'
 
