@@ -3,9 +3,6 @@ from django.http import HttpResponse
 from .forms import CustomUserCreationForm
 
 # Create your views here.
-#def index_page(request) :
-    #return HttpResponse("First App")
-    #return render(request, "index.html", {})
 
 def home_view(request):
     return render(request, 'home.html', {})
@@ -45,4 +42,4 @@ def feedback_view(request):
     return render(request, 'feedback.html', {})
 
 def contact_us_view(request):
-    return render(request, 'feedback.html', {})
+    return render(request, 'contactUs.html', {})
