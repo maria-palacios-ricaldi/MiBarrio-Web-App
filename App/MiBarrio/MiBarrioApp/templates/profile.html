@@ -7,52 +7,52 @@
   <!-- Sidebar -->
   <div id="sidebar" class="p-3 bg-light">
     <ul class="nav flex-column">
-<!-- Arrow icon always visible -->
+      <!-- Arrow icon always visible -->
       <li class="nav-item">
         <a id="toggleSidebar" class="nav-link" href="#">
           <img src="{% static 'icons/icons8-left-arrow-100.png' %}" alt="Reduce" height="20px">
-      </a>
-    </li>
+        </a>
+      </li>
 
-    <!-- Wrapped sidebar items in a div for toggle functionality -->
+      <!-- Wrapped sidebar items in a div for toggle functionality -->
 
-    <div id="sidebarMenu" class="show">
-      <li class="nav-item" >
-        <a class="nav-link" href="{% url 'MiBarrioApp:home' %}">
-          <img src="{% static 'icons/icons8-home-96.png' %}" alt="Home" height="20px">
-          <span class="nav-text"> Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:profile' %}">
-          <img src="{% static 'icons/icons8-customer-90.png' %}" alt="Profile" height="20px">
-          <span class="nav-text"> Profile</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:newSearch' %}">
-          <img src="{% static 'icons/icons8-search-90.png' %}" alt="New Search" height="20px">
-          <span class="nav-text"> New Search</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:viewPastSearches' %}">
-          <img src="{% static 'icons/icons8-time-machine-90.png' %}" alt="View Past Searches" height="20px">
-          <span class="nav-text"> View Past Searches</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:feedback' %}">
-          <img src="{% static 'icons/icons8-thumbs-up-down-90.png' %}" alt="Give Us Feedback" height="20px">
-          <span class="nav-text"> Give Us Feedback</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:logout' %}">
-          <img src="{% static 'icons/icons8-logout-96.png' %}" alt="Logout" height="20px">
-          <span class="nav-text"> Logout</span>
-        </a>
-      </li>
+      <div id="sidebarMenu" class="show">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:home' %}">
+            <img src="{% static 'icons/icons8-home-96.png' %}" alt="Home" height="20px">
+            <span class="nav-text"> Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:profile' %}">
+            <img src="{% static 'icons/icons8-customer-90.png' %}" alt="Profile" height="20px">
+            <span class="nav-text"> Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:newSearch' %}">
+            <img src="{% static 'icons/icons8-search-90.png' %}" alt="New Search" height="20px">
+            <span class="nav-text"> New Search</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:viewPastSearches' %}">
+            <img src="{% static 'icons/icons8-time-machine-90.png' %}" alt="View Past Searches" height="20px">
+            <span class="nav-text"> View Past Searches</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:feedback' %}">
+            <img src="{% static 'icons/icons8-thumbs-up-down-90.png' %}" alt="Give Us Feedback" height="20px">
+            <span class="nav-text"> Give Us Feedback</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:logout' %}">
+            <img src="{% static 'icons/icons8-logout-96.png' %}" alt="Logout" height="20px">
+            <span class="nav-text"> Logout</span>
+          </a>
+        </li>
       </div>
     </ul>
   </div>
@@ -63,181 +63,214 @@
     <div class="row">
 
       <!-- Account Details Section -->
-      <div class="col-md-6 border-end pr-7 border-secondary" >
+      <div class="col-md-6 border-end pr-7 border-secondary">
         <h2>Account Details</h2>
         <form id="accountDetailsForm">
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="firstname" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="firstname" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="lastname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="lastname" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" disabled>
-            </div>
-            <div class="mb-3" id="repasswordDiv" style="display: none;">
-                <label for="repassword" class="form-label">Re-enter Password</label>
-                <input type="password" class="form-control" id="repassword" disabled>
-            </div>
-            <div class="mb-3">
-                <button type="button" class="btn btn-primary" id="editSaveBtn">Edit</button>
-                <button type="button" class="btn btn-secondary disabled" id="cancelBtn">Cancel</button>
-            </div>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="firstname" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstname" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="lastname" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastname" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" disabled>
+          </div>
+          <div class="mb-3" id="repasswordDiv" style="display: none;">
+            <label for="repassword" class="form-label">Re-enter Password</label>
+            <input type="password" class="form-control" id="repassword" disabled>
+          </div>
+          <div class="mb-3">
+            <button type="button" class="btn btn-primary" id="editSaveBtn">Edit</button>
+            <button type="button" class="btn btn-secondary disabled" id="cancelBtn">Cancel</button>
+          </div>
         </form>
-    </div>
+      </div>
 
-    <!-- Search Profiles Section -->
-    <div class="col-md-6 pl-5">
-      <h2>Search Profiles</h2>
+      <!-- Search Profiles Section -->
+      <div class="col-md-6 pl-5">
+        <h2>Search Profiles</h2>
 
-      <!-- List of search profiles (you'll populate this from the database later) -->
-      <div id="searchProfilesList">
-        <!-- Sample profile (you can repeat this structure for all profiles) -->
-        <!-- <div class="search-profile">
+        <!-- List of search profiles (you'll populate this from the database later) -->
+        <div id="searchProfilesList">
+          <!-- Sample profile (you can repeat this structure for all profiles) -->
+          <!-- <div class="search-profile">
             <p>Profile Name - Age Group</p>
         </div> -->
-    </div>
+        </div>
 
-    <!-- Create New Button triggering the Modal -->
-    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createProfileModal">Create New</button>
+        <!-- Create New Button triggering the Modal -->
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+          data-bs-target="#createProfileModal">Create New</button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="createProfileModal" tabindex="-1" aria-labelledby="createProfileModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" >
-          <div class="modal-content p-3">
+        <!-- Modal -->
+        <div class="modal fade" id="createProfileModal" tabindex="-1" aria-labelledby="createProfileModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content p-3">
               <div class="modal-header">
-                  <h5 class="modal-title" id="createProfileModalLabel">Create Search Profile</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="createProfileModalLabel">Create Search Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                  <form id="searchProfileForm">
-                      <div class="mb-3">
-                          <label for="searchProfileName" class="form-label">Enter Search Profile</label>
-                          <input type="text" class="form-control" id="searchProfileName">
-                      </div>
-                      <div class="mb-3">
-                          <label for="ageGroup" class="form-label">Age Group</label>
-                          <div class="d-flex justify-content-center">
-                            <select class="form-select" id="ageGroup" style="max-width: 100px; width: 100%;">
-                              <!-- Add age groups here -->
-                              <option value="18-24">18-24</option>
-                              <option value="25-34">26-34</option>
-                              <option value="35-44">18-24</option>
-                              <option value="45-54">26-34</option>
-                              <option value="55-64">18-24</option>
-                              <option value="65+">65+</option>
-                              <!-- ... -->
-                            </select>
-                          </div>
-                      </div>
-                      <hr class="my-4"> <!-- Faint line separator -->
-                      <div class="mb-3">
-                          <label class="form-label fw-bold">Proximity Factors - Level of Importance</label>
-                          <p>Rate from 1 (not important) to 5 (very important)</p>
-                          <div class="d-flex justify-content-between" style="border: 1px solid rgba(0,0,0,0.1); padding: 10px; border-radius: 5px; background:rgb(222, 220, 220);">
-                              <span>1</span>
-                              <span>2</span>
-                              <span>3</span>
-                              <span>4</span>
-                              <span>5</span>
-                          </div>
-                          <br>
-                          <!-- ... sliders for Indoor, Outdoor, etc. -->
-                          <!-- Indoor Social Activities -->
-                          <div class="mb-3">
-                              <label for="indoorSlider" class="form-label">Indoor Social Activities</label>
-                              <input type="range" class="form-range" min="1" max="5" step="1" id="indoorSlider">
-                          </div>
+                <form id="searchProfileForm">
+                  <div class="mb-3">
+                    <label for="searchProfileName" class="form-label">Enter Search Profile</label>
+                    <input type="text" class="form-control" id="searchProfileName">
+                  </div>
+                  <div class="mb-3">
+                    <label for="ageGroup" class="form-label">Age Group</label>
+                    <div class="d-flex justify-content-center">
+                      <select class="form-select" id="ageGroup" style="max-width: 100px; width: 100%;">
+                        <!-- Add age groups here -->
+                        <option value="18-24">18-24</option>
+                        <option value="25-34">26-34</option>
+                        <option value="35-44">18-24</option>
+                        <option value="45-54">26-34</option>
+                        <option value="55-64">18-24</option>
+                        <option value="65+">65+</option>
+                        <!-- ... -->
+                      </select>
+                    </div>
+                  </div>
+                  <hr class="my-4"> <!-- Faint line separator -->
+                  <div class="mb-3">
 
-                          <!-- Outdoor Social Activities -->
-                          <div class="mb-3">
-                            <label for="outdoorSlider" class="form-label">Outdoor Social Activities</label>
-                            <input type="range" class="form-range" min="1" max="5" step="1" id="outdoorSlider">
-                          </div>
+                    <label class="form-label fw-bold">Proximity Factors - Level of Importance</label>
+                    <p>Rate from 1 (not important) to 5 (very important)</p>
 
-                          <!-- Healthcare Services -->
-                          <div class="mb-3">
-                            <label for="healthcareSlider" class="form-label">Healthcare Services</label>
-                            <input type="range" class="form-range" min="1" max="5" step="1" id="healthcareSlider">
-                          </div>
+                    <!-- Row containing both the number range and sliders -->
+                    <div class="row">
 
-                          <!-- Educational Institutions -->
-                          <div class="mb-3">
-                            <label for="educationalSlider" class="form-label">Educational Institutions</label>
-                            <input type="range" class="form-range" min="1" max="5" step="1" id="educationalSlider">
-                          </div>
+                      <div class="row">
 
-                      </div>
-                      <hr class="my-4"> <!-- Faint line separator -->
-                      <div class="mb-3">
-                        <label class="form-label fw-bold">Select Transportation Preference:</label>
-                        <div class=" horizontal-checkboxes mb-3">
-
-                          <!-- Checkboxes with icons -->
-                          <!-- Active Transportation -->
-                          <div class="d-inline-block mr-3">
-                              <input class="form-check-input" type="checkbox" value="Active" id="activeTransportation" style=" margin-left: 15px ;">
-                              <label class="form-check-label" for="activeTransportation">
-                                  Active<img src="{% static 'icons/icons8-cycling-100.png' %}" alt="" style ="height: 15px; margin-left:5px;">
-                              </label>
-                          </div>
-
-                          <!-- Private Transportation -->
-                          <div class="d-inline-block mr-3">
-                            <input class="form-check-input" type="checkbox" value="Private" id="privateTransportation" style=" margin-left: 15px ;">
-                            <label class="form-check-label" for="privateTransportation">
-                                Private<img src="{% static 'icons/icons8-car-90.png' %}" alt="" style ="height: 15px; margin-left:5px;">
-                            </label>
-                          </div>
-
-                          <!-- Public Transportation -->
-                          <div class="d-inline-block mr-3">
-                            <input class="form-check-input" type="checkbox" value="Private" id="publicTransportation" style=" margin-left: 15px ;">
-                            <label class="form-check-label" for="publicTransportation">
-                                Public<img src="{% static 'icons/icons8-bus-100.png' %}" alt="" style ="height: 15px; margin-left:5px;">
-                            </label>
+                        <!-- Number range (1-5) -->
+                        <div class="col-md-6 offset-md-6 col-sm-12">
+                          <!-- Offset to position it above the right sliders -->
+                          <div class="d-flex justify-content-between mb-3 equal-width"
+                            style="border: 1px solid rgba(0,0,0,0.1); padding: 10px; border-radius: 5px; background:rgb(222, 220, 220); margin-right: 35px;">
+                            <span>1</span>
+                            <span>2</span>
+                            <span>3</span>
+                            <span>4</span>
+                            <span>5</span>
                           </div>
                         </div>
-                      </div>
-                      <hr class="my-4"> <!-- Faint line separator -->
-                      <div class="mb-3">
-                          <label class="form-label fw-bold">Other Preferences:</label>
-                          <!-- Larger checkboxes -->
-                          <!-- Back-up Power Supply checkbox -->
-                          <div style="margin-bottom: 10px;">
-                              <input class="form-check-input" type="checkbox" value="PowerSupply" id="powerSupply">
-                              <label class="form-check-label" for="powerSupply">Back-up Power Supply</label>
+
+                        <!-- Indoor Social Activities -->
+                        <div class="col-12 mb-3 row">
+                          <label for="indoorSlider" class="form-label col-md-6 col-sm-12"
+                            style="text-align: left; padding-left: 1em;">Indoor Social Activities</label>
+                          <div class="col-md-6 col-sm-12 equal-width">
+                            <input type="range" class="form-range custom-slider" min="1" max="5" step="1" id="indoorSlider">
                           </div>
-                          <!-- Water Supply checkbox -->
-                          <div>
-                            <input class="form-check-input" type="checkbox" value="WaterSupply" id="waterSupply">
-                            <label class="form-check-label" for="waterSupply">Back-up Water Supply</label>
+                        </div>
+
+                        <!-- Outdoor Social Activities -->
+                        <div class="col-12 mb-3 row">
+                          <label for="outdoorSlider" class="form-label col-md-6 col-sm-12"
+                            style="text-align: left; padding-left: 1em;">Outdoor Social Activities</label>
+                          <div class="col-md-6 col-sm-12 equal-width">
+                            <input type="range" class="form-range custom-slider" min="1" max="5" step="1" id="outdoorSlider">
+                          </div>
+                        </div>
+
+                        <!-- Healthcare Services -->
+                        <div class="col-12 mb-3 row">
+                          <label for="healthcareSlider" class="form-label col-md-6 col-sm-12"
+                            style="text-align: left; padding-left: 1em;">Healthcare Services</label>
+                          <div class="col-md-6 col-sm-12 equal-width">
+                            <input type="range" class="form-range custom-slider" min="1" max="5" step="1" id="healthcareSlider" >
+                          </div>
+                        </div>
+
+                        <!-- Educational Institutions -->
+                        <div class="col-12 mb-3 row">
+                          <label for="educationalSlider" class="form-label col-md-6 col-sm-12"
+                            style="text-align: left; padding-left: 1em;">Educational Institutions</label>
+                          <div class="col-md-6 col-sm-12 equal-width">
+                            <input type="range" class="form-range custom-slider" min="1" max="5" step="1" id="educationalSlider">
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+                    <hr class="my-4"> <!-- Faint line separator -->
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Select Transportation Preference:</label>
+                      <div class=" horizontal-checkboxes mb-3">
+
+                        <!-- Checkboxes with icons -->
+                        <!-- Active Transportation -->
+                        <div class="d-inline-block mr-3">
+                          <input class="form-check-input" type="checkbox" value="Active" id="activeTransportation"
+                            style=" margin-left: 15px ;">
+                          <label class="form-check-label" for="activeTransportation">
+                            Active<img src="{% static 'icons/icons8-cycling-100.png' %}" alt=""
+                              style="height: 15px; margin-left:5px;">
+                          </label>
+                        </div>
+
+                        <!-- Private Transportation -->
+                        <div class="d-inline-block mr-3">
+                          <input class="form-check-input" type="checkbox" value="Private" id="privateTransportation"
+                            style=" margin-left: 15px ;">
+                          <label class="form-check-label" for="privateTransportation">
+                            Private<img src="{% static 'icons/icons8-car-90.png' %}" alt=""
+                              style="height: 15px; margin-left:5px;">
+                          </label>
+                        </div>
+
+                        <!-- Public Transportation -->
+                        <div class="d-inline-block mr-3">
+                          <input class="form-check-input" type="checkbox" value="Private" id="publicTransportation"
+                            style=" margin-left: 15px ;">
+                          <label class="form-check-label" for="publicTransportation">
+                            Public<img src="{% static 'icons/icons8-bus-100.png' %}" alt=""
+                              style="height: 15px; margin-left:5px;">
+                          </label>
                         </div>
                       </div>
-                  </form>
+                    </div>
+                    <hr class="my-4"> <!-- Faint line separator -->
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Other Preferences:</label>
+                      <!-- Larger checkboxes -->
+                      <!-- Back-up Power Supply checkbox -->
+                      <div style="margin-bottom: 10px;">
+                        <input class="form-check-input" type="checkbox" value="PowerSupply" id="powerSupply">
+                        <label class="form-check-label" for="powerSupply">Back-up Power Supply</label>
+                      </div>
+                      <!-- Water Supply checkbox -->
+                      <div>
+                        <input class="form-check-input" type="checkbox" value="WaterSupply" id="waterSupply">
+                        <label class="form-check-label" for="waterSupply">Back-up Water Supply</label>
+                      </div>
+                    </div>
+                </form>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" id="saveProfileBtn">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveProfileBtn" style="background-color: black; color: white;border-color: black;">Save</button>
               </div>
+            </div>
           </div>
+        </div>
+
+
+
       </div>
-  </div>
-
-
-
-    </div>
 
     </div>
 
