@@ -50,6 +50,28 @@ html, body {
   border-left-color: #dcdcdc;
 }
 
+.custom-slider::-webkit-slider-thumb {
+  background: black;
+}
+
+.custom-slider::-moz-range-thumb {
+  background: black;
+}
+
+.custom-slider::-ms-thumb {
+  background: black;
+}
+
+.equal-width {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.equal-width > * {
+  flex: 1;
+}
+
 .header {
   height: min-content;
   background: rgb(246,226, 181);
