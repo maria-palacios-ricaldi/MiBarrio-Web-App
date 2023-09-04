@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .models import SearchProfile
+from .forms import SearchProfileForm
+
 
 # Create your views here.
 
@@ -46,7 +49,7 @@ def profile_view(request):
             user.last_name = last_name
         if email:
             user.email = email
-        
+
         # Don't forget to save the user object to commit changes
         try:
             user.save()
