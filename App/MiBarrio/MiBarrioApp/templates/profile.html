@@ -15,7 +15,6 @@
       </li>
 
       <!-- Wrapped sidebar items in a div for toggle functionality -->
-
       <div id="sidebarMenu" class="show">
         <li class="nav-item">
           <a class="nav-link" href="{% url 'MiBarrioApp:home' %}">
@@ -145,27 +144,98 @@
                   </div>
                   <hr class="my-4"> <!-- Faint line separator -->
                   <div class="mb-3">
-    <label class="form-label fw-bold">Proximity Factors - Select sub-parameters</label>
-    <div class="row">
-        <!-- Social & Cultural Activities -->
-        <div class="col-12 mb-3 row align-items-center">
-            <label for="social" class="form-label col-md-4 col-sm-4">Social & Cultural:</label>
-            <div class="col-md-8 col-sm-8">
-                <div class="row">
-                    <div class="col-12">
-                        <div id="checkbox-container">
-                            <input type="checkbox" value="Eating" id="eating"> <label for="eating">Eating</label>
-                            <input type="checkbox" value="Nightlife" id="nightlife"> <label for="nightlife">Nightlife</label>
-                            <input type="checkbox" value="Culture" id="culture"> <label for="culture">Culture</label>
-                            <!-- Add more checkboxes here -->
+                    <label class="form-label fw-bold">Proximity Factors - Select sub-parameters</label>
+                    <div class="row">
+                      <!-- Social & Cultural Activities -->
+                      <div class="col-12 mb-3 row align-items-center">
+                        <label for="social" class="form-label col-md-3 col-sm-3"
+                          style="text-align: left; padding-left: 1.5em;">Social & Cultural:</label>
+                        <div class="col-md-9 col-sm-9">
+                          <div class="row">
+                            <div class="col-12">
+                              <div id="checkbox-container">
+                                <input type="checkbox" value="Eating" id="eating"> <label for="eating">Eating</label>
+                                <input type="checkbox" value="Nightlife" id="nightlife"> <label
+                                  for="nightlife">Nightlife</label>
+                                <input type="checkbox" value="Culture" id="culture"> <label
+                                  for="culture">Culture</label>
+                                <!-- Add more checkboxes here -->
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                      </div>
 
+                      <!-- Health & Wellness Activities -->
+                      <div class="col-12 mb-3 row align-items-center">
+                        <label for="health" class="form-label col-md-3 col-sm-3"
+                          style="text-align: left; padding-left: 1.5em;">Health & Wellness:</label>
+                        <div class="col-md-9 col-sm-9">
+                          <div class="row">
+                            <div class="col-12">
+                              <div id="checkbox-container">
+                                <input type="checkbox" value="Clinic" id="clinic"> <label for="clinic">Clinic</label>
+                                <input type="checkbox" value="Dentist" id="dentist"> <label
+                                  for="dentist">Dentist</label>
+                                <input type="checkbox" value="Doctor" id="doctor"> <label for="doctor">Doctor</label>
+                                <input type="checkbox" value="Hospital" id="hospital"> <label
+                                  for="hospital">Hospital</label>
+                                <input type="checkbox" value="Pharmacy" id="pharmacy"> <label
+                                  for="pharmacy">Pharmacy</label>
+                                <input type="checkbox" value="Veterinary" id="veterinary"> <label
+                                  for="veterinary">Veterinary</label>
+                                <!-- Add more checkboxes here -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Leisure & Recreation Activities -->
+                      <div class="col-12 mb-3 row align-items-center">
+                        <label for="leisure" class="form-label col-md-3 col-sm-3"
+                          style="text-align: left; padding-left: 1.5em;">Leisure & Recreation:</label>
+                        <div class="col-md-9 col-sm-9">
+                          <div class="row">
+                            <div class="col-12">
+                              <div id="checkbox-container">
+                                <input type="checkbox" value="Leisure spots" id="leisure_spots"> <label
+                                  for="leisure_spots">Leisure spots</label>
+                                <input type="checkbox" value="Sports Centres" id="sports_centres"> <label
+                                  for="sports_centres">Sports Centres</label>
+                                <input type="checkbox" value="Leisure Areas" id="leisure_areas"> <label
+                                  for="leisure_areas">Leisure Areas</label>
+                                <!-- Add more checkboxes here -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Community & Services -->
+                      <div class="col-12 mb-3 row align-items-center">
+                        <label for="community" class="form-label col-md-3 col-sm-3"
+                          style="text-align: left; padding-left: 1.5em;">Community & Services:</label>
+                        <div class="col-md-9 col-sm-9">
+                          <div class="row">
+                            <div class="col-12">
+                              <div id="checkbox-container">
+                                <input type="checkbox" value="Retail Shopping Centres" id="retail_shopping_centres">
+                                <label for="retail_shopping_centres">Retail Shopping Centres</label>
+                                <input type="checkbox" value="Community" id="community"> <label
+                                  for="community">Community</label>
+                                <input type="checkbox" value="Economic" id="economic"> <label
+                                  for="economic">Economic</label>
+                                <input type="checkbox" value="Education" id="education"> <label
+                                  for="education">Education</label>
+                                <!-- Add more checkboxes here -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                   <hr class="my-4"> <!-- Faint line separator -->
                   <div class="mb-3">
@@ -180,7 +250,8 @@
                         <!-- Social & Cultural Activities -->
                         <div class="col-12 mb-3 row">
                           <fieldset class="col-12 row" id="socialSlider">
-                            <legend class="form-label col-md-4 col-sm-4" style="text-align: left; padding-left: 2em; font-size: 16px;">
+                            <legend class="form-label col-md-4 col-sm-4"
+                              style="text-align: left; padding-left: 2em; font-size: 16px;">
                               Social & Cultural</legend>
                             <div class="col-md-8 col-sm-8">
                               <ul class='likert'>
@@ -212,7 +283,8 @@
                         <!-- Health & Wellness Activities -->
                         <div class="col-12 mb-3 row">
                           <fieldset class="col-12 row" id="healthSlider">
-                            <legend class="form-label col-md-4 col-sm-4" style="text-align: left; padding-left: 2em; font-size: 16px;">Health & Wellness</legend>
+                            <legend class="form-label col-md-4 col-sm-4"
+                              style="text-align: left; padding-left: 2em; font-size: 16px;">Health & Wellness</legend>
                             <div class="col-md-8 col-sm-8">
                               <ul class='likert'>
                                 <li>
@@ -243,7 +315,8 @@
                         <!-- Leisure & Recreation Activities -->
                         <div class="col-12 mb-3 row">
                           <fieldset class="col-12 row" id="leisureSlider">
-                            <legend class="form-label col-md-4 col-sm-4" style="text-align: left; padding-left: 2em; font-size: 16px;">
+                            <legend class="form-label col-md-4 col-sm-4"
+                              style="text-align: left; padding-left: 2em; font-size: 16px;">
                               Leisure & Recreation</legend>
                             <div class="col-md-8 col-sm-8">
                               <ul class='likert'>
@@ -275,7 +348,8 @@
                         <!-- Community & Services  -->
                         <div class="col-12 mb-3 row">
                           <fieldset class="col-12 row" id="communitySlider">
-                            <legend class="form-label col-md-4 col-sm-4" style="text-align: left; padding-left: 2em; font-size: 16px;">
+                            <legend class="form-label col-md-4 col-sm-4"
+                              style="text-align: left; padding-left: 2em; font-size: 16px;">
                               Community & Services</legend>
                             <div class="col-md-8 col-sm-8">
                               <ul class='likert'>
@@ -359,9 +433,6 @@
             </div>
           </div>
         </div>
-
-
-
       </div>
 
     </div>
