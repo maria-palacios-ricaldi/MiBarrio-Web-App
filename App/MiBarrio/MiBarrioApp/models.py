@@ -46,7 +46,6 @@ class CustomUser(AbstractBaseUser):
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
 
 
-
 class SearchProfile(models.Model):
     search_profileID = models.AutoField(primary_key=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
