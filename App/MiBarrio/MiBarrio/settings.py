@@ -142,8 +142,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # User Authentication - re-used from tutorial
 LOGIN_REDIRECT_URL = 'MiBarrioApp:home'
-LOGOUT_REDIRECT_URL = 'login'
-LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'MiBarrioApp:login'
+LOGIN_URL = 'MiBarrioApp:login'
 
 # Crispy Forms Settings
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
