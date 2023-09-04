@@ -66,6 +66,7 @@
         <h2>Account Details</h2>
         <form id="accountDetailsForm" action="{% url 'MiBarrioApp:profile' %}" method="post">
           {% csrf_token %}
+          <input type="hidden" name="form_type" value="profile">
           <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input type="text" class="form-control" name="username" id="username" value="{{ user.username }}" disabled>
@@ -122,7 +123,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form id="searchProfileForm">
+                <form id="searchProfileForm" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="form_type" value="search_profile">
                   <div class="mb-3">
                     <label for="searchProfileName" class="form-label">Enter Search Profile</label>
                     <input type="text" class="form-control" id="searchProfileName">
@@ -427,8 +430,8 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveProfileBtn"
-                  style="background-color: black; color: white;border-color: black;">Save</button>
+                <button type="button" class="btn btn-primary" id="saveProfileBtn" style="background-color: black; color: white;border-color: black;">Save</button>
+                <input type="submit" id="hiddenSearchProfileSubmitBtn" style="display: none;">
               </div>
             </div>
           </div>
