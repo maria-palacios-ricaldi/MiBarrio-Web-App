@@ -17,34 +17,33 @@ $(document).ready(function() {
 //toggle navbar - collapse
 
 $(document).ready(function() {
-  console.log("Script loaded!");  // This should appear in your browser's console
-  // ... rest of the code ...
+  console.log("Script loaded!");  // a check if script has loaded correctly!
 });
 
 
 document.getElementById('editSaveBtn').addEventListener('click', function() {
   if (this.innerText === 'Edit') {
-      this.innerText = 'Save';
-      document.getElementById('cancelBtn').classList.remove('disabled');
-      document.querySelectorAll('#accountDetailsForm input:not(#username)').forEach(input => {
-          input.disabled = false;
-      });
-      document.getElementById('repasswordDiv').style.display = 'block';
-  } else {
-      this.innerText = 'Edit';
-      document.getElementById('cancelBtn').classList.add('disabled');
-      document.querySelectorAll('#accountDetailsForm input:not(#username)').forEach(input => {
-          input.disabled = true;
-      });
-      document.getElementById('repasswordDiv').style.display = 'none';
-  }
+    this.innerText = 'Save';
+    document.getElementById('cancelBtn').classList.remove('disabled');
+    document.querySelectorAll('#accountDetailsForm input:not(#username):not(#password)').forEach(input => {
+        input.disabled = false;
+    });
+} else {
+  // Programmatically "click" the hidden submit button
+  document.getElementById('hiddenSubmitBtn').click();
+}
 });
 
 document.getElementById('cancelBtn').addEventListener('click', function() {
   document.getElementById('editSaveBtn').innerText = 'Edit';
   this.classList.add('disabled');
-  document.querySelectorAll('#accountDetailsForm input:not(#username)').forEach(input => {
+  document.querySelectorAll('#accountDetailsForm input:not(#username):not(#password)').forEach(input => {
       input.disabled = true;
   });
-  document.getElementById('repasswordDiv').style.display = 'none';
 });
+
+
+//mobiscroll.select('#multiple-select', {
+  //inputElement: document.getElementById('my-input'),
+ //touchUi: false
+//});
