@@ -65,34 +65,34 @@
       <!-- Account Details Section -->
       <div class="col-md-6 border-end pr-7 border-secondary">
         <h2>Account Details</h2>
-        <form id="accountDetailsForm">
+        <form id="accountDetailsForm" action="{% url 'MiBarrioApp:profile' %}" method="post">
+          {% csrf_token %}
           <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" disabled>
+            <input type="text" class="form-control" name="username" id="username" value="{{ user.username }}" disabled>
           </div>
           <div class="mb-3">
             <label for="firstname" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="firstname" disabled>
+            <input type="text" class="form-control" name="firstname" id="firstname" value="{{ user.first_name }}"
+              disabled>
           </div>
           <div class="mb-3">
             <label for="lastname" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="lastname" disabled>
+            <input type="text" class="form-control" name="lastname" id="lastname" value="{{ user.last_name }}" disabled>
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" disabled>
+            <input type="email" class="form-control" name="email" id="email" value="{{ user.email }}" disabled>
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" disabled>
+            <input type="password" class="form-control" name="password" id="password" value="********" disabled>
           </div>
-          <div class="mb-3" id="repasswordDiv" style="display: none;">
-            <label for="repassword" class="form-label">Re-enter Password</label>
-            <input type="password" class="form-control" id="repassword" disabled>
-          </div>
+
           <div class="mb-3">
             <button type="button" class="btn btn-primary" id="editSaveBtn">Edit</button>
             <button type="button" class="btn btn-secondary disabled" id="cancelBtn">Cancel</button>
+            <input type="submit" id="hiddenSubmitBtn" style="display: none;">
           </div>
         </form>
       </div>
@@ -145,62 +145,163 @@
                   </div>
                   <hr class="my-4"> <!-- Faint line separator -->
                   <div class="mb-3">
+    <label class="form-label fw-bold">Proximity Factors - Select sub-parameters</label>
+    <div class="row">
+        <!-- Social & Cultural Activities -->
+        <div class="col-12 mb-3 row align-items-center">
+            <label for="social" class="form-label col-md-4 col-sm-4">Social & Cultural:</label>
+            <div class="col-md-8 col-sm-8">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="checkbox-container">
+                            <input type="checkbox" value="Eating" id="eating"> <label for="eating">Eating</label>
+                            <input type="checkbox" value="Nightlife" id="nightlife"> <label for="nightlife">Nightlife</label>
+                            <input type="checkbox" value="Culture" id="culture"> <label for="culture">Culture</label>
+                            <!-- Add more checkboxes here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                  <hr class="my-4"> <!-- Faint line separator -->
+                  <div class="mb-3">
 
                     <label class="form-label fw-bold">Proximity Factors - Level of Importance</label>
                     <p>Rate from 1 (not important) to 5 (very important)</p>
 
                     <!-- Row containing both the number range and sliders -->
                     <div class="row">
-
                       <div class="row">
 
-                        <!-- Number range (1-5) -->
-                        <div class="col-md-6 offset-md-6 col-sm-12">
-                          <!-- Offset to position it above the right sliders -->
-                          <div class="d-flex justify-content-between mb-3 equal-width"
-                            style="border: 1px solid rgba(0,0,0,0.1); padding: 10px; border-radius: 5px; background:rgb(222, 220, 220); margin-right: 35px;">
-                            <span>1</span>
-                            <span>2</span>
-                            <span>3</span>
-                            <span>4</span>
-                            <span>5</span>
-                          </div>
+                        <!-- Social & Cultural Activities -->
+                        <div class="col-12 mb-3 row">
+                          <fieldset class="col-12 row" id="socialSlider">
+                            <legend class="form-label col-md-4 col-sm-4" style="text-align: left; padding-left: 2em; font-size: 16px;">
+                              Social & Cultural</legend>
+                            <div class="col-md-8 col-sm-8">
+                              <ul class='likert'>
+                                <li>
+                                  <input type="radio" name="likert" value="1" id="socialSlider1">
+                                  <label for="socialSlider1">1</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="2" id="socialSlider2">
+                                  <label for="socialSlider2">2</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="3" id="socialSlider3">
+                                  <label for="socialSlider3">3</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="4" id="socialSlider4">
+                                  <label for="socialSlider4">4</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="5" id="socialSlider5">
+                                  <label for="socialSlider5">5</label>
+                                </li>
+                              </ul>
+                            </div>
+                          </fieldset>
                         </div>
 
-                        <!-- Indoor Social Activities -->
+                        <!-- Health & Wellness Activities -->
                         <div class="col-12 mb-3 row">
-                          <label for="indoorSlider" class="form-label col-md-6 col-sm-12"
-                            style="text-align: left; padding-left: 1em;">Indoor Social Activities</label>
-                          <div class="col-md-6 col-sm-12 equal-width">
-                            <input type="range" class="form-range custom-slider" min="1" max="5" step="1" id="indoorSlider">
-                          </div>
+                          <fieldset class="col-12 row" id="healthSlider">
+                            <legend class="form-label col-md-4 col-sm-4" style="text-align: left; padding-left: 2em; font-size: 16px;">Health & Wellness</legend>
+                            <div class="col-md-8 col-sm-8">
+                              <ul class='likert'>
+                                <li>
+                                  <input type="radio" name="likert" value="1" id="healthSlider1">
+                                  <label for="healthSlider1">1</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="2" id="healthSlider2">
+                                  <label for="healthSlider2">2</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="3" id="healthSlider3">
+                                  <label for="healthSlider3">3</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="4" id="healthSlider4">
+                                  <label for="healthSlider4">4</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="5" id="healthSlider5">
+                                  <label for="healthSlider5">5</label>
+                                </li>
+                              </ul>
+                            </div>
+                          </fieldset>
                         </div>
 
-                        <!-- Outdoor Social Activities -->
+                        <!-- Leisure & Recreation Activities -->
                         <div class="col-12 mb-3 row">
-                          <label for="outdoorSlider" class="form-label col-md-6 col-sm-12"
-                            style="text-align: left; padding-left: 1em;">Outdoor Social Activities</label>
-                          <div class="col-md-6 col-sm-12 equal-width">
-                            <input type="range" class="form-range custom-slider" min="1" max="5" step="1" id="outdoorSlider">
-                          </div>
+                          <fieldset class="col-12 row" id="leisureSlider">
+                            <legend class="form-label col-md-4 col-sm-4" style="text-align: left; padding-left: 2em; font-size: 16px;">
+                              Leisure & Recreation</legend>
+                            <div class="col-md-8 col-sm-8">
+                              <ul class='likert'>
+                                <li>
+                                  <input type="radio" name="likert" value="1" id="leisureSlider1">
+                                  <label for="leisureSlider1">1</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="2" id="leisureSlider2">
+                                  <label for="leisureSlider2">2</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="3" id="leisureSlider3">
+                                  <label for="leisureSlider3">3</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="4" id="leisureSlider4">
+                                  <label for="leisureSlider4">4</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="5" id="leisureSlider5">
+                                  <label for="leisureSlider5">5</label>
+                                </li>
+                              </ul>
+                            </div>
+                          </fieldset>
                         </div>
 
-                        <!-- Healthcare Services -->
+                        <!-- Community & Services  -->
                         <div class="col-12 mb-3 row">
-                          <label for="healthcareSlider" class="form-label col-md-6 col-sm-12"
-                            style="text-align: left; padding-left: 1em;">Healthcare Services</label>
-                          <div class="col-md-6 col-sm-12 equal-width">
-                            <input type="range" class="form-range custom-slider" min="1" max="5" step="1" id="healthcareSlider" >
-                          </div>
-                        </div>
-
-                        <!-- Educational Institutions -->
-                        <div class="col-12 mb-3 row">
-                          <label for="educationalSlider" class="form-label col-md-6 col-sm-12"
-                            style="text-align: left; padding-left: 1em;">Educational Institutions</label>
-                          <div class="col-md-6 col-sm-12 equal-width">
-                            <input type="range" class="form-range custom-slider" min="1" max="5" step="1" id="educationalSlider">
-                          </div>
+                          <fieldset class="col-12 row" id="communitySlider">
+                            <legend class="form-label col-md-4 col-sm-4" style="text-align: left; padding-left: 2em; font-size: 16px;">
+                              Community & Services</legend>
+                            <div class="col-md-8 col-sm-8">
+                              <ul class='likert'>
+                                <li>
+                                  <input type="radio" name="likert" value="1" id="communitySlider1">
+                                  <label for="communitySlider1">1</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="2" id="communitySlider2">
+                                  <label for="communitySlider2">2</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="3" id="communitySlider3">
+                                  <label for="communitySlider3">3</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="4" id="communitySlider4">
+                                  <label for="communitySlider4">4</label>
+                                </li>
+                                <li>
+                                  <input type="radio" name="likert" value="5" id="communitySlider5">
+                                  <label for="communitySlider5">5</label>
+                                </li>
+                              </ul>
+                            </div>
+                          </fieldset>
                         </div>
 
                       </div>
@@ -218,16 +319,6 @@
                             style=" margin-left: 15px ;">
                           <label class="form-check-label" for="activeTransportation">
                             Active<img src="{% static 'icons/icons8-cycling-100.png' %}" alt=""
-                              style="height: 15px; margin-left:5px;">
-                          </label>
-                        </div>
-
-                        <!-- Private Transportation -->
-                        <div class="d-inline-block mr-3">
-                          <input class="form-check-input" type="checkbox" value="Private" id="privateTransportation"
-                            style=" margin-left: 15px ;">
-                          <label class="form-check-label" for="privateTransportation">
-                            Private<img src="{% static 'icons/icons8-car-90.png' %}" alt=""
                               style="height: 15px; margin-left:5px;">
                           </label>
                         </div>
@@ -262,7 +353,8 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveProfileBtn" style="background-color: black; color: white;border-color: black;">Save</button>
+                <button type="button" class="btn btn-primary" id="saveProfileBtn"
+                  style="background-color: black; color: white;border-color: black;">Save</button>
               </div>
             </div>
           </div>
