@@ -36,7 +36,7 @@ def profile_view(request):
 
     if request.method == 'POST':
         if form_type == 'profile':
-            # Existing code for updating the profile
+
             first_name = request.POST.get('firstname')
             last_name = request.POST.get('lastname')
             email = request.POST.get('email')
