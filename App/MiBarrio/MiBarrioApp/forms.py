@@ -20,11 +20,3 @@ class CustomUserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
-class SearchProfileForm(forms.ModelForm):
-    class Meta:
-        model = SearchProfile
-        fields = ['sp_name', 'age', 'social_cultural', 'health_wellness',
-                  'leisure_recreation', 'community_services',
-                  'transportation_active', 'transportation_public',
-                  'backup_power_supply', 'backup_water_supply']
