@@ -50,11 +50,20 @@ class SearchProfile(models.Model):
     search_profileID = models.AutoField(primary_key=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     sp_name = models.TextField()
-    age = models.PositiveIntegerField(validators=[MinValueValidator(0)])
-    social_cultural = models.TextField()
-    health_wellness = models.TextField()
-    leisure_recreation = models.TextField()
-    community_services = models.TextField()
+    age = models.TextField()
+
+    #factor tags
+    social_cultural_tags = models.TextField()
+    health_wellness_tags = models.TextField()
+    leisure_recreation_tags = models.TextField()
+    community_services_tags = models.TextField()
+
+    #factor levels
+    social_cultural_levels = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], default=1)
+    health_wellness_levels = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], default=1)
+    leisure_recreation_levels = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], default=1)
+    community_services_levels = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], default=1)
+
     transportation_active = models.BooleanField()
     transportation_public = models.BooleanField()
     backup_power_supply = models.BooleanField()
@@ -74,7 +83,7 @@ class Feedback(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     category = models.CharField(max_length=255)
-    message = models.CharField(max_length=255)
+    message = models.TextField()
 
 
 class City(models.Model):
