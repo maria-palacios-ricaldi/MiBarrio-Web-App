@@ -123,17 +123,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form id="searchProfileForm" method="post">
+                <form id="searchProfileForm" method="post" action="{% url 'MiBarrioApp:profile' %}">
                   {% csrf_token %}
                   <input type="hidden" name="form_type" value="search_profile">
                   <div class="mb-3">
-                    <label for="searchProfileName" class="form-label">Enter Search Profile</label>
-                    <input type="text" class="form-control" id="searchProfileName">
+                    <label for="sp_name" class="form-label">Enter Search Profile </label>
+                    <input type="text" class="form-control" id="sp_name" name="sp_name" required>
                   </div>
                   <div class="mb-3">
-                    <label for="ageGroup" class="form-label">Age Group</label>
+                    <label for="age" class="form-label">Age Group</label>
                     <div class="d-flex justify-content-center">
-                      <select class="form-select" id="ageGroup" style="max-width: 100px; width: 100%;">
+                      <select class="form-select" id="age" name="age" style="max-width: 100px; width: 100%;"
+                        required>
                         <!-- Add age groups here -->
                         <option value="18-24">18-24</option>
                         <option value="25-34">26-34</option>
@@ -148,21 +149,22 @@
                   <hr class="my-4"> <!-- Faint line separator -->
                   <div class="mb-3">
                     <label class="form-label fw-bold">Proximity Factors - Select sub-parameters</label>
+                    <p>Select at least one tag per Proximity Factor</p>
                     <div class="row">
                       <!-- Social & Cultural Activities -->
                       <div class="col-12 mb-3 row align-items-center">
-                        <label for="social" class="form-label col-md-3 col-sm-3"
+                        <label class="form-label col-md-3 col-sm-3"
                           style="text-align: left; padding-left: 1.5em;">Social & Cultural:</label>
-                        <div class="col-md-9 col-sm-9">
+                        <div id="social" class="col-md-9 col-sm-9">
                           <div class="row">
                             <div class="col-12">
                               <div id="checkbox-container">
-                                <input type="checkbox" value="Eating" id="eating"> <label for="eating">Eating</label>
-                                <input type="checkbox" value="Nightlife" id="nightlife"> <label
-                                  for="nightlife">Nightlife</label>
-                                <input type="checkbox" value="Culture" id="culture"> <label
-                                  for="culture">Culture</label>
-                                <!-- Add more checkboxes here -->
+                                <input type="checkbox" value="Eating" id="eating" name="social_cultural[]"> <label for="eating">Eating</label>
+                                <input type="checkbox" value="Nightlife" id="nightlife" name="social_cultural[]">
+                                <label for="nightlife">Nightlife</label>
+                                  <input type="checkbox" value="Culture" id="culture" name="social_cultural[]"> <label
+                                    for="culture">Culture</label>
+                                  <!-- Add more checkboxes here -->
                               </div>
                             </div>
                           </div>
@@ -171,21 +173,21 @@
 
                       <!-- Health & Wellness Activities -->
                       <div class="col-12 mb-3 row align-items-center">
-                        <label for="health" class="form-label col-md-3 col-sm-3"
+                        <label class="form-label col-md-3 col-sm-3"
                           style="text-align: left; padding-left: 1.5em;">Health & Wellness:</label>
                         <div class="col-md-9 col-sm-9">
                           <div class="row">
                             <div class="col-12">
                               <div id="checkbox-container">
-                                <input type="checkbox" value="Clinic" id="clinic"> <label for="clinic">Clinic</label>
-                                <input type="checkbox" value="Dentist" id="dentist"> <label
+                                <input type="checkbox" value="Clinic" id="clinic" name="health_wellness[]"> <label for="clinic">Clinic</label>
+                                <input type="checkbox" value="Dentist" id="dentist" name="health_wellness[]" > <label
                                   for="dentist">Dentist</label>
-                                <input type="checkbox" value="Doctor" id="doctor"> <label for="doctor">Doctor</label>
-                                <input type="checkbox" value="Hospital" id="hospital"> <label
+                                <input type="checkbox" value="Doctor" id="doctor" name="health_wellness[]"> <label for="doctor">Doctor</label>
+                                <input type="checkbox" value="Hospital" id="hospital" name="health_wellness[]"> <label
                                   for="hospital">Hospital</label>
-                                <input type="checkbox" value="Pharmacy" id="pharmacy"> <label
+                                <input type="checkbox" value="Pharmacy" id="pharmacy" name="health_wellness[]"> <label
                                   for="pharmacy">Pharmacy</label>
-                                <input type="checkbox" value="Veterinary" id="veterinary"> <label
+                                <input type="checkbox" value="Veterinary" id="veterinary" name="health_wellness[]"> <label
                                   for="veterinary">Veterinary</label>
                                 <!-- Add more checkboxes here -->
                               </div>
@@ -196,17 +198,17 @@
 
                       <!-- Leisure & Recreation Activities -->
                       <div class="col-12 mb-3 row align-items-center">
-                        <label for="leisure" class="form-label col-md-3 col-sm-3"
+                        <label class="form-label col-md-3 col-sm-3"
                           style="text-align: left; padding-left: 1.5em;">Leisure & Recreation:</label>
                         <div class="col-md-9 col-sm-9">
                           <div class="row">
                             <div class="col-12">
                               <div id="checkbox-container">
-                                <input type="checkbox" value="Leisure spots" id="leisure_spots"> <label
+                                <input type="checkbox" value="Leisure spots" id="leisure_spots" name="leisure_recreation[]"> <label
                                   for="leisure_spots">Leisure spots</label>
-                                <input type="checkbox" value="Sports Centres" id="sports_centres"> <label
+                                <input type="checkbox" value="Sports Centres" id="sports_centres" name="leisure_recreation[]"> <label
                                   for="sports_centres">Sports Centres</label>
-                                <input type="checkbox" value="Leisure Areas" id="leisure_areas"> <label
+                                <input type="checkbox" value="Leisure Areas" id="leisure_areas" name="leisure_recreation[]"> <label
                                   for="leisure_areas">Leisure Areas</label>
                                 <!-- Add more checkboxes here -->
                               </div>
@@ -217,7 +219,7 @@
 
                       <!-- Community & Services -->
                       <div class="col-12 mb-3 row align-items-center">
-                        <label for="community" class="form-label col-md-3 col-sm-3"
+                        <label class="form-label col-md-3 col-sm-3"
                           style="text-align: left; padding-left: 1.5em;">Community & Services:</label>
                         <div class="col-md-9 col-sm-9">
                           <div class="row">
@@ -225,11 +227,11 @@
                               <div id="checkbox-container">
                                 <input type="checkbox" value="Retail Shopping Centres" id="retail_shopping_centres">
                                 <label for="retail_shopping_centres">Retail Shopping Centres</label>
-                                <input type="checkbox" value="Community" id="community"> <label
+                                <input type="checkbox" value="Community" id="community" name="community_services[]"> <label
                                   for="community">Community</label>
-                                <input type="checkbox" value="Economic" id="economic"> <label
+                                <input type="checkbox" value="Economic" id="economic" name="community_services[]"> <label
                                   for="economic">Economic</label>
-                                <input type="checkbox" value="Education" id="education"> <label
+                                <input type="checkbox" value="Education" id="education" name="community_services[]"> <label
                                   for="education">Education</label>
                                 <!-- Add more checkboxes here -->
                               </div>
@@ -393,7 +395,7 @@
                         <!-- Active Transportation -->
                         <div class="d-inline-block mr-3">
                           <input class="form-check-input" type="checkbox" value="Active" id="activeTransportation"
-                            style=" margin-left: 15px ;">
+                            style=" margin-left: 15px ;" name="transportation_active">
                           <label class="form-check-label" for="activeTransportation">
                             Active<img src="{% static 'icons/icons8-cycling-100.png' %}" alt=""
                               style="height: 15px; margin-left:5px;">
@@ -403,7 +405,7 @@
                         <!-- Public Transportation -->
                         <div class="d-inline-block mr-3">
                           <input class="form-check-input" type="checkbox" value="Private" id="publicTransportation"
-                            style=" margin-left: 15px ;">
+                            style=" margin-left: 15px ;" name="transportation_public" >
                           <label class="form-check-label" for="publicTransportation">
                             Public<img src="{% static 'icons/icons8-bus-100.png' %}" alt=""
                               style="height: 15px; margin-left:5px;">
@@ -417,13 +419,13 @@
                       <!-- Larger checkboxes -->
                       <!-- Back-up Power Supply checkbox -->
                       <div style="margin-bottom: 10px;">
-                        <input class="form-check-input" type="checkbox" value="PowerSupply" id="powerSupply">
-                        <label class="form-check-label" for="powerSupply">Back-up Power Supply</label>
+                        <input class="form-check-input" type="checkbox" value="PowerSupply" id="backup_power_supply" name="backup_power_supply">
+                        <label class="form-check-label" for="backup_power_supply">Back-up Power Supply</label>
                       </div>
                       <!-- Water Supply checkbox -->
                       <div>
-                        <input class="form-check-input" type="checkbox" value="WaterSupply" id="waterSupply">
-                        <label class="form-check-label" for="waterSupply">Back-up Water Supply</label>
+                        <input class="form-check-input" type="checkbox" value="WaterSupply" id="backup_water_supply" name="backup_water_supply">
+                        <label class="form-check-label" for="backup_water_supply">Back-up Water Supply</label>
                       </div>
                     </div>
                   </div>
@@ -431,8 +433,8 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveProfileBtn" style="background-color: black; color: white;border-color: black;">Save</button>
-                <input type="submit" id="hiddenSearchProfileSubmitBtn" style="display: none;">
+                <button type="button" class="btn btn-primary" id="saveProfileBtn">Save</button>
+                <input type="submit" id="hiddenSearchProfileSubmitBtn" style="display: none;" form="searchProfileForm">
               </div>
             </div>
           </div>
@@ -440,13 +442,9 @@
       </div>
 
     </div>
-
   </div>
-
-
-
-
 </div>
+
 
 
 {% endblock %}
