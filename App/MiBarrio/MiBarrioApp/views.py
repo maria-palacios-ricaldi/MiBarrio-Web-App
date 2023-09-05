@@ -4,9 +4,8 @@ from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import SearchProfile
-from .forms import SearchProfileForm
 from django.http import JsonResponse
-
+import json
 
 # Create your views here.
 
@@ -57,27 +56,51 @@ def profile_view(request):
             return redirect('MiBarrioApp:profile')
 
         elif form_type == 'search_profile':
-            # Code for creating a new search profile
+            print("Processing search_profile form")
+
             sp_name = request.POST.get('sp_name')
             age = request.POST.get('age')
-            social_cultural = request.POST.get('social_cultural')
-            health_wellness = request.POST.get('health_wellness')
-            leisure_recreation = request.POST.get('leisure_recreation')
-            community_services = request.POST.get('community_services')
+
+            social_cultural = request.POST.getlist('social_cultural[]')
+            health_wellness = request.POST.getlist('health_wellness[]')
+            leisure_recreation = request.POST.getlist('leisure_recreation[]')
+            community_services = request.POST.getlist('community_services[]')
+
+            social_cultural_levels = request.POST.get('socialLikert')
+            health_wellness_levels = request.POST.get('healthLikert')
+            leisure_recreation_levels = request.POST.get('leisureLikert')
+            community_services_levels = request.POST.get('communityLikert')
+
+            # Mandatory field checks
+            mandatory_fields = [
+                sp_name, age, social_cultural, health_wellness, leisure_recreation, community_services,
+                social_cultural_levels, health_wellness_levels, leisure_recreation_levels, community_services_levels
+            ]
+
+            if not all(mandatory_fields):
+                messages.error(request, 'Not all mandatory fields are completed.')
+                return redirect('MiBarrioApp:profile')
+
             transportation_active = request.POST.get('transportation_active') == 'on'
             transportation_public = request.POST.get('transportation_public') == 'on'
             backup_power_supply = request.POST.get('backup_power_supply') == 'on'
             backup_water_supply = request.POST.get('backup_water_supply') == 'on'
 
             try:
+                print("Trying to save search profile...")  # Add this
                 search_profile = SearchProfile.objects.create(
                     user=user,
                     sp_name=sp_name,
                     age=age,
-                    social_cultural=social_cultural,
-                    health_wellness=health_wellness,
-                    leisure_recreation=leisure_recreation,
-                    community_services=community_services,
+                    # Serialize the list to string
+                    social_cultural_tags=json.dumps(social_cultural),
+                    health_wellness_tags=json.dumps(health_wellness),
+                    leisure_recreation_tags=json.dumps(leisure_recreation),
+                    community_services_tags=json.dumps(community_services),
+                    social_cultural_levels=social_cultural_levels,
+                    health_wellness_levels=health_wellness_levels,
+                    leisure_recreation_levels=leisure_recreation_levels,
+                    community_services_levels=community_services_levels,
                     transportation_active=transportation_active,
                     transportation_public=transportation_public,
                     backup_power_supply=backup_power_supply,
