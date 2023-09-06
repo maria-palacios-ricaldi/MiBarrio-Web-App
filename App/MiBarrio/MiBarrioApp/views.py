@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import SearchProfile
+from .models import SearchProfiles
 from django.http import JsonResponse
 import json
 
@@ -88,7 +88,7 @@ def profile_view(request):
 
             try:
                 print("Trying to save search profile...")  # Add this
-                search_profile = SearchProfile.objects.create(
+                search_profile = SearchProfiles.objects.create(
                     user=user,
                     sp_name=sp_name,
                     age=age,
@@ -115,7 +115,8 @@ def profile_view(request):
             return redirect('MiBarrioApp:profile')
 
     # If a GET request, display the profile page as usual
-    context = {'user': user}
+    user_search_profiles = SearchProfiles.objects.filter(user=request.user)
+    context = {'user': user, 'search_profiles': user_search_profiles}
     return render(request, 'profile.html', context)
 
 
