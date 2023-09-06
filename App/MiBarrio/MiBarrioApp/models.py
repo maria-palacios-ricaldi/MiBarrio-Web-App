@@ -47,7 +47,7 @@ class CustomUser(AbstractBaseUser):
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
 
 
-class SearchProfile(models.Model):
+class SearchProfiles(models.Model):
     search_profileID = models.AutoField(primary_key=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     sp_name = models.TextField()
@@ -70,11 +70,14 @@ class SearchProfile(models.Model):
     backup_power_supply = models.BooleanField()
     backup_water_supply = models.BooleanField()
 
+    class Meta:
+        unique_together = ('user', 'sp_name',)
+
 
 class Searches(models.Model):
     searchID = models.AutoField(primary_key=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    search_profileID = models.ForeignKey(SearchProfile, on_delete=models.CASCADE)
+    search_profileID = models.ForeignKey(SearchProfiles, on_delete=models.CASCADE)
     search_parameters = models.TextField()
     search_timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -87,14 +90,14 @@ class Feedback(models.Model):
     message = models.TextField()
 
 
-class City(models.Model):
+class Cities(models.Model):
     cityID = models.AutoField(primary_key=True)
     cityName = models.CharField(max_length=255)
 
 
 class Suburbs(models.Model):
     suburbID = models.AutoField(primary_key=True)
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    city = models.ForeignKey(Cities, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     coordinates = models.TextField()
 
