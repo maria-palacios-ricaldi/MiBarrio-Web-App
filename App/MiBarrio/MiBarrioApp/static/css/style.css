@@ -237,6 +237,14 @@ html, body {
 
 .likert li label {width:100%;}
 
+.sticky-action-column {
+  position: sticky;
+  right: 0;
+  background-color: #fff; /* To make it stand out from the scrolling content */
+  z-index: 1; /* To make it stack above the other cells */
+}
+
+
 /* For WebKit browsers like Chrome and Safari */
 .likert li input[type=radio]:checked::-webkit-radio-button {
   background-color: black;
