@@ -3,14 +3,14 @@
 {% block content %}
 
 {% if messages %}
-  <div class="messages-container">
-    {% for message in messages %}
-      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-        {{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    {% endfor %}
+<div class="messages-container">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
+  {% endfor %}
+</div>
 {% endif %}
 
 <div class="d-flex">
@@ -297,7 +297,8 @@
                           <div class="row">
                             <div class="col-12">
                               <div id="checkbox-container">
-                                <input type="checkbox" value="Retail Shopping Centres" id="retail_shopping_centres" name="community_services[]">
+                                <input type="checkbox" value="Retail Shopping Centres" id="retail_shopping_centres"
+                                  name="community_services[]">
                                 <label for="retail_shopping_centres">Retail Shopping Centres</label>
                                 <input type="checkbox" value="Community" id="community" name="community_services[]">
                                 <label for="community">Community</label>
@@ -458,65 +459,66 @@
                       </div>
 
                     </div>
-                    <hr class="my-4"> <!-- Faint line separator -->
-                    <div class="mb-3">
-                      <label class="form-label fw-bold">Select Transportation Preference:</label>
-                      <div class=" horizontal-checkboxes mb-3">
+                  </div>
+                  <hr class="my-4"> <!-- Faint line separator -->
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Select Transportation Preference:</label>
+                    <div class=" horizontal-checkboxes mb-3">
 
-                        <!-- Checkboxes with icons -->
-                        <!-- Active Transportation -->
-                        <div class="d-inline-block mr-3">
-                          <input class="form-check-input" type="checkbox" value="on" id="activeTransportation"
-                            style=" margin-left: 15px ;" name="transportation_active">
-                          <label class="form-check-label" for="activeTransportation">
-                            Active<img src="{% static 'icons/icons8-cycling-100.png' %}" alt=""
-                              style="height: 15px; margin-left:5px;">
-                          </label>
-                        </div>
+                      <!-- Checkboxes with icons -->
+                      <!-- Active Transportation -->
+                      <div class="d-inline-block mr-3">
+                        <input class="form-check-input" type="checkbox" value="on" id="activeTransportation"
+                          style=" margin-left: 15px ;" name="transportation_active">
+                        <label class="form-check-label" for="activeTransportation">
+                          Active<img src="{% static 'icons/icons8-cycling-100.png' %}" alt=""
+                            style="height: 15px; margin-left:5px;">
+                        </label>
+                      </div>
 
-                        <!-- Public Transportation -->
-                        <div class="d-inline-block mr-3">
-                          <input class="form-check-input" type="checkbox" value="on" id="publicTransportation"
-                            style=" margin-left: 15px ;" name="transportation_public">
-                          <label class="form-check-label" for="publicTransportation">
-                            Public<img src="{% static 'icons/icons8-bus-100.png' %}" alt=""
-                              style="height: 15px; margin-left:5px;">
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                    <hr class="my-4"> <!-- Faint line separator -->
-                    <div class="mb-3">
-                      <label class="form-label fw-bold">Other Preferences:</label>
-                      <!-- Larger checkboxes -->
-                      <!-- Back-up Power Supply checkbox -->
-                      <div style="margin-bottom: 10px;">
-                        <input class="form-check-input" type="checkbox" value="on" id="backup_power_supply"
-                          name="backup_power_supply">
-                        <label class="form-check-label" for="backup_power_supply">Back-up Power Supply</label>
-                      </div>
-                      <!-- Water Supply checkbox -->
-                      <div>
-                        <input class="form-check-input" type="checkbox" value="on" id="backup_water_supply"
-                          name="backup_water_supply">
-                        <label class="form-check-label" for="backup_water_supply">Back-up Water Supply</label>
+                      <!-- Public Transportation -->
+                      <div class="d-inline-block mr-3">
+                        <input class="form-check-input" type="checkbox" value="on" id="publicTransportation"
+                          style=" margin-left: 15px ;" name="transportation_public">
+                        <label class="form-check-label" for="publicTransportation">
+                          Public<img src="{% static 'icons/icons8-bus-100.png' %}" alt=""
+                            style="height: 15px; margin-left:5px;">
+                        </label>
                       </div>
                     </div>
                   </div>
-                </form>
+                  <hr class="my-4"> <!-- Faint line separator -->
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Other Preferences:</label>
+                    <!-- Larger checkboxes -->
+                    <!-- Back-up Power Supply checkbox -->
+                    <div style="margin-bottom: 10px;">
+                      <input class="form-check-input" type="checkbox" value="on" id="backup_power_supply"
+                        name="backup_power_supply">
+                      <label class="form-check-label" for="backup_power_supply">Back-up Power Supply</label>
+                    </div>
+                    <!-- Water Supply checkbox -->
+                    <div>
+                      <input class="form-check-input" type="checkbox" value="on" id="backup_water_supply"
+                        name="backup_water_supply">
+                      <label class="form-check-label" for="backup_water_supply">Back-up Water Supply</label>
+                    </div>
+                  </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveProfileBtn">Save</button>
-                <input type="submit" id="hiddenSearchProfileSubmitBtn" style="display: none;" form="searchProfileForm">
-              </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-dark" id="saveProfileBtn">Save</button>
+              <input type="submit" id="hiddenSearchProfileSubmitBtn" style="display: none;" form="searchProfileForm">
             </div>
           </div>
         </div>
       </div>
-
     </div>
+
   </div>
+</div>
 </div>
 
 
