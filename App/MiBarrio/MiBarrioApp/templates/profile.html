@@ -2,6 +2,17 @@
 {% load static %}
 {% block content %}
 
+{% if messages %}
+  <div class="messages-container">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
 <div class="d-flex">
 
   <!-- Sidebar -->
@@ -90,7 +101,7 @@
           </div>
 
           <div class="mb-3">
-            <button type="button" class="btn btn-primary" id="editSaveBtn">Edit</button>
+            <button type="button" class="btn btn-dark" id="editSaveBtn">Edit</button>
             <button type="button" class="btn btn-secondary disabled" id="cancelBtn">Cancel</button>
             <input type="submit" id="hiddenSubmitBtn" style="display: none;">
           </div>
@@ -101,16 +112,73 @@
       <div class="col-md-6 pl-5">
         <h2>Search Profiles</h2>
 
-        <!-- List of search profiles (you'll populate this from the database later) -->
+        <!-- List of search profiles -->
         <div id="searchProfilesList">
-          <!-- Sample profile (you can repeat this structure for all profiles) -->
-          <!-- <div class="search-profile">
-            <p>Profile Name - Age Group</p>
-        </div> -->
-        </div>
+          <div style="max-height:500px; overflow-x:auto; overflow-y:auto; max-width: 600px; ">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Search Profile Name</th>
+                  <th style="min-width: 80px;">Age</th>
+                  <th>Social & Cultural tags</th>
+                  <th>Health & Wellness tags</th>
+                  <th>Leisure & Recretion tags</th>
+                  <th>Community & Services tags</th>
+                  <th>Social & Cultural levels</th>
+                  <th>Health & Wellness levels </th>
+                  <th>Leisure & Recreation levels</th>
+                  <th>Community & Services levels</th>
+                  <th>Active Transportation</th>
+                  <th>Public Transportation</th>
+                  <th>Back-up Power Supply</th>
+                  <th>Back-up Water Supply</th>
+                  <th class="sticky-action-column">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for sp in search_profiles %}
+                <tr>
+                  <td>{{ sp.sp_name }}</td>
+                  <td>{{ sp.age }}</td>
+                  <td>{{ sp.social_cultural_tags }}</td>
+                  <td>{{ sp.health_wellness_tags }}</td>
+                  <td>{{ sp.leisure_recreation_tags }}</td>
+                  <td>{{ sp.community_services_tags }}</td>
+                  <td>{{ sp.social_cultural_levels }}</td>
+                  <td>{{ sp.health_wellness_levels }}</td>
+                  <td>{{ sp.leisure_recreation_levels }}</td>
+                  <td>{{ sp.community_services_levels }}</td>
+                  <td>{{ sp.transportation_active }}</td>
+                  <td>{{ sp.transportation_public }}</td>
+                  <td>{{ sp.backup_power_supply }}</td>
+                  <td>{{ sp.backup_water_supply }}</td>
 
+                  <td class="sticky-action-column">
+                    <button class="btn btn-dark edit-btn" data-bs-toggle="modal" data-bs-target="#createProfileModal"
+                      data-id="{{ sp.search_profileID }}" data-sp_name="{{ sp.sp_name }}" data-age="{{ sp.age }}"
+                      data-social_cultural_tags="{{ sp.social_cultural_tags }}"
+                      data-health_wellness_tags="{{ sp.health_wellness_tags }}"
+                      data-leisure_recreation_tags="{{ sp.leisure_recreation_tags }}"
+                      data-community_services_tags="{{ sp.community_services_tags }}"
+                      data-social_cultural_levels="{{ sp.social_cultural_levels }}"
+                      data-health_wellness_levels="{{ sp.health_wellness_levels }}"
+                      data-leisure_recreation_levels="{{ sp.leisure_recreation_levels }}"
+                      data-community_services_levels="{{ sp.community_services_levels }}"
+                      data-transportation_active="{{ sp.transportation_active }}"
+                      data-transportation_public="{{ sp.transportation_public }}"
+                      data-backup_power_supply="{{ sp.backup_power_supply }}"
+                      data-backup_water_supply="{{ sp.backup_water_supply }}" class="btn btn-primary edit-btn"
+                      data-bs-toggle="modal" data-bs-target="#createProfileModal"
+                      data-id="{{ sp.search_profileID }}">Edit</button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
         <!-- Create New Button triggering the Modal -->
-        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+        <button type="button" class="btn btn-dark mb-3" data-bs-toggle="modal"
           data-bs-target="#createProfileModal">Create New</button>
 
         <!-- Modal -->
@@ -126,6 +194,8 @@
                 <form id="searchProfileForm" method="post" action="{% url 'MiBarrioApp:profile' %}">
                   {% csrf_token %}
                   <input type="hidden" name="form_type" value="search_profile">
+                  <input type="hidden" id="editingSpId" name="editingSpId" value="">
+
                   <div class="mb-3">
                     <label for="sp_name" class="form-label">Enter Search Profile </label>
                     <input type="text" class="form-control" id="sp_name" name="sp_name" required>
@@ -133,14 +203,13 @@
                   <div class="mb-3">
                     <label for="age" class="form-label">Age Group</label>
                     <div class="d-flex justify-content-center">
-                      <select class="form-select" id="age" name="age" style="max-width: 100px; width: 100%;"
-                        required>
+                      <select class="form-select" id="age" name="age" style="max-width: 100px; width: 100%;" required>
                         <!-- Add age groups here -->
                         <option value="18-24">18-24</option>
-                        <option value="25-34">26-34</option>
-                        <option value="35-44">18-24</option>
-                        <option value="45-54">26-34</option>
-                        <option value="55-64">18-24</option>
+                        <option value="25-34">25-34</option>
+                        <option value="35-44">35-44</option>
+                        <option value="45-54">45-54</option>
+                        <option value="55-64">55-64</option>
                         <option value="65+">65+</option>
                         <!-- ... -->
                       </select>
@@ -159,12 +228,13 @@
                           <div class="row">
                             <div class="col-12">
                               <div id="checkbox-container">
-                                <input type="checkbox" value="Eating" id="eating" name="social_cultural[]"> <label for="eating">Eating</label>
+                                <input type="checkbox" value="Eating" id="eating" name="social_cultural[]"> <label
+                                  for="eating">Eating</label>
                                 <input type="checkbox" value="Nightlife" id="nightlife" name="social_cultural[]">
                                 <label for="nightlife">Nightlife</label>
-                                  <input type="checkbox" value="Culture" id="culture" name="social_cultural[]"> <label
-                                    for="culture">Culture</label>
-                                  <!-- Add more checkboxes here -->
+                                <input type="checkbox" value="Culture" id="culture" name="social_cultural[]"> <label
+                                  for="culture">Culture</label>
+                                <!-- Add more checkboxes here -->
                               </div>
                             </div>
                           </div>
@@ -179,16 +249,18 @@
                           <div class="row">
                             <div class="col-12">
                               <div id="checkbox-container">
-                                <input type="checkbox" value="Clinic" id="clinic" name="health_wellness[]"> <label for="clinic">Clinic</label>
-                                <input type="checkbox" value="Dentist" id="dentist" name="health_wellness[]" > <label
+                                <input type="checkbox" value="Clinic" id="clinic" name="health_wellness[]"> <label
+                                  for="clinic">Clinic</label>
+                                <input type="checkbox" value="Dentist" id="dentist" name="health_wellness[]"> <label
                                   for="dentist">Dentist</label>
-                                <input type="checkbox" value="Doctor" id="doctor" name="health_wellness[]"> <label for="doctor">Doctor</label>
+                                <input type="checkbox" value="Doctor" id="doctor" name="health_wellness[]"> <label
+                                  for="doctor">Doctor</label>
                                 <input type="checkbox" value="Hospital" id="hospital" name="health_wellness[]"> <label
                                   for="hospital">Hospital</label>
                                 <input type="checkbox" value="Pharmacy" id="pharmacy" name="health_wellness[]"> <label
                                   for="pharmacy">Pharmacy</label>
-                                <input type="checkbox" value="Veterinary" id="veterinary" name="health_wellness[]"> <label
-                                  for="veterinary">Veterinary</label>
+                                <input type="checkbox" value="Veterinary" id="veterinary" name="health_wellness[]">
+                                <label for="veterinary">Veterinary</label>
                                 <!-- Add more checkboxes here -->
                               </div>
                             </div>
@@ -204,12 +276,12 @@
                           <div class="row">
                             <div class="col-12">
                               <div id="checkbox-container">
-                                <input type="checkbox" value="Leisure spots" id="leisure_spots" name="leisure_recreation[]"> <label
-                                  for="leisure_spots">Leisure spots</label>
-                                <input type="checkbox" value="Sports Centres" id="sports_centres" name="leisure_recreation[]"> <label
-                                  for="sports_centres">Sports Centres</label>
-                                <input type="checkbox" value="Leisure Areas" id="leisure_areas" name="leisure_recreation[]"> <label
-                                  for="leisure_areas">Leisure Areas</label>
+                                <input type="checkbox" value="Leisure spots" id="leisure_spots"
+                                  name="leisure_recreation[]"> <label for="leisure_spots">Leisure spots</label>
+                                <input type="checkbox" value="Sports Centres" id="sports_centres"
+                                  name="leisure_recreation[]"> <label for="sports_centres">Sports Centres</label>
+                                <input type="checkbox" value="Leisure Areas" id="leisure_areas"
+                                  name="leisure_recreation[]"> <label for="leisure_areas">Leisure Areas</label>
                                 <!-- Add more checkboxes here -->
                               </div>
                             </div>
@@ -225,14 +297,14 @@
                           <div class="row">
                             <div class="col-12">
                               <div id="checkbox-container">
-                                <input type="checkbox" value="Retail Shopping Centres" id="retail_shopping_centres">
+                                <input type="checkbox" value="Retail Shopping Centres" id="retail_shopping_centres" name="community_services[]">
                                 <label for="retail_shopping_centres">Retail Shopping Centres</label>
-                                <input type="checkbox" value="Community" id="community" name="community_services[]"> <label
-                                  for="community">Community</label>
-                                <input type="checkbox" value="Economic" id="economic" name="community_services[]"> <label
-                                  for="economic">Economic</label>
-                                <input type="checkbox" value="Education" id="education" name="community_services[]"> <label
-                                  for="education">Education</label>
+                                <input type="checkbox" value="Community" id="community" name="community_services[]">
+                                <label for="community">Community</label>
+                                <input type="checkbox" value="Economic" id="economic" name="community_services[]">
+                                <label for="economic">Economic</label>
+                                <input type="checkbox" value="Education" id="education" name="community_services[]">
+                                <label for="education">Education</label>
                                 <!-- Add more checkboxes here -->
                               </div>
                             </div>
@@ -394,7 +466,7 @@
                         <!-- Checkboxes with icons -->
                         <!-- Active Transportation -->
                         <div class="d-inline-block mr-3">
-                          <input class="form-check-input" type="checkbox" value="Active" id="activeTransportation"
+                          <input class="form-check-input" type="checkbox" value="on" id="activeTransportation"
                             style=" margin-left: 15px ;" name="transportation_active">
                           <label class="form-check-label" for="activeTransportation">
                             Active<img src="{% static 'icons/icons8-cycling-100.png' %}" alt=""
@@ -404,8 +476,8 @@
 
                         <!-- Public Transportation -->
                         <div class="d-inline-block mr-3">
-                          <input class="form-check-input" type="checkbox" value="Private" id="publicTransportation"
-                            style=" margin-left: 15px ;" name="transportation_public" >
+                          <input class="form-check-input" type="checkbox" value="on" id="publicTransportation"
+                            style=" margin-left: 15px ;" name="transportation_public">
                           <label class="form-check-label" for="publicTransportation">
                             Public<img src="{% static 'icons/icons8-bus-100.png' %}" alt=""
                               style="height: 15px; margin-left:5px;">
@@ -419,12 +491,14 @@
                       <!-- Larger checkboxes -->
                       <!-- Back-up Power Supply checkbox -->
                       <div style="margin-bottom: 10px;">
-                        <input class="form-check-input" type="checkbox" value="PowerSupply" id="backup_power_supply" name="backup_power_supply">
+                        <input class="form-check-input" type="checkbox" value="on" id="backup_power_supply"
+                          name="backup_power_supply">
                         <label class="form-check-label" for="backup_power_supply">Back-up Power Supply</label>
                       </div>
                       <!-- Water Supply checkbox -->
                       <div>
-                        <input class="form-check-input" type="checkbox" value="WaterSupply" id="backup_water_supply" name="backup_water_supply">
+                        <input class="form-check-input" type="checkbox" value="on" id="backup_water_supply"
+                          name="backup_water_supply">
                         <label class="form-check-label" for="backup_water_supply">Back-up Water Supply</label>
                       </div>
                     </div>
