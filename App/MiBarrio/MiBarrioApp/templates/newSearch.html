@@ -4,8 +4,11 @@
 
 <div class="d-flex">
 
+
+
   <!-- Sidebar -->
   <div id="sidebar" class="p-3 bg-light">
+
     <ul class="nav flex-column">
       <!-- Arrow icon always visible -->
       <li class="nav-item">
@@ -63,8 +66,10 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">Step 1: Find the Suburb</li>
-        <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch2' %}">Step 2: Select Property Filters</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch3' %}"> Step 3: View Property Listings</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch2' %}">Step 2: Select Property Filters</a>
+        </li>
+        <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch3' %}"> Step 3: View Property Listings</a>
+        </li>
       </ol>
     </nav>
 
@@ -72,81 +77,286 @@
 
       <!-- Step 1 Form -->
       <div class="col-md-6">
-        <h3>Find the Suburb</h3>
-        <form id="searchProfileForm">
-
+        <form id="searchProfileForm" method="post" action="{% url 'MiBarrioApp:newSearch' %}">
+          {% csrf_token %}
+          <br>
           <!--Set up search profile - get list of search profile names from database-->
           <div class="mb-3">
             <label for="searchProfileSelect" class="form-label">Select a Search Profile</label>
             <div class="d-flex justify-content-center">
-              <select class="form-select" id="searchProfileSelect" style="max-width: 350px; width: 100%;">
-                <option value="1">Search Profile 1</option>
-                <option value="2">Search Profile 2</option>
+              <select class="form-select" name="selected_profile" id="searchProfileSelect"
+                style="max-width: 350px; width: 100%;">
+                {% for profile in search_profiles %}
+                <option value="{{ profile.search_profileID }}" {% if profile.search_profileID == selected_profile_id %}selected{% endif %}>
+                  {{ profile.sp_name }}
+                </option>
+                {% endfor %}
               </select>
             </div>
           </div>
-
-          <div class="mb-3">
-            <label for="citySelect" class="form-label">Select a City</label>
-            <div class="d-flex justify-content-center">
-              <select class="form-select" id="citySelect" style="max-width: 200px; width: 100%;">
+          <div id="selectedProfileData" data-selected-profile="{{ selected_profile_data|safe }}"></div>
+          <div class="row mb-3 align-items-center">
+            <div class="col-md-3">
+              <label for="citySelect" class="form-label">Select a City</label>
+            </div>
+            <div class="col-md-3">
+              <select class="form-select" id="citySelect" style="max-width: 170px; width: 100%;">
                 <option value="Cape Town">Cape Town</option>
                 <option value="Port Elizabeth">Port Elizabeth</option>
               </select>
             </div>
-          </div>
 
-          <div class="mb-3">
-            <label for="ageGroup" class="form-label">Age Group</label>
-            <div class="d-flex justify-content-center">
-              <select class="form-select" id="ageGroup" style="max-width: 100px; width: 100%;">
+            <div class="col-md-2">
+              <label for="age" class="form-label">Age Group</label>
+            </div>
+            <div class="col-md-3">
+              <select class="form-select" id="age" name="age" style="max-width: 100px; width: 100%;" required>
                 <!-- Add age groups here -->
                 <option value="18-24">18-24</option>
-                <option value="25-34">26-34</option>
-                <option value="35-44">18-24</option>
-                <option value="45-54">26-34</option>
-                <option value="55-64">18-24</option>
+                <option value="25-34">25-34</option>
+                <option value="35-44">35-44</option>
+                <option value="45-54">45-54</option>
+                <option value="55-64">55-64</option>
                 <option value="65+">65+</option>
                 <!-- ... -->
               </select>
             </div>
           </div>
+
           <hr class="my-4"> <!-- Faint line separator -->
           <div class="mb-3">
+            <label class="form-label fw-bold">Proximity Factors - Select sub-parameters</label>
+            <div class="row">
+              <!-- Social & Cultural Activities -->
+              <div class="col-12 mb-3 row align-items-center">
+                <label class="form-label col-md-3 col-sm-3" style="text-align: left; padding-left: 1.5em;">Social &
+                  Cultural:</label>
+                <div id="social" class="col-md-9 col-sm-9">
+                  <div class="row">
+                    <div class="col-12">
+                      <div id="checkbox-container">
+                        <input type="checkbox" value="Eating" id="eating" name="social_cultural[]"> <label
+                          for="eating">Eating</label>
+                        <input type="checkbox" value="Nightlife" id="nightlife" name="social_cultural[]">
+                        <label for="nightlife">Nightlife</label>
+                        <input type="checkbox" value="Culture" id="culture" name="social_cultural[]"> <label
+                          for="culture">Culture</label>
+                        <!-- Add more checkboxes here -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Health & Wellness Activities -->
+              <div class="col-12 mb-3 row align-items-center">
+                <label class="form-label col-md-3 col-sm-3" style="text-align: left; padding-left: 1.5em;">Health &
+                  Wellness:</label>
+                <div class="col-md-9 col-sm-9">
+                  <div class="d-flex flex-wrap" id="checkbox-container">
+                    <div class="me-3"><input type="checkbox" value="Clinic" id="clinic" name="health_wellness[]"> <label
+                        for="clinic">Clinic</label></div>
+                    <div class="me-3"><input type="checkbox" value="Dentist" id="dentist" name="health_wellness[]">
+                      <label for="dentist">Dentist</label>
+                    </div>
+                    <div class="me-3"><input type="checkbox" value="Doctor" id="doctor" name="health_wellness[]"> <label
+                        for="doctor">Doctor</label></div>
+                    <div class="me-3"><input type="checkbox" value="Hospital" id="hospital" name="health_wellness[]">
+                      <label for="hospital">Hospital</label>
+                    </div>
+                    <div class="me-3"><input type="checkbox" value="Pharmacy" id="pharmacy" name="health_wellness[]">
+                      <label for="pharmacy">Pharmacy</label>
+                    </div>
+                    <div class="me-3"><input type="checkbox" value="Veterinary" id="veterinary"
+                        name="health_wellness[]"> <label for="veterinary">Veterinary</label></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Leisure & Recreation Activities -->
+              <div class="col-12 mb-3 row align-items-center">
+                <label class="form-label col-md-3 col-sm-3" style="text-align: left; padding-left: 1.5em;">Leisure &
+                  Recreation:</label>
+                <div class="col-md-9 col-sm-9">
+                  <div class="row">
+                    <div class="col-12">
+                      <div id="checkbox-container">
+                        <input type="checkbox" value="Leisure spots" id="leisure_spots" name="leisure_recreation[]">
+                        <label for="leisure_spots">Leisure spots</label>
+                        <input type="checkbox" value="Sports Centres" id="sports_centres" name="leisure_recreation[]">
+                        <label for="sports_centres">Sports Centres</label>
+                        <input type="checkbox" value="Leisure Areas" id="leisure_areas" name="leisure_recreation[]">
+                        <label for="leisure_areas">Leisure Areas</label>
+                        <!-- Add more checkboxes here -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Community & Services -->
+              <div class="col-12 mb-3 row align-items-center">
+                <label class="form-label col-md-3 col-sm-3" style="text-align: left; padding-left: 1.5em;">Community &
+                  Services:</label>
+                <div class="col-md-9 col-sm-9">
+                  <div class="d-flex flex-wrap" id="checkbox-container">
+                    <div class="me-3"><input type="checkbox" value="Retail Shopping Centres"
+                        id="retail_shopping_centres" name="community_services[]"> <label
+                        for="retail_shopping_centres">Retail Shopping Centres</label></div>
+                    <div class="me-3"><input type="checkbox" value="Community" id="community"
+                        name="community_services[]"> <label for="community">Community</label></div>
+                    <div class="me-3"><input type="checkbox" value="Economic" id="economic" name="community_services[]">
+                      <label for="economic">Economic</label>
+                    </div>
+                    <div class="me-3"><input type="checkbox" value="Education" id="education"
+                        name="community_services[]"> <label for="education">Education</label></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <hr class="my-4"> <!-- Faint line separator -->
+          <div class="mb-3">
+
             <label class="form-label fw-bold">Proximity Factors - Level of Importance</label>
             <p>Rate from 1 (not important) to 5 (very important)</p>
-            <div class="d-flex justify-content-between"
-              style="border: 1px solid rgba(0,0,0,0.1); padding: 5px; border-radius: 5px; background:rgb(222, 220, 220);">
-              <span>1</span>
-              <span>2</span>
-              <span>3</span>
-              <span>4</span>
-              <span>5</span>
-            </div>
-            <br>
-            <!-- ... sliders for Indoor, Outdoor, etc. -->
-            <!-- Indoor Social Activities -->
-            <div class="mb-3">
-              <label for="indoorSlider" class="form-label">Indoor Social Activities</label>
-              <input type="range" class="form-range" min="1" max="5" step="1" id="indoorSlider">
-            </div>
 
-            <!-- Outdoor Social Activities -->
-            <div class="mb-3">
-              <label for="outdoorSlider" class="form-label">Outdoor Social Activities</label>
-              <input type="range" class="form-range" min="1" max="5" step="1" id="outdoorSlider">
-            </div>
+            <div class="row">
 
-            <!-- Healthcare Services -->
-            <div class="mb-3">
-              <label for="healthcareSlider" class="form-label">Healthcare Services</label>
-              <input type="range" class="form-range" min="1" max="5" step="1" id="healthcareSlider">
-            </div>
+              <!-- Social & Cultural Activities -->
+              <div class="col-12 mb-3 row">
+                <fieldset class="col-12 row" id="socialSlider">
+                  <legend class="form-label col-md-3 col-sm-3"
+                    style="text-align: left; padding-left: 2em; font-size: 16px;">
+                    Social & Cultural</legend>
+                  <div class="col-md-9 col-sm-9">
+                    <ul class='likert'>
+                      <li>
+                        <input type="radio" name="socialLikert" value="1" id="socialSlider1">
+                        <label for="socialSlider1">1</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="socialLikert" value="2" id="socialSlider2">
+                        <label for="socialSlider2">2</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="socialLikert" value="3" id="socialSlider3">
+                        <label for="socialSlider3">3</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="socialLikert" value="4" id="socialSlider4">
+                        <label for="socialSlider4">4</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="socialLikert" value="5" id="socialSlider5">
+                        <label for="socialSlider5">5</label>
+                      </li>
+                    </ul>
+                  </div>
+                </fieldset>
+              </div>
 
-            <!-- Educational Institutions -->
-            <div class="mb-3">
-              <label for="educationalSlider" class="form-label">Educational Institutions</label>
-              <input type="range" class="form-range" min="1" max="5" step="1" id="educationalSlider">
+              <!-- Health & Wellness Activities -->
+              <div class="col-12 mb-3 row">
+                <fieldset class="col-12 row" id="healthSlider">
+                  <legend class="form-label col-md-3 col-sm-3"
+                    style="text-align: left; padding-left: 2em; font-size: 16px;">Health & Wellness</legend>
+                  <div class="col-md-9 col-sm-9">
+                    <ul class='likert'>
+                      <li>
+                        <input type="radio" name="healthLikert" value="1" id="healthSlider1">
+                        <label for="healthSlider1">1</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="healthLikert" value="2" id="healthSlider2">
+                        <label for="healthSlider2">2</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="healthLikert" value="3" id="healthSlider3">
+                        <label for="healthSlider3">3</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="healthLikert" value="4" id="healthSlider4">
+                        <label for="healthSlider4">4</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="healthLikert" value="5" id="healthSlider5">
+                        <label for="healthSlider5">5</label>
+                      </li>
+                    </ul>
+                  </div>
+                </fieldset>
+              </div>
+
+              <!-- Leisure & Recreation Activities -->
+              <div class="col-12 mb-3 row">
+                <fieldset class="col-12 row" id="leisureSlider">
+                  <legend class="form-label col-md-3 col-sm-3"
+                    style="text-align: left; padding-left: 2em; font-size: 16px;">
+                    Leisure & Recreation</legend>
+                  <div class="col-md-9 col-sm-9">
+                    <ul class='likert'>
+                      <li>
+                        <input type="radio" name="leisureLikert" value="1" id="leisureSlider1">
+                        <label for="leisureSlider1">1</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="leisureLikert" value="2" id="leisureSlider2">
+                        <label for="leisureSlider2">2</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="leisureLikert" value="3" id="leisureSlider3">
+                        <label for="leisureSlider3">3</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="leisureLikert" value="4" id="leisureSlider4">
+                        <label for="leisureSlider4">4</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="leisureLikert" value="5" id="leisureSlider5">
+                        <label for="leisureSlider5">5</label>
+                      </li>
+                    </ul>
+                  </div>
+                </fieldset>
+              </div>
+
+              <!-- Community & Services  -->
+              <div class="col-12 mb-3 row">
+                <fieldset class="col-12 row" id="communitySlider">
+                  <legend class="form-label col-md-3 col-sm-3"
+                    style="text-align: left; padding-left: 2em; font-size: 16px;">
+                    Community & Services</legend>
+                  <div class="col-md-9 col-sm-9">
+                    <ul class='likert'>
+                      <li>
+                        <input type="radio" name="communityLikert" value="1" id="communitySlider1">
+                        <label for="communitySlider1">1</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="communityLikert" value="2" id="communitySlider2">
+                        <label for="communitySlider2">2</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="communityLikert" value="3" id="communitySlider3">
+                        <label for="communitySlider3">3</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="communityLikert" value="4" id="communitySlider4">
+                        <label for="communitySlider4">4</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="communityLikert" value="5" id="communitySlider5">
+                        <label for="communitySlider5">5</label>
+                      </li>
+                    </ul>
+                  </div>
+                </fieldset>
+              </div>
+
+              <!---->
             </div>
 
           </div>
@@ -158,28 +368,18 @@
               <!-- Checkboxes with icons -->
               <!-- Active Transportation -->
               <div class="d-inline-block mr-3">
-                <input class="form-check-input" type="checkbox" value="Active" id="activeTransportation"
-                  style=" margin-left: 15px ;">
+                <input class="form-check-input" type="checkbox" value="on" id="activeTransportation"
+                  style=" margin-left: 15px ;" name="transportation_active">
                 <label class="form-check-label" for="activeTransportation">
                   Active<img src="{% static 'icons/icons8-cycling-100.png' %}" alt=""
                     style="height: 15px; margin-left:5px;">
                 </label>
               </div>
 
-              <!-- Private Transportation -->
-              <div class="d-inline-block mr-3">
-                <input class="form-check-input" type="checkbox" value="Private" id="privateTransportation"
-                  style=" margin-left: 15px ;">
-                <label class="form-check-label" for="privateTransportation">
-                  Private<img src="{% static 'icons/icons8-car-90.png' %}" alt=""
-                    style="height: 15px; margin-left:5px;">
-                </label>
-              </div>
-
               <!-- Public Transportation -->
               <div class="d-inline-block mr-3">
-                <input class="form-check-input" type="checkbox" value="Private" id="publicTransportation"
-                  style=" margin-left: 15px ;">
+                <input class="form-check-input" type="checkbox" value="on" id="publicTransportation"
+                  style=" margin-left: 15px ;" name="transportation_public">
                 <label class="form-check-label" for="publicTransportation">
                   Public<img src="{% static 'icons/icons8-bus-100.png' %}" alt=""
                     style="height: 15px; margin-left:5px;">
@@ -190,7 +390,7 @@
 
 
           <div class="mt-4">
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn btn-dark">Search</button>
           </div>
 
         </form>
