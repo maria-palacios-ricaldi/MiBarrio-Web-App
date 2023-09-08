@@ -102,6 +102,7 @@ class Suburbs(models.Model):
     coordinates = models.TextField()
 
 
+
 class Properties(models.Model):
     propertyID = models.AutoField(primary_key=True)
     suburb = models.ForeignKey(Suburbs, on_delete=models.CASCADE)
