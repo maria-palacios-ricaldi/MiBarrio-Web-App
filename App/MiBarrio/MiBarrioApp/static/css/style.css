@@ -11,6 +11,43 @@ html, body {
   text-align: center;
   background: rgb(214,223,207);
 }
+/* Chrome, Safari */
+#checkbox-container input[type="checkbox"]::-webkit-checkbox,
+.d-flex input[type="checkbox"]::-webkit-checkbox {
+  background-color: black;
+  border-color: black;
+  color: white;
+}
+
+/* For the tick */
+#checkbox-container input[type="checkbox"]:checked,
+.d-flex input[type="checkbox"]:checked {
+  background-color: black !important;
+  border-color: black !important;
+  color: white !important;
+}
+
+
+
+/* Custom radio button fill */
+input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 12px;  /* Adjust as needed */
+  width: 12px;  /* Adjust as needed */
+  margin-top: -6px;  /* Half the height */
+  margin-left: -6px;  /* Half the width */
+  background-color: black;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+input[type="radio"] {
+  position: relative;
+}
+
 
 .age-column {
   width: 200px; /* Or whatever width makes it look good */
@@ -276,9 +313,6 @@ table thead th{
   background-color: rgb(234, 236, 239); /* Light gray background */
 }
 
-
-
-
 .remove-tag {
   background: none;
   border: none;
@@ -297,6 +331,9 @@ table thead th{
   margin-right: 2px;
 }
 
+#checkbox-container input[type="checkbox"]:checked {
+  filter: brightness(0);
+}
 
 #sidebar, #content {
   flex-grow: 1;
