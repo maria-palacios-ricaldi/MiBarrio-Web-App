@@ -15,6 +15,8 @@ $(document).ready(function () {
   console.log("jQuery part of the script loaded!"); // a check if script has loaded correctly!
 });
 
+var map = null;
+
 // JavaScript Code
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -196,87 +198,397 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('editingSpId').value = '';
   });
 
-  // Code that applies to newSearch.html
+  if (window.location.pathname.endsWith('newSearch')) {
+    // Code that applies to newSearch.html
+    initializeMap();
+
+    // Listen for changes in the dropdown to switch profiles
+    const searchProfileSelect = document.getElementById('searchProfileSelect');
+    if (searchProfileSelect) {
+      console.log("searchProfileSelect listener added");  // Debugging Line
+      searchProfileSelect.addEventListener('change', () => {
+        console.log("searchProfileSelect changed");  // Debugging Line
+        document.getElementById('action_type').value = 'profile_change';
+        console.log("Setting action_type to 'profile_change'");  // Debugging Line
+        document.getElementById('searchProfileForm').submit();
+      });
+    }
+
+    // Extract selected profile data
+    const selectedProfileElement = document.getElementById("selectedProfileData");
+    const rawData = selectedProfileElement.getAttribute('data-selected-profile');
+    const cleanedData = decodeURIComponent(JSON.parse('"' + rawData.replace(/"/g, '\\"') + '"'));
+    const selectedProfileData = JSON.parse(cleanedData);
+
+    // Store selectedProfileData in session storage
+    sessionStorage.setItem("selectedProfileData", JSON.stringify(selectedProfileData));
+
+    //const selectedProfileData = JSON.parse(selectedProfileElement.getAttribute('data-selected-profile'));
+    if (searchProfileSelect && selectedProfileData) {
+      searchProfileSelect.value = selectedProfileData.search_profileID;
+    }
+
+    function populateTables(selectedProfileData) {
+      document.getElementById("social_cultural_level").textContent = selectedProfileData.social_cultural_levels;
+      document.getElementById("social_cultural_tags").textContent = selectedProfileData.social_cultural_tags.join(", ");
+      document.getElementById("health_wellness_level").textContent = selectedProfileData.health_wellness_levels;
+      document.getElementById("health_wellness_tags").textContent = selectedProfileData.health_wellness_tags.join(", ");
+      document.getElementById("leisure_recreation_level").textContent = selectedProfileData.leisure_recreation_levels;
+      document.getElementById("leisure_recreation_tags").textContent = selectedProfileData.leisure_recreation_tags.join(", ");
+      document.getElementById("community_services_level").textContent = selectedProfileData.community_services_levels;
+      document.getElementById("community_services_tags").textContent = selectedProfileData.community_services_tags.join(", ");
+
+      document.getElementById("public_transport").textContent = selectedProfileData.transportation_public ? "Selected" : "Not Selected";
+      document.getElementById("active_transport").textContent = selectedProfileData.transportation_active ? "Selected" : "Not Selected";
+    }
+
+    populateTables(selectedProfileData);
+
+    document.getElementById("nextStepBtn").addEventListener("click", function () {
+      // Save the necessary data to session storage
+      const selectedProfileId = $('#searchProfileSelect').val();
+
+      sessionStorage.setItem("selectedProfileId", selectedProfileId);
+      sessionStorage.setItem("nearestSuburbsData", JSON.stringify(nearestSuburbsData));
+
+      // Navigate to newSearch2.html
+      window.location.href = "newSearch2.html";
+    });
+  }
+
+  if (window.location.pathname.endsWith('newSearch2')) {
+
+    initializeMap();
+    // Code below refers to newSearch2.html
+    const selectedProfileId = sessionStorage.getItem("selectedProfileId");
+    const nearestSuburbsData = JSON.parse(sessionStorage.getItem("nearestSuburbsData"));
+
+    updateMapWithNewData(nearestSuburbsData);
+
+
+    console.log('Nearest Suburbs Data:', nearestSuburbsData);
+    console.log('Is it an array?', Array.isArray(nearestSuburbsData));
+    if (nearestSuburbsData && nearestSuburbsData.length > 0) {
+      console.log('First element:', nearestSuburbsData[0]);
+      console.log('Does the first element have a suburb__name?', 'suburb__name' in nearestSuburbsData[0]);
+    }
+
+    // Populate suburb dropdown based on nearest suburbs data
+    const suburbSelect = document.getElementById("suburbSelect");
+    suburbSelect.innerHTML = ""; // Clear existing options
+    if (nearestSuburbsData) {
+      nearestSuburbsData.slice(0, 5).forEach((suburb, index) => {
+        const option = document.createElement("option");
+        option.value = suburb.suburb__name;
+        option.text = suburb.suburb__name;
+        suburbSelect.add(option);
+      });
+    }
+
+    // Retrieve selectedProfileData from session storage
+    const selectedProfile = JSON.parse(sessionStorage.getItem("selectedProfileData"));
+
+    // Update checkboxes based on selected profile
+    if (selectedProfile) {
+      document.getElementById("powerSupply").checked = selectedProfile.backup_power_supply;
+      document.getElementById("waterSupply").checked = selectedProfile.backup_water_supply;
+    }
+
+    // Rent and Buy options
+    const rentOptions = [
+      { value: 1000, text: "R1000" },
+      { value: 1500, text: "R1500" },
+      { value: 2000, text: "R2000" },
+      { value: 2500, text: "R2500" },
+      { value: 3500, text: "R3500" },
+      { value: 4000, text: "R4000" },
+      { value: 4500, text: "R4500" },
+      { value: 5000, text: "R5000" },
+      { value: 6000, text: "R6000" },
+      { value: 7000, text: "R7000" },
+      { value: 8000, text: "R8000" },
+      { value: 9000, text: "R9000" },
+      { value: 10000, text: "R10000" },
+      { value: 11000, text: "R11000" },
+      { value: 12000, text: "R12000" },
+      { value: 13000, text: "R13000" },
+      { value: 14000, text: "R14000" },
+      { value: 15000, text: "R15000" },
+      { value: 16000, text: "R16000" },
+      { value: 17000, text: "R17000" },
+      { value: 18000, text: "R18000" },
+      { value: 19000, text: "R19000" },
+      { value: 20000, text: "R20000" },
+      { value: 25000, text: "R25000" },
+      { value: 30000, text: "R30000" },
+      { value: 35000, text: "R35000" },
+      { value: 40000, text: "R40000" },
+      { value: 50000, text: "R50000" },
+      { value: 60000, text: "R60000" },
+      { value: 70000, text: "R70000" },
+      { value: 80000, text: "R80000" }
+
+    ];
+
+    const buyOptions = [
+      { value: 100000, text: "R100000" },
+      { value: 150000, text: "R150000" },
+      { value: 200000, text: "R200000" },
+      { value: 250000, text: "R250000" },
+      { value: 300000, text: "R300000" },
+      { value: 350000, text: "R350000" },
+      { value: 400000, text: "R400000" },
+      { value: 450000, text: "R450000" },
+      { value: 500000, text: "R500000" },
+      { value: 600000, text: "R600000" },
+      { value: 700000, text: "R700000" },
+      { value: 800000, text: "R800000" },
+      { value: 900000, text: "R900000" },
+      { value: 1000000, text: "R1000000" },
+      { value: 1250000, text: "R1250000" },
+      { value: 1500000, text: "R1500000" },
+      { value: 2000000, text: "R2000000" },
+      { value: 2500000, text: "R2500000" },
+      { value: 3000000, text: "R3000000" },
+      { value: 3500000, text: "R3500000" },
+      { value: 4000000, text: "R4000000" },
+      { value: 4500000, text: "R4500000" },
+      { value: 5000000, text: "R5000000" },
+      { value: 6000000, text: "R6000000" },
+      { value: 7000000, text: "R7000000" },
+      { value: 8000000, text: "R8000000" },
+      { value: 9000000, text: "R9000000" },
+      { value: 10000000, text: "R10000000" },
+      { value: 15000000, text: "R15000000" },
+    ];
+
+    // Function to populate options
+    function populateOptions(selectElement, optionsArray) {
+      // Clear existing options
+      selectElement.innerHTML = '';
+
+      // Populate new options
+      optionsArray.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option.value;
+        opt.textContent = option.text;
+        selectElement.appendChild(opt);
+      });
+    }
+
+    // Event listener for radio buttons
+document.querySelectorAll('input[name="type"]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    const minPrice = document.getElementById('min-price');
+    const maxPrice = document.getElementById('max-price');
+
+    if (this.value === 'rent') {
+      populateOptions(minPrice, rentOptions);
+      populateOptions(maxPrice, rentOptions);
+    } else if (this.value === 'buy') {
+      populateOptions(minPrice, buyOptions);
+      populateOptions(maxPrice, buyOptions);
+    }
+  });
+});
+
+  }
+
+});
+
+function setSearchActionType() {
+  console.log("Inside setSearchActionType function");  // Debugging Line
+  document.getElementById('action_type').value = 'search';
+  console.log("Setting action_type to 'search'");  // Debugging Line
+  if (map) {
+    map.setView([-33.9249, 18.4241], 10);  // 10 is the zoom level, you can adjust this
+    console.log("Map changed to CPT");  // Debugging Line
+
+    // Update local storage with the new state
+    const mapState = {
+      lat: -33.9249,
+      lng: 18.4241,
+      zoom: 10
+    };
+    localStorage.setItem('mapState', JSON.stringify(mapState));
+  }
+
+}
+
+async function getCrimeData(suburbName) {
+  let crimeRate = null;
+  try {
+    const response = await fetch(`/get_crime_data/${suburbName}/`);
+    const data = await response.json();
+    crimeRate = data.crime_rate;
+  } catch (error) {
+    console.log("An error occurred:", error);
+  }
+  return crimeRate;
+}
+
+async function updateTableWithNewData(nearestSuburbsData) {
+  const table = document.getElementById("suburbTable");
+  table.innerHTML = "";
+
+  for (let i = 0; i < 5 && i < nearestSuburbsData.length; i++) {
+    const suburb = nearestSuburbsData[i];
+    const row = table.insertRow();
+    const cell1 = row.insertCell(0);
+    const cell2 = row.insertCell(1);
+    const cell3 = row.insertCell(2);
+
+    cell1.innerHTML = i + 1;
+    cell2.innerHTML = suburb.suburb__name;
+    const crimeRate = await getCrimeData(suburb.suburb__name);
+    cell3.innerHTML = crimeRate !== null ? crimeRate : "Data not available";
+  }
+}
+
+let nearestSuburbsData = [];
+
+async function getNearestSuburbs() {
+  const selectedProfileId = $('#searchProfileSelect').val();
+
+  try {
+    const response = await $.ajax({
+      type: 'POST',
+      url: '/get_nearest_suburbs/',
+      data: {
+        'selected_profile_id': selectedProfileId,
+        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+      }
+    });
+    nearestSuburbsData = response.nearest_suburbs;  // Assuming the server returns a key called 'nearest_suburbs'
+    console.log("Updated Nearest Suburbs Data:", nearestSuburbsData); // Debugging Line
+    updateMapWithNewData(nearestSuburbsData);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+async function updateMapWithNewData(nearestSuburbsData) {
+  console.log('Raw Data:', nearestSuburbsData);
+
+  clearExistingLayers();
+  setDefaultMapView();
+
+  nearestSuburbsData.forEach((suburb, index) => {
+    const coordinates = parseSuburbCoordinates(suburb.suburb__coordinates);
+    const name = suburb.suburb__name;
+
+    if (!coordinates) {
+      return;
+    }
+
+    drawPolygon(coordinates);
+    placeMarker(coordinates, name);
+  });
+
+  await updateTableWithNewData(nearestSuburbsData);
+}
+
+function clearExistingLayers() {
+  markers.forEach(marker => map.removeLayer(marker));
+  polygons.forEach(polygon => map.removeLayer(polygon));
+  markers = [];
+  polygons = [];
+}
+
+function setDefaultMapView() {
+  const defaultState = {
+    lat: -33.9249,
+    lng: 18.4241,
+    zoom: 10
+  };
+  map.setView([defaultState.lat, defaultState.lng], defaultState.zoom);
+  localStorage.setItem('mapState', JSON.stringify(defaultState));
+}
+
+function parseSuburbCoordinates(coordString) {
+
+  console.log("Received coordinate string: ", coordString);  // Add this line
+
+  const matches = coordString.match(/(-?\d+\.\d+),(-?\d+\.\d+)/g);
+  const coordArray = [];
+
+  // Check if matches is not null
+  if (matches !== null) {
+    for (const match of matches) {
+      const [lat, lng] = match.split(',').map(parseFloat);
+
+      if (isNaN(lat) || isNaN(lng)) {
+        console.error("Invalid coordinate pair:", lat, lng);
+        return null;
+      }
+      coordArray.push([lat, lng]);
+    }
+  } else {
+    console.error("No valid matches found for coordinates.");
+    return null;
+  }
+
+  return coordArray;
+}
+
+function drawPolygon(coordinates) {
+  const polygon = L.polygon(coordinates, { color: 'black', fillColor: '#004551', fillOpacity: 0.3 }).addTo(map);
+  polygons.push(polygon);
+}
+
+function placeMarker(coordinates, name) {
+  const [centroidLat, centroidLon] = calculateCentroid(coordinates);
+  const marker = L.marker([centroidLat, centroidLon]).addTo(map).bindPopup(name).openPopup();
+  markers.push(marker);
+}
+
+function calculateCentroid(coordinates) {
+  const centroidLat = coordinates.reduce((acc, val) => acc + val[0], 0) / coordinates.length;
+  const centroidLon = coordinates.reduce((acc, val) => acc + val[1], 0) / coordinates.length;
+  return [centroidLat, centroidLon];
+}
+
+let markers = [];
+let polygons = [];
+
+function initializeMap() {
   var cityMapElement = document.getElementById('cityMap');
-  if (cityMapElement) {
-    // Initialize the map with South Africa as default location
-    var map = L.map('cityMap').setView([-30.5595, 22.9375], 5);
+  if (!map && cityMapElement) {
+    map = L.map('cityMap'); // Initialize without setting the view yet
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
-    // ... existing code for newSearch.html
-  }
 
-  //populates the form every time a user selects a different searchProfile
-  const searchProfileSelect = document.getElementById('searchProfileSelect');
-  if (searchProfileSelect) {
-    // Debugging Line: Log the selected option at the beginning
-    console.log("Initially selected option:", searchProfileSelect.value);
-    searchProfileSelect.addEventListener('change', () => {
-      // Debugging Line: Log the selected option when it changes
-      console.log("Selected option has been changed to:", searchProfileSelect.value);
-      document.getElementById('searchProfileForm').submit();
-    });
-  }
-
-  // Define function to set checkboxes as checked based on provided tag list
-  function setCheckedCheckboxes(tagList, name) {
-    tagList.forEach(function (tag) {
-      const checkboxElement = document.querySelector(`input[name="${name}[]"][value="${tag}"]`);
-      if (checkboxElement) {
-        checkboxElement.checked = true;
-      }
-    });
-  }
-
-  const selectedProfileElement = document.getElementById("selectedProfileData");
-  const rawData = selectedProfileElement.getAttribute('data-selected-profile');
-  const cleanedData = decodeURIComponent(JSON.parse('"' + rawData.replace(/"/g, '\\"') + '"'));
-  console.log("Data attribute: ", selectedProfileElement.getAttribute('data-selected-profile'));
-  const selectedProfileData = JSON.parse(cleanedData);
-
-  //const selectedProfileData = JSON.parse(selectedProfileElement.getAttribute('data-selected-profile'));
-  if (searchProfileSelect && selectedProfileData) {
-    searchProfileSelect.value = selectedProfileData.search_profileID;
-  }
-
-  // Check appropriate checkboxes
-  setCheckedCheckboxes(selectedProfileData.social_cultural_tags, "social_cultural");
-  setCheckedCheckboxes(selectedProfileData.health_wellness_tags, "health_wellness");
-  setCheckedCheckboxes(selectedProfileData.leisure_recreation_tags, "leisure_recreation");
-  setCheckedCheckboxes(selectedProfileData.community_services_tags, "community_services");
-
-  // Add these lines to populate the age dropdown
-  const ageSelect = document.getElementById("age");
-  if (ageSelect && selectedProfileData.age) {
-    ageSelect.value = selectedProfileData.age;
-  }
-
-  // Function to set the selected radio button for Likert scale
-  function setLikertScaleValue(name, value) {
-    const inputElement = document.querySelector(`input[name="${name}"][value="${value}"]`);
-    if (inputElement) {
-      inputElement.checked = true;
+    // Check for a saved map state in local storage
+    let initialLat, initialLng, initialZoom;
+    const savedMapState = localStorage.getItem('mapState');
+    if (savedMapState) {
+      const mapState = JSON.parse(savedMapState);
+      initialLat = mapState.lat;
+      initialLng = mapState.lng;
+      initialZoom = mapState.zoom;
+    } else {
+      // Use default values
+      initialLat = -30.5595;
+      initialLng = 22.9375;
+      initialZoom = 5;
     }
+
+    // Now set the view
+    map.setView([initialLat, initialLng], initialZoom);
+
+    // Update localStorage on map move
+    map.on('moveend', function () {
+      const center = map.getCenter();
+      const zoom = map.getZoom();
+      const mapState = {
+        lat: center.lat,
+        lng: center.lng,
+        zoom: zoom
+      };
+      localStorage.setItem('mapState', JSON.stringify(mapState));
+    });
   }
 
-  // Add these lines to populate the Likert scale radio buttons
-  setLikertScaleValue('socialLikert', selectedProfileData.social_cultural_levels);
-  setLikertScaleValue('healthLikert', selectedProfileData.health_wellness_levels);
-  setLikertScaleValue('leisureLikert', selectedProfileData.leisure_recreation_levels);
-  setLikertScaleValue('communityLikert', selectedProfileData.community_services_levels);
-
-  // Add these lines to populate the checkboxes for Transportation Preference
-  const activeTransportCheckbox = document.getElementById("activeTransportation");
-  const publicTransportCheckbox = document.getElementById("publicTransportation");
-
-  if (activeTransportCheckbox && selectedProfileData.transportation_active) {
-    activeTransportCheckbox.checked = true;
-  }
-
-  if (publicTransportCheckbox && selectedProfileData.transportation_public) {
-    publicTransportCheckbox.checked = true;
-  }
-
-
-});
+  console.log("Map initialized");
+}
