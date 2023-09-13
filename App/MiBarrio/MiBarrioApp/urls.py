@@ -32,6 +32,11 @@ urlpatterns = [
     path('viewPastSearches', views.view_past_searches_view, name = "viewPastSearches"),
     path('feedback', views.feedback_view, name ="feedback" ),
     path('contactUs', views.contact_us_view, name='contactUs'),
+    path('test', views.test_view, name='test'),
+
+    #AJAX related:
+    path('get_nearest_suburbs/', views.get_nearest_suburbs, name='get_nearest_suburbs'),
+    path('get_crime_data/<str:suburb_name>/', views.get_crime_data, name='get_crime_data'),
 ]
 
 
