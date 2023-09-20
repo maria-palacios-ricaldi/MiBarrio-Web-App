@@ -19,3 +19,24 @@ class CustomUserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+CATEGORY_CHOICES = [
+    ('Bug Report', 'Bug Report'),
+    ('Feature Request', 'Feature Request'),
+    ('General Inquiry', 'General Inquiry'),
+    ('Technical Support', 'Technical Support'),
+    ('Other', 'Other'),
+]
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    category = forms.ChoiceField(
+    widget=forms.Select(attrs={'class': 'category-dropdown'}),
+    choices=CATEGORY_CHOICES
+)
+
+    message = forms.CharField(
+    widget=forms.Textarea(attrs={'rows': 4}) 
+)
