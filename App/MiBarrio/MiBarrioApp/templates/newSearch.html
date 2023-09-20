@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block title %}New Search{% endblock %}
 {% load static %}
 {% block content %}
 
@@ -58,20 +59,17 @@
     </ul>
   </div>
 
-  <div class="container-fluid p-3">
+  <div class="container-fluid">
 
     <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Step 1: Find the Suburb</li>
-        <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch2' %}">Step 2: Select Property Filters</a>
-        </li>
-        <li class="breadcrumb-item"><a href="{% url 'MiBarrioApp:newSearch3' %}"> Step 3: View Property Listings</a>
-        </li>
-      </ol>
-    </nav>
+     <div class="breadcrumb">
+      <a href="#" class="active">Step 1: Find the Suburb</a>
+      <a href="{% url 'MiBarrioApp:newSearch2' %}">Step 2: Select Property Filters</a>
+      <a href="{% url 'MiBarrioApp:newSearch3' %}"> Step 3: View Property Listings</a>
+    </div>
 
-    <div class="row">
+
+    <div class="row p-3">
 
       <!-- Step 1 Form -->
       <div class="col-md-6">
