@@ -1,67 +1,70 @@
 {% extends 'base.html' %}
+{% block title %}Contact Us{% endblock %}
 {% load static %}
+{% load widget_tweaks %}
 {% block content %}
 
-<div class="d-flex">
-
-  <!-- Sidebar -->
-  <div id="sidebar" class="p-3 bg-light">
-    <ul class="nav flex-column">
-<!-- Arrow icon always visible -->
-      <li class="nav-item">
-        <a id="toggleSidebar" class="nav-link" href="#">
-          <img src="{% static 'icons/icons8-left-arrow-100.png' %}" alt="Reduce" height="20px">
-      </a>
-    </li>
-
-    <!-- Wrapped sidebar items in a div for toggle functionality -->
-
-    <div id="sidebarMenu" class="show">
-      <li class="nav-item" >
-        <a class="nav-link" href="{% url 'MiBarrioApp:home' %}">
-          <img src="{% static 'icons/icons8-home-96.png' %}" alt="Home" height="20px">
-          <span class="nav-text"> Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:profile' %}">
-          <img src="{% static 'icons/icons8-customer-90.png' %}" alt="Profile" height="20px">
-          <span class="nav-text"> Profile</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:newSearch' %}">
-          <img src="{% static 'icons/icons8-search-90.png' %}" alt="New Search" height="20px">
-          <span class="nav-text"> New Search</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:viewPastSearches' %}">
-          <img src="{% static 'icons/icons8-time-machine-90.png' %}" alt="View Past Searches" height="20px">
-          <span class="nav-text"> View Past Searches</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:feedback' %}">
-          <img src="{% static 'icons/icons8-thumbs-up-down-90.png' %}" alt="Give Us Feedback" height="20px">
-          <span class="nav-text"> Give Us Feedback</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:logout' %}">
-          <img src="{% static 'icons/icons8-logout-96.png' %}" alt="Logout" height="20px">
-          <span class="nav-text"> Logout</span>
-        </a>
-      </li>
-      </div>
-    </ul>
+{% if messages %}
+<div class="messages-container">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-
-
-
-
-
+  {% endfor %}
 </div>
+{% endif %}
+
+
+<div class="container-fluid">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-6 contact-form-container">
+      <h2 class="text-center">Contact Us</h2>
+      <form method="post" action="{% url 'MiBarrioApp:contactUs' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.name.id_for_label }}" class="form-label">Name</label>
+            {{ form.name|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+            {{ form.email|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+            {{ form.category|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.message.id_for_label }}" class="form-label">Message</label>
+            {{ form.message|add_class:"form-control" }}
+        </div>
+        <button type="submit" class="btn btn-dark" id="submitBtn" disabled>Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Enable submit button only when all fields are completed
+  document.querySelectorAll('input, select, textarea').forEach(function (el) {
+      el.addEventListener('input', function () {
+          var name = document.getElementById("id_name").value;
+          var email = document.getElementById("id_email").value;
+          var category = document.getElementById("id_category").value;
+          var message = document.getElementById("id_message").value;
+
+          var submitBtn = document.getElementById("submitBtn");
+
+          if (name.trim() !== "" && email.trim() !== "" && category.trim() !== "" && message.trim() !== "") {
+              submitBtn.removeAttribute("disabled");
+          } else {
+              submitBtn.setAttribute("disabled", "disabled");
+          }
+      });
+  });
+</script>
+
+
 
 
 {% endblock %}
