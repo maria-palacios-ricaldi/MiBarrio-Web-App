@@ -326,7 +326,8 @@ document.addEventListener('DOMContentLoaded', function () {
       { value: 50000, text: "R50000" },
       { value: 60000, text: "R60000" },
       { value: 70000, text: "R70000" },
-      { value: 80000, text: "R80000" }
+      { value: 80000, text: "R80000" },
+      {value}
 
     ];
 
