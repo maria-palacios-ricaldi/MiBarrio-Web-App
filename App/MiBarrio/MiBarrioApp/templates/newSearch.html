@@ -110,7 +110,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th></th> <!-- Empty cell -->
+                            <th id="profile-name-cell"></th>
                             <th>Level</th>
                             <th>Tags</th>
                         </tr>
@@ -186,8 +186,11 @@
 
           <table class="table table-bordered">
             <thead>
+              <tr>
+                <th colspan="3" style="text-align:center; font-size:1.5em;">Crime Statistics for your Top 5 Suburbs</th>
+              </tr>
                 <tr>
-                    <th>Ranking</th>
+                    <th>Ranking (based on preferences) </th>
                     <th>Suburb</th>
                     <th>Crime Stats</th>
                 </tr>
@@ -200,7 +203,7 @@
         </div>
 
         <div class="text-end mt-3">  <!-- Aligns content to the end of the container, effectively making it "right-aligned" -->
-          <a href="{% url 'MiBarrioApp:newSearch2' %}" id="nextStepBtn" class="btn btn-secondary">Next Step <i class="arrow right"></i> </a>
+          <a href="{% url 'MiBarrioApp:newSearch2' %}" id="nextStepBtn" class="btn btn-secondary">Next <i class="arrow right"></i> </a>
         </div>
 
       </div>
