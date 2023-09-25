@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from MiBarrioApp.models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
@@ -20,6 +20,12 @@ class CustomUserCreationForm(UserCreationForm):
             user.save()
         return user
 
+class MyPasswordResetForm(PasswordResetForm):
+    def get_users(self, email):
+        """Override get_users to remove filtering on is_active"""
+        return CustomUser.objects.filter(email__iexact=email)
+
+    
 
 CATEGORY_CHOICES = [
     ('Bug Report', 'Bug Report'),
