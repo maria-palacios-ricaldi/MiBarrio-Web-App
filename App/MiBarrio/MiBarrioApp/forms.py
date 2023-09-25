@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from MiBarrioApp.models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -8,7 +8,7 @@ class CustomUserCreationForm(UserCreationForm):
     last_name = forms.CharField(max_length=30)
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ("username", "first_name", "last_name", "email", "password1", "password2")
 
     def save(self, commit=True):
@@ -38,5 +38,5 @@ class ContactForm(forms.Form):
 )
 
     message = forms.CharField(
-    widget=forms.Textarea(attrs={'rows': 4}) 
+    widget=forms.Textarea(attrs={'rows': 4})
 )
