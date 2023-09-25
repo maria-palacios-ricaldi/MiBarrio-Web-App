@@ -2,6 +2,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
 </head>
+
 <body>
 
   <div class="wrapper">
@@ -26,6 +28,16 @@
           <span id="mi">Mi</span><span id="barrio">Barrio</span>
         </a>
       </h1>
+
+      <!--User info tag-->
+      {% if user.is_authenticated and show_user_info %}
+      <div class="user-info">
+        <i class="fas fa-user-circle fa-2x"></i>
+        Hi, {{ user.first_name }} {{ user.last_name }}
+      </div>
+      {% endif %}
+
+
     </div>
 
     {% block content %}
@@ -33,18 +45,19 @@
     {% endblock %}
 
   </div>
-<!--FOOTER-->
+  <!--FOOTER-->
   <footer class="footer">
     <img src="{% static 'logo.png' %}" alt="Logo" class="footer-logo">
     <div class="footer-links">
-      <a href="{% url 'MiBarrioApp:aboutUs' %}">About Us</a> | <a href="{% url 'MiBarrioApp:contactUs' %}">Contact Us</a>
+      <a href="{% url 'MiBarrioApp:aboutUs' %}">About Us</a> | <a href="{% url 'MiBarrioApp:contactUs' %}">Contact
+        Us</a>
     </div>
   </footer>
 
 
-<!--SCRIPTS-->
+  <!--SCRIPTS-->
 
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
     crossorigin="anonymous"></script>
@@ -53,4 +66,5 @@
     crossorigin="anonymous"></script>
   <script src="{% static 'js/script.js' %}"></script>
 </body>
+
 </html>
