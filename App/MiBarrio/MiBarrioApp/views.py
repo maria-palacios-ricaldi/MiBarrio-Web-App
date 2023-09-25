@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import SearchProfiles, Searches, SearchResults, Suburbs, Cities, CustomUser, SuburbStatistics
+from .models import SearchProfiles, Searches, SearchResults, Suburbs, Cities, CustomUser, SuburbStatistics, Feedback
 from django.http import JsonResponse
+from .forms import ContactForm
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from sklearn.neighbors import NearestNeighbors
@@ -16,11 +19,13 @@ import numpy as np
 import os
 from django.utils import timezone
 import pprint
+from django.core.paginator import Paginator
 
 # Create your views here.
 
 logger = logging.getLogger(__name__)
 
+@login_required
 def home_view(request):
     return render(request, 'home.html', {})
 
@@ -32,10 +37,13 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
+            return redirect('MiBarrioApp:login')
+        else:
+            print(form.errors)  # Print validation errors to the console
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
+
 
 def about_us_view(request):
     return render(request, 'aboutUs.html', {})
@@ -164,7 +172,7 @@ def profile_view(request):
     context = {'user': user, 'search_profiles': user_search_profiles}
     return render(request, 'profile.html', context)
 
-
+@login_required
 def new_search_view(request):
     context = {}  # Initialize context dictionary
 
@@ -257,7 +265,7 @@ def new_search_view(request):
                         print("Selected features is None.")
 
 
-                    nn_model = NearestNeighbors(n_neighbors=6, algorithm='ball_tree')
+                    nn_model = NearestNeighbors(n_neighbors=5, algorithm='ball_tree')
                     nn_model.fit(selected_features)
 
 
@@ -289,7 +297,7 @@ def new_search_view(request):
                     # Transform the QuerySet into a list of dictionaries for easier use in JavaScript
                     current_search_suburbs_list = list(current_search_suburbs)
 
-                    # Add to your context dictionary
+                    # Add to context dictionary
                     context['nearest_suburbs'] = json.dumps(current_search_suburbs_list)
 
 
@@ -337,21 +345,80 @@ def test_view(request):
     context = {'test_data': 'some_test_data'}
     return render(request, 'test_template.html', context)
 
-
+@login_required
 def new_search_2_view(request):
     return render(request, 'newSearch2.html', {})
-
+@login_required
 def new_search_3_view(request):
     return render(request, 'newSearch3.html', {})
-
+@login_required
 def view_past_searches_view(request):
-    return render(request, 'viewPastSearches.html', {})
+    if not request.user.is_authenticated:
+        return redirect('MiBarrioApp:login')
 
+    user_searches = Searches.objects.filter(user=request.user).order_by('-search_timestamp')
+
+    past_searches_data = [
+        {
+            "timestamp": search.search_timestamp,
+            "suburb": SearchResult.suburb.name  # Assuming `Suburb` model has a field `name`
+        }
+        for search in user_searches
+        for SearchResult in SearchResults.objects.filter(search=search)
+    ]
+
+    # Using Django's paginator
+    paginator = Paginator(past_searches_data, 15)  # Show 10 results per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'viewPastSearches.html', {'page_obj': page_obj})
+
+@login_required
 def feedback_view(request):
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        category = request.POST.get('category')
+        message_text = request.POST.get('message')
+
+        # Assuming the logged in user is `request.user`
+        feedback_entry = Feedback(user=request.user, rating=rating, category=category, message=message_text)
+        feedback_entry.save()
+
+        messages.success(request, "Feedback successfully submitted!")
+
+        return HttpResponseRedirect(request.path) # This will reload the same feedback page, but now with the success message.
+
     return render(request, 'feedback.html', {})
 
 def contact_us_view(request):
-    return render(request, 'contactUs.html', {})
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Get form data
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            category = form.cleaned_data['category']
+            message = form.cleaned_data['message']
+
+            # Send email
+            subject = f"New Contact Form Submission: {category}"
+            message = f"Name: {name}\nEmail: {email}\nCategory: {category}\nMessage: {message}"
+            from_email = 'mibarrio367@gmail.com'
+            recipient_list = ['mibarrio367@gmail.com']
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
+            # Add a success message
+            messages.success(request, 'Your contact form was successfully submitted.')
+
+            # Redirect to the same page (to clear the form)
+            return redirect('MiBarrioApp:contactUs')
+
+    else:
+        form = ContactForm()
+
+
+    return render(request, 'contactUs.html', {'form': form})
 
 # --------------------------- HELPER FUNCTIONS -------------------------->
 
