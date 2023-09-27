@@ -9,6 +9,7 @@ whitenoise = "*"
 django-crispy-forms = "*"
 pandas = "*"
 scikit-learn = "*"
+numpy = "*"
 
 [dev-packages]
 
