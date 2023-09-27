@@ -264,7 +264,6 @@ def new_search_view(request):
                     if selected_features is None:
                         print("Selected features is None.")
 
-
                     nn_model = NearestNeighbors(n_neighbors=5, algorithm='ball_tree')
                     nn_model.fit(selected_features)
 
@@ -274,10 +273,8 @@ def new_search_view(request):
                     user_preferences = [user_input[category] for category in ordered_categories]
                     distances, indices = nn_model.kneighbors([user_preferences])
 
-
                     nearest_suburbs = averaged_df.iloc[indices[0]][['Suburb_name', 'Coordinates']]
                     print("Top 5 best suburbs for the user:")
-
                     print(nearest_suburbs.head())
 
                     if nearest_suburbs is not None:
@@ -348,8 +345,6 @@ def test_view(request):
 @login_required
 @csrf_exempt
 def new_search_2_view(request):
-    print("view 2 accessed")
-
     if request.method == "POST":
         # Extract query parameters from the POST request
         suburb = request.POST.get("suburb")
@@ -510,7 +505,7 @@ def new_search_3_view(request):
 
             else:
                 print(f'Invalid record_index: {record_index}')
-                
+
         messages.success(request, 'Property listings have been saved successfully!')
 
 
@@ -536,11 +531,38 @@ def view_past_searches_view(request):
     ]
 
     # Using Django's paginator
-    paginator = Paginator(past_searches_data, 15)  # Show 10 results per page
+    paginator = Paginator(past_searches_data, 10)  # Show 10 results per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'viewPastSearches.html', {'page_obj': page_obj})
+    saved_properties = Properties.objects.filter(user=request.user).order_by('-search_timestamp')
+
+    # Organizing the data in a list of dictionaries (optional, based on your needs)
+    saved_properties_data = [
+        {
+            "suburb": property.suburb.name,  # Assuming suburb is a ForeignKey and has a field name
+            "num_of_bedrooms": property.num_of_bedrooms,
+            "num_of_bathrooms": property.num_of_bathrooms,
+            "has_power_solutions": property.has_power_solutions,
+            "has_water_solutions": property.has_water_solutions,
+            "property_type": property.property_type,
+            "search_timestamp": property.search_timestamp,
+            "sale_price": None if not hasattr(property, 'propertiestobuy') else property.propertiestobuy.sale_price,
+            "rental_price": None if not hasattr(property, 'propertiestorent') else property.propertiestorent.rental_price,
+        }
+        for property in saved_properties
+    ]
+
+    # Paginating saved properties data
+    saved_properties_paginator = Paginator(saved_properties_data, 15)  # Show 15 properties per page
+    saved_properties_page_number = request.GET.get('saved_properties_page')
+    saved_properties_page_obj = saved_properties_paginator.get_page(saved_properties_page_number)
+
+    # Rendering the template
+    return render(request, 'viewPastSearches.html', {
+        'page_obj': page_obj,  # Your existing paginated data
+        'saved_properties_page_obj': saved_properties_page_obj,  # New paginated data for saved properties
+    })
 
 @login_required
 def feedback_view(request):
