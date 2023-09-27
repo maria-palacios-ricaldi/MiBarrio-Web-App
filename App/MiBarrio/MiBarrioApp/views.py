@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import SearchProfiles, Searches, SearchResults, Suburbs, Cities, CustomUser, SuburbStatistics, Feedback
+from .models import SearchProfiles, Searches, SearchResults, Suburbs, PropertiesToBuy, PropertiesToRent, SuburbStatistics, Feedback, Properties
 from django.http import JsonResponse
 from .forms import ContactForm
 from datetime import datetime
@@ -346,11 +346,179 @@ def test_view(request):
     return render(request, 'test_template.html', context)
 
 @login_required
+@csrf_exempt
 def new_search_2_view(request):
+    print("view 2 accessed")
+
+    if request.method == "POST":
+        # Extract query parameters from the POST request
+        suburb = request.POST.get("suburb")
+        property_type = request.POST.get("property_type")
+        rent_sale = request.POST.get("rent_sale")
+        min_price = request.POST.get("min_price")
+        max_price = request.POST.get("max_price")
+        back_up_power = request.POST.get("back_up_power") == "True"
+        back_up_water = request.POST.get("back_up_water") == "True"
+
+        # Print statements for debugging
+        print(f'Suburb: {suburb}')
+        print(f'Property Type: {property_type}')
+        print(f'Rent/Sale: {rent_sale}')
+        print(f'Min Price: {min_price}')
+        print(f'Max Price: {max_price}')
+        print(f'Back Up Power: {back_up_power}')
+        print(f'Back Up Water: {back_up_water}')
+
+         # Get the path to the CSV file
+        base_dir = os.path.dirname(os.path.abspath(__file__))  # This will get the directory of views.py
+        data_dir = os.path.join(base_dir, 'data')
+
+        if property_type == "Apartment or Flat":
+            file_path = os.path.join(data_dir, 'Apartments_cpt.csv')
+        else:
+            file_path = os.path.join(data_dir, 'Apartments_cpt_updated.csv')
+
+        # Load the CSV file into a pandas DataFrame
+        df = pd.read_csv(file_path, delimiter=';')
+
+        df = df.rename(columns={
+        'Suburb Name': 'Suburb_Name',
+        'backup water': 'backup_water',
+        'back-up power': 'backup_power',
+        })
+        # Now you can refer to these columns using the new names in the rest of your code
+
+
+        # Replace NaN values with NULL
+        df.fillna('NULL', inplace=True)
+        df.columns = df.columns.str.replace(' ', '_')
+
+
+        # query logic here...
+        query = (df['Suburb_Name'] == suburb) & (df['sale_rent'] == rent_sale)
+        if min_price not in ["", "any"]:
+            query &= (df['Price'].astype(float) >= float(min_price))
+        if max_price not in ["", "any"]:
+            query &= (df['Price'].astype(float) <= float(max_price))
+
+        filtered_df = df[query]
+
+        if back_up_power:
+            power_filtered_df = filtered_df[filtered_df['backup_power'] == 'Yes']
+            if power_filtered_df.empty:
+                message = "There are currently no property listings with back-up power, but here are other property listings that meet your other criteria"
+            else:
+                filtered_df = power_filtered_df
+        if back_up_water:
+            water_filtered_df = filtered_df[filtered_df['backup_water'] == 'Yes']
+            if water_filtered_df.empty:
+                message = "There are currently no property listings with back-up water, but here are other property listings that meet your other criteria"
+            else:
+                filtered_df = water_filtered_df
+
+        if filtered_df.empty:
+            message = "No records match the given criteria"
+        else:
+            # Select only the necessary columns
+            selected_columns = [
+                'Suburb_Name', 'source_url', 'type_of_property', 'sale_rent',
+                'backup_water', 'backup_power', 'Price', 'name',
+                'Image', 'garages', 'floor_size', 'erf_size', 'bedrooms',
+                'bathrooms'
+            ]
+            filtered_df = filtered_df[selected_columns]
+
+            # Limit to 4 records
+            limited_df = filtered_df.head(4)
+            limited_df.reset_index(inplace=True)
+            result_dict = limited_df.to_dict('records')
+
+        # Respond with a JSON object containing the results and any message
+        response_data = {
+            'records': result_dict if not filtered_df.empty else [],
+            'message': message if message else ""
+        }
+
+        request.session['response_data'] = response_data
+
+        # Store search parameters in session for later use
+        search_params = {
+            "suburb": suburb,
+            "property_type": property_type,
+            "rent_sale": rent_sale,
+            "min_price": min_price,
+            "max_price": max_price,
+            "back_up_power": back_up_power,
+            "back_up_water": back_up_water
+        }
+
+        request.session['search_params'] = search_params
+
+
+        return redirect('MiBarrioApp:newSearch3')
+
     return render(request, 'newSearch2.html', {})
+
 @login_required
 def new_search_3_view(request):
-    return render(request, 'newSearch3.html', {})
+    if request.method == "POST":
+        # Get search parameters from session
+        search_params = request.session.get('search_params', {})
+        response_data = request.session.get('response_data', {})
+        records = response_data.get('records', [])
+
+        print(response_data)
+        print(records)
+
+        selected_records = [int(value) for value in request.POST.getlist('save-record')]
+
+        for record_index in selected_records:
+            if isinstance(record_index, int):
+                record_index = int(record_index)  # Convert to integer
+                record_data = records[record_index]  # Get record data by index
+
+                # Create a string representation of the search parameters
+                property_search_parameters = ", ".join(f"{key}: {value}" for key, value in search_params.items())
+
+                suburb_instance, created = Suburbs.objects.get_or_create(name=record_data['Suburb_Name'])  # Replace with the correct field for suburb name
+
+                common_properties = {
+                    'suburb': suburb_instance,
+                    'property_search_parameters': property_search_parameters,
+                    'num_of_bedrooms': record_data['bedrooms'],
+                    'num_of_bathrooms': record_data['bathrooms'],
+                    'has_power_solutions': record_data['backup_power'] == 'Yes',
+                    'has_water_solutions': record_data['backup_water'] == 'Yes',
+                    'property_type': record_data['type_of_property'],
+                }
+
+                sanitized_price = sanitize_price(record_data['Price'])
+
+                if record_data['sale_rent'] == 'sale':
+                    property_record = PropertiesToBuy(
+                        **common_properties,
+                        sale_price=sanitized_price,
+                        )
+                else:
+                    property_record = PropertiesToRent(
+                        **common_properties,
+                    rental_price=sanitized_price,
+                    )
+
+                property_record.save()
+
+
+            else:
+                print(f'Invalid record_index: {record_index}')
+                
+        messages.success(request, 'Property listings have been saved successfully!')
+
+
+    response_data = request.session.get('response_data', {})
+    return render(request, 'newSearch3.html', {'response_data': response_data})
+
+
+
 @login_required
 def view_past_searches_view(request):
     if not request.user.is_authenticated:
@@ -462,3 +630,8 @@ def get_crime_data(request, suburb_name):
         return JsonResponse({'crime_rate': suburb_stats.crime_rate})
     except SuburbStatistics.DoesNotExist:
         return JsonResponse({'error': 'Suburb not found'}, status=404)
+
+def sanitize_price(price):
+    # Remove any non-numeric characters from price string
+    sanitized_price = ''.join(char for char in price if char.isdigit())
+    return int(sanitized_price) if sanitized_price else None
