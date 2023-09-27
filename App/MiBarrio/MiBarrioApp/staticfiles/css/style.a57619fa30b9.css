@@ -1,0 +1,594 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background: rgb(214,223,207);
+}
+/* Chrome, Safari */
+#checkbox-container input[type="checkbox"]::-webkit-checkbox,
+.d-flex input[type="checkbox"]::-webkit-checkbox {
+  background-color: black;
+  border-color: black;
+  color: white;
+  border: 2px;
+}
+
+/* For the tick */
+#checkbox-container input[type="checkbox"]:checked,
+.d-flex input[type="checkbox"]:checked {
+  background-color: black !important;
+  border-color: black !important;
+  color: white !important;
+  border: 2px;
+}
+
+.password-field-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-field-container .form-control {
+  flex-grow: 1;
+  padding-right: 40px; /* Adjust padding to ensure text doesn't overlap with icon */
+}
+
+.password-field-container .fas {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
+
+/* Custom radio button fill */
+input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 12px;  /* Adjust as needed */
+  width: 12px;  /* Adjust as needed */
+  margin-top: -6px;  /* Half the height */
+  margin-left: -6px;  /* Half the width */
+  background-color: black;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+input[type="radio"] {
+  position: relative;
+}
+
+
+.age-column {
+  width: 200px; /* Or whatever width makes it look good */
+}
+
+.arrow {
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+/* Breadcrumb styles */
+.breadcrumb {
+  /* Remove floating and centering */
+  display: flex;
+  justify-content: space-between; /* Spread items evenly */
+  align-items: center;
+  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  border-radius: 5px;
+  counter-reset: flag; /* Counter for numbering links */
+  width: 100%; /* Take up the full width of the container */
+}
+
+.breadcrumb a {
+text-decoration: none;
+ outline: none;
+ font-size: 14px;
+ line-height: 36px;
+ color: white;
+ padding: 0 10px 0 60px;
+ background: #666;
+ background: linear-gradient(#666, #333);
+ position: relative;
+ flex: 1; /* Distribute space evenly among items */
+}
+
+.breadcrumb a:first-child {
+padding-left: 46px;
+border-radius: 5px 0 0 5px;
+}
+
+.breadcrumb a:first-child:before {
+left: 14px;
+}
+
+.breadcrumb a:last-child {
+border-radius: 0 5px 5px 0;
+padding-right: 20px;
+}
+
+.breadcrumb a.active,
+.breadcrumb a:hover {
+background: #333;
+background: linear-gradient(#333, #000);
+}
+
+.breadcrumb a.active:after,
+.breadcrumb a:hover:after {
+background: #333;
+background: linear-gradient(135deg, #333, #000);
+}
+
+.breadcrumb a:after {
+content: '';
+position: absolute;
+top: 0;
+right: -18px;
+width: 36px;
+height: 36px;
+transform: scale(0.707) rotate(45deg);
+z-index: 1;
+background: #666;
+background: linear-gradient(135deg, #666, #333);
+box-shadow:
+   2px -2px 0 2px rgba(0, 0, 0, 0.4),
+   3px -3px 0 2px rgba(255, 255, 255, 0.1);
+border-radius: 0 5px 0 50px;
+}
+
+.breadcrumb a:last-child:after {
+content: none;
+}
+
+.breadcrumb a:before {
+content: counter(flag);
+counter-increment: flag;
+border-radius: 100%;
+width: 20px;
+height: 20px;
+line-height: 20px;
+margin: 8px 0;
+position: absolute;
+top: 0;
+left: 30px;
+background: #898989;
+background: linear-gradient(#444, #222);
+font-weight: bold;
+}
+
+
+.contact-form-container {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  margin-top: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.equal-width {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.equal-width > * {
+  flex: 1;
+}
+
+.form-check-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  box-shadow: inset 0 0 0 1px black; /* Adjust thickness here */
+  outline: none;
+}
+
+.form-check-input:checked {
+  background-color: black;
+}
+
+.form-check-input:focus {
+  box-shadow: inset 0 0 0 2px black, 0 0 0 2px #5bc0de; /* Adjust focus outline thickness/color here */
+}
+
+
+.header {
+  height: min-content;
+  background: rgb(246,226, 181);
+  text-align: left;
+  padding-left: 17px ;
+  padding: 0.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-info {
+  font-size: 20px;
+}
+
+.table th, .table td {
+  text-align: left;
+}
+
+.wrapper {
+  flex: 1 0 auto;
+  background: rgb(214,223,207);
+}
+
+.form-style {
+  height: fit-content;
+}
+
+.form-range {
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.footer {
+  flex-shrink: 0;
+  text-align: center;
+  background: rgb(100,100,100);
+  padding: 1.5%;
+}
+
+.footer-links {
+  margin-top: 10px;
+  color: white;
+}
+
+.footer-links a {
+  color: inherit;
+}
+
+.footer-logo {
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.form-container {
+  background-color: rgb(214,223,207);
+}
+
+.form-group.pb-3 {
+  margin-bottom: 15px;
+}
+
+
+.horizontal-checkboxes img, .horizontal-checkboxes label {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.left {
+  transform: rotate(-220deg);
+  -webkit-transform: rotate(-220deg);
+}
+
+
+.login-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  align-self: start;
+}
+
+.col-md-6.d-none.d-md-block {
+  height: 100%;
+}
+
+.carousel-item {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.carousel-item .card {
+  margin: auto;
+}
+
+.carousel-item .card-img-top {
+  width: 15px !important;
+  object-fit: cover;
+  margin: 20px auto 10px;
+}
+
+.icon-img {
+  padding: 1em;
+  width: 80px; /* Set your desired width here */
+  height: 80px; /* Set your desired height here */
+  display: block;
+  margin: 0 auto;
+
+}
+
+.carousel-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-item .card {
+  margin: 20px;
+}
+
+.carousel-item.active,
+.carousel-item-next,
+.carousel-item-prev {
+  display: flex;
+}
+
+.carousel-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.navbar-nav {
+  align-items: flex-start;
+  flex-wrap: nowrap;
+}
+
+.nav-item {
+  flex-grow: 1; /* This ensures that nav items don't expand beyond their content's width */
+  text-align: left;
+  min-width: 0;
+}
+
+.nav-item a {
+  white-space: nowrap;
+  color: black;
+}
+
+.d-flex {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+}
+
+.nav-link img {
+  margin-right: 10px;
+  vertical-align: middle;
+  transition: margin 0.3s;
+}
+
+.likert {
+  list-style:none;
+  width:100%;
+  margin:0;
+  padding:0 0 35px;
+  display:block;
+  border-bottom:2px solid #efefef;
+  padding-left: 10%;
+}
+
+.likert:last-of-type {border-bottom:0;}
+.likert:before {
+  content: '';
+  position:relative;
+  top:11px;
+  left:9.5%;
+  display:block;
+  background-color:#efefef;
+  height:4px;
+  width:78%;
+}
+
+.likert li {
+  display:inline-block;
+  width:19%;
+  text-align:center;
+  vertical-align: top;
+}
+
+.likert li input[type=radio] {
+  display:block;
+  position:relative;
+  top:0;
+  left:50%;
+  margin-left:-6px;
+
+}
+
+.likert li label {width:100%;}
+
+/*message alerts to user*/
+.messages-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+
+
+.sticky-action-column {
+  position: sticky;
+  right: 0;
+  background-color: #fff; /* To make it stand out from the scrolling content */
+  z-index: 1; /* To make it stack above the other cells */
+}
+
+
+/* For WebKit browsers like Chrome and Safari */
+.likert li input[type=radio]:checked::-webkit-radio-button {
+  background-color: black;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.rating {
+  display: inline-block;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating > input {
+  display: none;
+}
+.rating > label {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #ccc;
+}
+.rating > input + label:hover,
+.rating > input + label:hover ~ label,
+.rating > input:checked ~ label {
+  color: #f5d314;
+}
+
+select.category-dropdown {
+  text-align-last: center;
+  text-align: center;
+}
+
+
+.tag {
+  display: inline-flex;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+table thead th{
+  white-space: nowrap; /* Makes sure text doesn't break into the next line */
+  background-color: rgb(234, 236, 239); /* Light gray background */
+}
+
+.remove-tag {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+#checkbox-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+#checkbox-container input[type="checkbox"] {
+  margin-right: 2px;
+}
+
+#checkbox-container input[type="checkbox"]:checked {
+  filter: brightness(0);
+}
+
+#sidebar, #content {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+header img {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
+#mi {
+  color: black;
+}
+
+#barrio {
+  color: rgb(51, 100, 34);
+}
+
+.welcome-section {
+  background: rgb(245,246,248);
+  padding: 10px;
+
+}
+
+#header_aboutus {
+  width: 100vw;
+  padding-left: 0;
+  padding-right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#header_aboutus h1 {
+  z-index: 1;
+}
+
+#content {
+  background-size: cover;
+}
+
+#sidebar {
+  transition: width 0.5s;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#sidebar.collapsed {
+  width: min-content; /* Collapsed width */
+}
+
+#sidebar.collapsed .nav-text {
+  display: none;
+}
+
+#sidebar.collapsed .nav-link img {
+  margin-right: 0;
+}
+
+#sidebar.collapsed .nav-item {
+  text-align: left;
+}
+
+@media (max-width: 576px) {
+  .row-cols-1 > * {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .row-cols-sm-2 > * {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+  .row-cols-md-2 > * {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 993px) {
+  .row-cols-lg-4 > * {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
