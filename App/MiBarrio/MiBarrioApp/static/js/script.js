@@ -282,6 +282,12 @@ document.addEventListener('DOMContentLoaded', function () {
       table.append(...rows.reverse());
     });
 
+    document.getElementById("toggleOrderSaved").addEventListener("click", function () {
+      var table = document.querySelectorAll("table tbody")[1];  // Get the second table
+      var rows = Array.from(table.rows);
+      table.append(...rows.reverse());
+    });
+
   }
 
   if (window.location.pathname.endsWith('newSearch2')) {
@@ -406,22 +412,77 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Event listener for radio buttons
-    document.querySelectorAll('input[name="type"]').forEach(radio => {
+    document.querySelectorAll('input[name="rent_sale"]').forEach(radio => {
       radio.addEventListener('change', function () {
         const minPrice = document.getElementById('min-price');
         const maxPrice = document.getElementById('max-price');
 
-        if (this.value === 'rent') {
+        if (this.value === 'Rent') {
           populateOptions(minPrice, rentOptions);
           populateOptions(maxPrice, rentOptions);
-        } else if (this.value === 'buy') {
+        } else if (this.value === 'Sale') {
           populateOptions(minPrice, buyOptions);
           populateOptions(maxPrice, buyOptions);
         }
       });
     });
 
+    function validateForm() {
+      const suburbSelect = document.getElementById("suburbSelect");
+      const propertyTypeSelect = document.getElementById("citySelect");
+      const rentRadio = document.getElementById("rent");
+      const buyRadio = document.getElementById("buy");
+      const minPriceSelect = document.getElementById("min-price");
+      const maxPriceSelect = document.getElementById("max-price");
+
+      // Check if suburb is selected
+      if (suburbSelect.value.trim() === "") {
+        alert("Please select a suburb.");
+        return false;
+      }
+
+      // Check if property type is selected
+      if (propertyTypeSelect.value.trim() === "") {
+        alert("Please select a property type.");
+        return false;
+      }
+
+      // Check if either rent or buy is selected
+      if (!rentRadio.checked && !buyRadio.checked) {
+        alert("Please select either For Rent or For Sale.");
+        return false;
+      }
+
+      // Check if min price is selected
+      if (minPriceSelect.value.trim() === "") {
+        alert("Please select a minimum price.");
+        return false;
+      }
+
+      // Check if max price is selected
+      if (maxPriceSelect.value.trim() === "") {
+        alert("Please select a maximum price.");
+        return false;
+      }
+
+
+      // If all validations pass
+      return true;
+    }
+
   }
+
+
+  if (window.location.pathname.endsWith('newSearch3')) {
+    document.getElementById('save-button').onclick = function (e) {
+      var checkboxes = document.querySelectorAll('input[name="save-record"]:checked');
+      if (checkboxes.length === 0) {
+        e.preventDefault();  // Prevent form submission
+        alert('Please select at least one record.');
+      }
+    }
+  }
+
 
 });
 
@@ -502,17 +563,18 @@ async function updateMapWithNewData(nearestSuburbsData) {
   clearExistingLayers();
   setDefaultMapView();
 
-  nearestSuburbsData.forEach((suburb, index) => {
+  for (let index = 0; index < Math.min(nearestSuburbsData.length, 5); index++) {
+    const suburb = nearestSuburbsData[index];
     const coordinates = parseSuburbCoordinates(suburb.suburb__coordinates);
     const name = suburb.suburb__name;
 
     if (!coordinates) {
-      return;
+      continue;
     }
 
     drawPolygon(coordinates);
     placeMarker(coordinates, name);
-  });
+  }
 
   await updateTableWithNewData(nearestSuburbsData);
 }
@@ -625,6 +687,6 @@ function initializeMap() {
 function updateProfileNameCell() {
   var storedProfileName = sessionStorage.getItem('selectedProfileName');
   if (storedProfileName) {
-      document.getElementById('profile-name-cell').innerText = storedProfileName;
+    document.getElementById('profile-name-cell').innerText = storedProfileName;
   }
 }
