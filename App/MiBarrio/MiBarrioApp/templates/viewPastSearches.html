@@ -8,52 +8,52 @@
   <!-- Sidebar -->
   <div id="sidebar" class="p-3 bg-light">
     <ul class="nav flex-column">
-<!-- Arrow icon always visible -->
+      <!-- Arrow icon always visible -->
       <li class="nav-item">
         <a id="toggleSidebar" class="nav-link" href="#">
           <img src="{% static 'icons/icons8-left-arrow-100.png' %}" alt="Reduce" height="20px">
-      </a>
-    </li>
+        </a>
+      </li>
 
-    <!-- Wrapped sidebar items in a div for toggle functionality -->
+      <!-- Wrapped sidebar items in a div for toggle functionality -->
 
-    <div id="sidebarMenu" class="show">
-      <li class="nav-item" >
-        <a class="nav-link" href="{% url 'MiBarrioApp:home' %}">
-          <img src="{% static 'icons/icons8-home-96.png' %}" alt="Home" height="20px">
-          <span class="nav-text"> Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:profile' %}">
-          <img src="{% static 'icons/icons8-customer-90.png' %}" alt="Profile" height="20px">
-          <span class="nav-text"> Profile</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:newSearch' %}">
-          <img src="{% static 'icons/icons8-search-90.png' %}" alt="New Search" height="20px">
-          <span class="nav-text"> New Search</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:viewPastSearches' %}">
-          <img src="{% static 'icons/icons8-time-machine-90.png' %}" alt="View Past Searches" height="20px">
-          <span class="nav-text"> View Past Searches</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:feedback' %}">
-          <img src="{% static 'icons/icons8-thumbs-up-down-90.png' %}" alt="Give Us Feedback" height="20px">
-          <span class="nav-text"> Give Us Feedback</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'MiBarrioApp:logout' %}">
-          <img src="{% static 'icons/icons8-logout-96.png' %}" alt="Logout" height="20px">
-          <span class="nav-text"> Logout</span>
-        </a>
-      </li>
+      <div id="sidebarMenu" class="show">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:home' %}">
+            <img src="{% static 'icons/icons8-home-96.png' %}" alt="Home" height="20px">
+            <span class="nav-text"> Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:profile' %}">
+            <img src="{% static 'icons/icons8-customer-90.png' %}" alt="Profile" height="20px">
+            <span class="nav-text"> Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:newSearch' %}">
+            <img src="{% static 'icons/icons8-search-90.png' %}" alt="New Search" height="20px">
+            <span class="nav-text"> New Search</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:viewPastSearches' %}">
+            <img src="{% static 'icons/icons8-time-machine-90.png' %}" alt="View Past Searches" height="20px">
+            <span class="nav-text"> View Past Searches</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:feedback' %}">
+            <img src="{% static 'icons/icons8-thumbs-up-down-90.png' %}" alt="Give Us Feedback" height="20px">
+            <span class="nav-text"> Give Us Feedback</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'MiBarrioApp:logout' %}">
+            <img src="{% static 'icons/icons8-logout-96.png' %}" alt="Logout" height="20px">
+            <span class="nav-text"> Logout</span>
+          </a>
+        </li>
       </div>
     </ul>
   </div>
@@ -62,53 +62,114 @@
 
     <div class="row">
       <div class="col-md-12">
-          <button id="toggleOrder" class="btn btn-info btn-dark mb-2">Toggle Order (Latest/Oldest)</button>
+        <button id="toggleOrder" class="btn btn-info btn-dark mb-2">Toggle Order (Latest/Oldest)</button>
+        <div class="table-responsive">
           <table class="table table-striped table-bordered">
-              <thead class="thead-dark">
-                  <tr>
-                      <th>Time and Date</th>
-                      <th>Suburb Name</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% for search_data in page_obj %}
-                  <tr>
-                      <td>{{ search_data.timestamp|date:"F j, Y, P" }}</td>
-                      <td>{{ search_data.suburb }}</td>
-                  </tr>
-                  {% endfor %}
-              </tbody>
+            <thead class="thead-dark">
+              <tr>
+                <th style="width:30%;">Time and Date</th>
+                <th style="width:70%;">Suburb Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for search_data in page_obj %}
+              <tr>
+                <td>{{ search_data.timestamp|date:"F j, Y, P" }}</td>
+                <td>{{ search_data.suburb }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
           </table>
+        </div>
+        <!-- Pagination controls -->
+        <div class="pagination">
+          <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
 
-          <!-- Pagination controls -->
-          <div class="pagination">
-              <span class="step-links">
-                  {% if page_obj.has_previous %}
-                      <a href="?page=1">&laquo; first</a>
-                      <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            <span class="current">
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+          </span>
+        </div>
+        <br>
+
+        <!-- New table for Saved Property Listings -->
+        <button id="toggleOrderSaved" class="btn btn-info btn-dark mb-2">Toggle Order (Latest/Oldest) Saved
+          Listings</button>
+
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+              <tr>
+                <th>Suburb Name</th>
+                <th># Bedrooms</th>
+                <th># Bathrooms</th>
+                <th>Power Solutions</th>
+                <th>Water Solutions</th>
+                <th>Property Type</th>
+                <th>Price (R)</th>
+                <th>Time and Date</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Assume saved_properties is the context variable containing your saved property data -->
+              {% for property in saved_properties_page_obj %}
+              <tr>
+                <td>{{ property.suburb }}</td>
+                <td>{{ property.num_of_bedrooms }}</td>
+                <td>{{ property.num_of_bathrooms }}</td>
+                <td>{{ property.has_power_solutions }}</td>
+                <td>{{ property.has_water_solutions }}</td>
+                <td>{{ property.property_type }}</td>
+                <td>
+                  {% if property.sale_price %}
+                  {{ property.sale_price }}
+                  {% elif property.rental_price %}
+                  {{ property.rental_price }}
                   {% endif %}
+                </td>
+                <td>{{ property.search_timestamp|date:"F j, Y, P" }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
 
-                  <span class="current">
-                      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                  </span>
+        <!-- Pagination controls for saved properties -->
+        <div class="pagination">
+          <span class="step-links">
+            {% if saved_properties_page_obj.has_previous %}
+            <a href="?saved_properties_page=1">&laquo; first</a>
+            <a href="?saved_properties_page={{ saved_properties_page_obj.previous_page_number }}">previous</a>
+            {% endif %}
 
-                  {% if page_obj.has_next %}
-                      <a href="?page={{ page_obj.next_page_number }}">next</a>
-                      <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                  {% endif %}
-              </span>
-          </div>
+            <span class="current">
+              Page {{ saved_properties_page_obj.number }} of {{ saved_properties_page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if saved_properties_page_obj.has_next %}
+            <a href="?saved_properties_page={{ saved_properties_page_obj.next_page_number }}">next</a>
+            <a href="?saved_properties_page={{ saved_properties_page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+          </span>
+        </div>
+
+
+
+
       </div>
-  </div>
-
-
+    </div>
 
   </div>
-
-
-
-
-
 
 
 </div>
