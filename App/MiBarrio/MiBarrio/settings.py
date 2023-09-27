@@ -122,21 +122,30 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 #STATICFILES_DIRS = (os.path.join(BASE_DIR, "static/"))
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_TMP = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-os.makedirs(STATIC_TMP, exist_ok=True)
-os.makedirs(STATIC_ROOT, exist_ok=True)
-os.makedirs(MEDIA_ROOT, exist_ok=True)
+# Directory where Django will collect static files to
+STATIC_ROOT = os.path.join(BASE_DIR, 'MiBarrioApp', 'staticfiles')
 
+# Directories where Django will look for additional static files, apart from STATIC_ROOT
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'MiBarrioApp', 'static'),
+]
+
+# Your configured storage backend for serving static files in production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# URL prefix for media files (uploads)
+MEDIA_URL = '/media/'
+
+# Directory where uploaded media files will be stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Making sure the directories exist, creating them if they don't
+os.makedirs(os.path.join(BASE_DIR, 'MiBarrioApp', 'static'), exist_ok=True)
+os.makedirs(os.path.join(BASE_DIR, 'MiBarrioApp', 'staticfiles'), exist_ok=True)
+os.makedirs(MEDIA_ROOT, exist_ok=True)
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
