@@ -67,72 +67,65 @@
       <a href="{% url 'MiBarrioApp:newSearch3' %}"> Step 3: View Property Listings</a>
     </div>
 
-    <div class="row p-3">
+    <div class="row p-3" style="display: flex; align-items: stretch;">
 
       <!-- Step 2 Form -->
       <div class="col-md-6">
         <br>
-        <form id="propertyFiltersForm">
-
+        <form id="propertyFiltersForm" onsubmit="return validateForm();" action="{% url 'MiBarrioApp:newSearch2' %}" method="post">
+          {% csrf_token %}
           <!--Set up search profile - get list of search profile names from database-->
           <div class="mb-3">
             <label for="suburbSelect" class="form-label">Select a Suburb</label>
             <div class="d-flex justify-content-center">
-              <select class="form-select" id="suburbSelect" style="max-width: 350px; width: 100%;">
-
+              <select class="form-select" id="suburbSelect" name="suburb" style="max-width: 350px; width: 100%;">
               </select>
             </div>
           </div>
 
-          <div class="row mb-4 align-items-center justify-content-center">
+          <div class="row mb-5 align-items-center justify-content-center">
             <div class="col-md-4">
               <label for="citySelect" class="form-label">Select Property Type</label>
             </div>
-            <div class="col-md-4">
-              <select class="form-select" id="citySelect" style="max-width: 200px; width: 100%;">
+            <div class="col-md-5">
+              <select class="form-select" id="citySelect" name="property_type" style="max-width: 200px; width: 100%;">
+                <option value="Apartment or Flat">Apartment or Flat</option>
                 <option value="House">House</option>
-                <option value="Apartment/Flat">Apartment/Flat</option>
               </select>
             </div>
           </div>
-
-
           <!-- Rent and Buy Buttons -->
           <div class="mb-3">
-            <input type="radio" id="rent" name="type" value="rent">
-            <label for="rent" class="form-label">For Rent</label>
+            <input type="radio" id="rent"  name="rent_sale" value="Rent">
+            <label for="rent" class="form-label">To Rent</label>
 
-            <input type="radio" id="buy" name="type" value="buy">
+            <input type="radio" id="buy" name="rent_sale" value="Sale">
             <label for="buy" class="form-label">For Sale</label>
           </div>
 
           <div class="mb-3">
             <label for="min-price" class="form-label">Min-price</label>
-            <select id="min-price" name="min-price">
-
+            <select id="min-price" name="min_price">
               <!-- Options populated by JS -->
-
             </select>
           </div>
 
           <div class="mb-3">
             <label for="max-price" class="form-label">Max-price</label>
-            <select id="max-price" name="max-price">
-
+            <select id="max-price" name="max_price">
               <!-- Options populated by JS -->
-
             </select>
           </div>
 
           <div class="mb-3">
             <!-- Back-up Power Supply checkbox -->
             <div style="margin-bottom: 10px;">
-              <input class="form-check-input" type="checkbox" value="PowerSupply" id="powerSupply">
+              <input class="form-check-input" type="checkbox" name="back_up_power" value="True" id="powerSupply">
               <label class="form-check-label" for="powerSupply">Back-up Power Supply</label>
             </div>
             <!-- Water Supply checkbox -->
             <div>
-              <input class="form-check-input" type="checkbox" value="WaterSupply" id="waterSupply">
+              <input class="form-check-input" type="checkbox" name="back_up_water" value="True" id="waterSupply">
               <label class="form-check-label" for="waterSupply">Back-up Water Supply</label>
             </div>
           </div>
@@ -142,10 +135,9 @@
           </div>
         </form>
 
-        <div class="text-start mt-3">  <!-- Aligns content to the end of the container, effectively making it "right-aligned" -->
+        <div class="text-start mt-3" style="margin-top: auto;">  <!-- Aligns content to the end of the container, effectively making it "right-aligned" -->
           <a href="{% url 'MiBarrioApp:newSearch2' %}" id="nextStepBtn" class="btn btn-secondary"><i class="arrow left"></i> Previous </a>
         </div>
-
 
       </div>
 
@@ -156,10 +148,6 @@
           <!-- Map will be shown here -->
         </div>
 
-
-        <div class="text-end mt-3">  <!-- Aligns content to the end of the container, effectively making it "right-aligned" -->
-          <a href="{% url 'MiBarrioApp:newSearch3' %}" id="nextStepBtn2" class="btn btn-secondary"> Next <i class="arrow right"></i> </a>
-        </div>
 
       </div>
 
