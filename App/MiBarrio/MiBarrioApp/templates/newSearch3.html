@@ -163,12 +163,12 @@
                     <div>Suburb Name: {{ record.Suburb_Name }}</div>
                     <div>Listing url link: <a href="{{ record.source_url }}" target="_blank">View Property</a></div>
                     <div>Type of Property: {{ record.type_of_property }}</div>
-                    <div>Price: {{ record.Price }}</div>
+                    <div>Price: R{{ record.Price }}</div>
                   </div>
                   <div>
                     <div>{% if record.garages != "NULL" %}# Garages: {{ record.garages }}{% endif %}</div>
-                    <div>{% if record.floor_size != "NULL" %}Floor Size: {{ record.floor_size }} sq ft{% endif %}</div>
-                    <div>{% if record.erf_size != "NULL" %}Erf Size: {{ record.erf_size }} sq m{% endif %}</div>
+                    <div>{% if record.floor_size != "NULL" %}Floor Size: {{ record.floor_size }}{% endif %}</div>
+                    <div>{% if record.erf_size != "NULL" %}Erf Size: {{ record.erf_size }}{% endif %}</div>
                     <div>{% if record.bedrooms != "NULL" %}# Bedrooms: {{ record.bedrooms }}{% endif %}</div>
                     <div>{% if record.bathrooms != "NULL" %}# Bathrooms: {{ record.bathrooms }}{% endif %}</div>
                   </div>
@@ -182,6 +182,8 @@
               {% endfor %}
             </tbody>
           </table>
+          <br>
+          <br>
 
           <button type="submit" class="btn btn-dark" id="save-button">Save</button>
 

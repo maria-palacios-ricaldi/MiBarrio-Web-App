@@ -465,7 +465,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return false;
       }
 
-
       // If all validations pass
       return true;
     }

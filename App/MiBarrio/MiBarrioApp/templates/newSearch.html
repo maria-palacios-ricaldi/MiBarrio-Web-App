@@ -164,8 +164,11 @@
               </table>
           </div>
       </div>
+
+      <input type="hidden" name="action_type" value="search">
+
       <div class="mt-4">
-        <button type="button" class="btn btn-dark" onclick="setSearchActionType(); getNearestSuburbs(); ">Search</button>
+        <button type="submit" class="btn btn-dark" onclick="event.preventDefault(); setSearchActionType(); getNearestSuburbs(); ">Search</button>
         <input type="hidden" name="action_type" id="action_type" value="profile_change">
       </div>
 

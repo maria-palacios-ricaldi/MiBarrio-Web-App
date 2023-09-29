@@ -18,7 +18,6 @@ import pandas as pd
 import numpy as np
 import os
 from django.utils import timezone
-import pprint
 from django.core.paginator import Paginator
 
 # Create your views here.
@@ -142,7 +141,7 @@ def profile_view(request):
                     search_profile = SearchProfiles.objects.create(
                     user=user,
                     sp_name=sp_name,
-                    #age=age,
+                    age=age,
                     # Serialize the list to string
                     social_cultural_tags=json.dumps(social_cultural),
                     health_wellness_tags=json.dumps(health_wellness),
@@ -227,16 +226,22 @@ def new_search_view(request):
                     }
                     search_parameters_str = json.dumps(search_parameters)
 
-                    new_search = Searches(
-                    user=request.user,
-                    search_profileID=SearchProfiles.objects.get(search_profileID=selected_profile_id),
-                    search_parameters=search_parameters_str,
-                    search_timestamp=datetime.now()
-                    )
-                    #saves new Search to Searches model
-                    new_search.save()
+                    try:
+                        new_search = Searches(
+                            user=request.user,
+                            search_profileID=SearchProfiles.objects.get(search_profileID=selected_profile_id),
+                            search_parameters=search_parameters_str,
+                            search_timestamp=datetime.now()
+                     )
+
+                        #saves new Search to Searches model
+                        new_search.save()
+                        print("new Search is saved")
+                    except Exception as e:
+                        print(f"Exception occurred: {e}")
 
                     df = read_my_csv()
+                    print(df.columns)
 
                     averaged_df = pd.DataFrame()
                     averaged_df['Suburb_name'] = df['Suburb_name']
@@ -267,19 +272,18 @@ def new_search_view(request):
                     nn_model = NearestNeighbors(n_neighbors=5, algorithm='ball_tree')
                     nn_model.fit(selected_features)
 
-
-                    print(f"Selected features for profile {selected_profile_id}: {selected_features}")
+                    #print(f"Selected features for profile {selected_profile_id}: {selected_features}")
 
                     user_preferences = [user_input[category] for category in ordered_categories]
                     distances, indices = nn_model.kneighbors([user_preferences])
 
                     nearest_suburbs = averaged_df.iloc[indices[0]][['Suburb_name', 'Coordinates']]
                     print("Top 5 best suburbs for the user:")
-                    print(nearest_suburbs.head())
 
                     if nearest_suburbs is not None:
                         for _, row in nearest_suburbs.iterrows():
                             suburb_name = row['Suburb_name']
+                            print(suburb_name)
 
                             # Fetch the Suburbs object based on the suburb_name
                             suburb_record = Suburbs.objects.filter(name=suburb_name).first()
@@ -296,8 +300,6 @@ def new_search_view(request):
 
                     # Add to context dictionary
                     context['nearest_suburbs'] = json.dumps(current_search_suburbs_list)
-
-
 
         else:
             selected_profile_id = request.session.get('selected_profile_id', None)
@@ -330,7 +332,7 @@ def new_search_view(request):
             context['test_data'] = 'some_test_data2'  # Set test_data
 
         print('About to render template.')
-        print(f'context: {context}')
+
         return render(request, 'newSearch.html', context)
 
     else:
@@ -345,6 +347,9 @@ def test_view(request):
 @login_required
 @csrf_exempt
 def new_search_2_view(request):
+    message = ""
+    result_dict = []
+
     if request.method == "POST":
         # Extract query parameters from the POST request
         suburb = request.POST.get("suburb")
@@ -355,7 +360,7 @@ def new_search_2_view(request):
         back_up_power = request.POST.get("back_up_power") == "True"
         back_up_water = request.POST.get("back_up_water") == "True"
 
-        # Print statements for debugging
+        # Debugging print statements
         print(f'Suburb: {suburb}')
         print(f'Property Type: {property_type}')
         print(f'Rent/Sale: {rent_sale}')
@@ -364,7 +369,7 @@ def new_search_2_view(request):
         print(f'Back Up Power: {back_up_power}')
         print(f'Back Up Water: {back_up_water}')
 
-         # Get the path to the CSV file
+        # Get the path to the CSV file
         base_dir = os.path.dirname(os.path.abspath(__file__))  # This will get the directory of views.py
         data_dir = os.path.join(base_dir, 'data')
 
@@ -377,19 +382,19 @@ def new_search_2_view(request):
         df = pd.read_csv(file_path, delimiter=';')
 
         df = df.rename(columns={
-        'Suburb Name': 'Suburb_Name',
-        'backup water': 'backup_water',
-        'back-up power': 'backup_power',
+            'Suburb Name': 'Suburb_Name',
+            'backup water': 'backup_water',
+            'back-up power': 'backup_power',
         })
-        # Now you can refer to these columns using the new names in the rest of your code
-
 
         # Replace NaN values with NULL
         df.fillna('NULL', inplace=True)
         df.columns = df.columns.str.replace(' ', '_')
 
+        # Clean the 'Price' column
+        df['Price'] = df['Price'].apply(lambda x: float(str(x).replace('R', '').replace(' ', '').replace(',', '').replace('\xa0', '')) if "POA" not in str(x) else 0)
 
-        # query logic here...
+        # Query logic
         query = (df['Suburb_Name'] == suburb) & (df['sale_rent'] == rent_sale)
         if min_price not in ["", "any"]:
             query &= (df['Price'].astype(float) >= float(min_price))
@@ -397,36 +402,63 @@ def new_search_2_view(request):
             query &= (df['Price'].astype(float) <= float(max_price))
 
         filtered_df = df[query]
+        print(f'Size of filtered_df after initial filtering: {len(filtered_df)}')
+
+        if filtered_df.empty:
+            closest_below = pd.DataFrame()
+            closest_above = pd.DataFrame()
+            if min_price not in ["", "any"]:
+                closest_below = df[(df['Price'].astype(float) < float(min_price)) & (df['Suburb_Name'] == suburb)].nlargest(1, 'Price')
+            if max_price not in ["", "any"]:
+                closest_above = df[(df['Price'].astype(float) > float(max_price)) & (df['Suburb_Name'] == suburb)].nsmallest(1, 'Price')
+
+            print(f'Size of closest_below: {len(closest_below)}')
+            print(f'Size of closest_above: {len(closest_above)}')
+
+            closest_df = pd.concat([closest_below, closest_above], ignore_index=True) if not closest_below.empty and not closest_above.empty else closest_below if not closest_below.empty else closest_above if not closest_above.empty else pd.DataFrame()
+
+            print(f'Size of closest_df: {len(closest_df)}')
+
+            if not closest_df.empty:
+                message = ("Although there aren't any property listings within the selected price range, "
+                           "we've found some close alternatives that might interest you.")
+                filtered_df = closest_df
+            else:
+                message = "Unfortunately, no records match the given criteria and no close alternatives are available."
+
+        original_filtered_df = filtered_df.copy()
 
         if back_up_power:
-            power_filtered_df = filtered_df[filtered_df['backup_power'] == 'Yes']
+            power_filtered_df = original_filtered_df[original_filtered_df['backup_power'] == 'Yes']
+            print(f'Size of power_filtered_df: {len(power_filtered_df)}')
             if power_filtered_df.empty:
                 message = "There are currently no property listings with back-up power, but here are other property listings that meet your other criteria"
             else:
                 filtered_df = power_filtered_df
+
         if back_up_water:
-            water_filtered_df = filtered_df[filtered_df['backup_water'] == 'Yes']
+            water_filtered_df = original_filtered_df[original_filtered_df['backup_water'] == 'Yes']
+            print(f'Size of water_filtered_df: {len(water_filtered_df)}')
             if water_filtered_df.empty:
                 message = "There are currently no property listings with back-up water, but here are other property listings that meet your other criteria"
             else:
                 filtered_df = water_filtered_df
 
-        if filtered_df.empty:
-            message = "No records match the given criteria"
-        else:
-            # Select only the necessary columns
-            selected_columns = [
+
+        # Select only the necessary columns
+        selected_columns = [
                 'Suburb_Name', 'source_url', 'type_of_property', 'sale_rent',
                 'backup_water', 'backup_power', 'Price', 'name',
                 'Image', 'garages', 'floor_size', 'erf_size', 'bedrooms',
                 'bathrooms'
-            ]
-            filtered_df = filtered_df[selected_columns]
+        ]
+        filtered_df = filtered_df[selected_columns]
 
             # Limit to 4 records
-            limited_df = filtered_df.head(4)
-            limited_df.reset_index(inplace=True)
-            result_dict = limited_df.to_dict('records')
+        limited_df = filtered_df.head(4)
+        limited_df.reset_index(inplace=True)
+        result_dict = limited_df.to_dict('records')
+
 
         # Respond with a JSON object containing the results and any message
         response_data = {
@@ -449,10 +481,11 @@ def new_search_2_view(request):
 
         request.session['search_params'] = search_params
 
-
         return redirect('MiBarrioApp:newSearch3')
 
     return render(request, 'newSearch2.html', {})
+
+
 
 @login_required
 def new_search_3_view(request):

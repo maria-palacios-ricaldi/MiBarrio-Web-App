@@ -198,7 +198,7 @@
                   <input type="hidden" id="editingSpId" name="editingSpId" value="">
 
                   <div class="mb-3">
-                    <label for="sp_name" class="form-label">Enter Search Profile </label>
+                    <label for="sp_name" class="form-label">Enter Search Profile Name </label>
                     <input type="text" class="form-control" id="sp_name" name="sp_name" required>
                   </div>
                   <div class="mb-3">
@@ -254,7 +254,7 @@
                                   for="clinic" data-bs-toggle="tooltip" data-bs-placement="top" title="Included in this tag: General health clinics">Clinic</label>
                                 <input type="checkbox" value="Dentist" id="dentist" name="health_wellness[]"> <label
                                   for="dentist" data-bs-toggle="tooltip" data-bs-placement="top" title="Included in this tag: Dental clinics">Dentist</label>
-                                <input type="checkbox" value="Doctor" id="doctor" name="health_wellness[]"> <label
+                                <input type="checkbox" value="Doctors" id="doctor" name="health_wellness[]"> <label
                                   for="doctor" data-bs-toggle="tooltip" data-bs-placement="top" title="Included in this tag: General practitioners or doctor's offices">Doctor</label>
                                 <input type="checkbox" value="Hospital" id="hospital" name="health_wellness[]"> <label
                                   for="hospital">Hospital</label>
@@ -506,13 +506,15 @@
                     </div>
                   </div>
               </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-dark" id="saveProfileBtn">Save</button>
+                      <input type="submit" id="hiddenSearchProfileSubmitBtn" style="display: none;" form="searchProfileForm">
+                  </div>
+
               </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-dark" id="saveProfileBtn">Save</button>
-              <input type="submit" id="hiddenSearchProfileSubmitBtn" style="display: none;" form="searchProfileForm">
-            </div>
+
           </div>
         </div>
       </div>
