@@ -47,6 +47,7 @@ urlpatterns = [
     #AJAX related:
     path('get_nearest_suburbs/', views.get_nearest_suburbs, name='get_nearest_suburbs'),
     path('get_crime_data/<str:suburb_name>/', views.get_crime_data, name='get_crime_data'),
+
 ]
 
 

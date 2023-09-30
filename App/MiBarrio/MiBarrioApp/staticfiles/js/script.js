@@ -690,3 +690,4 @@ function updateProfileNameCell() {
     document.getElementById('profile-name-cell').innerText = storedProfileName;
   }
 }
+

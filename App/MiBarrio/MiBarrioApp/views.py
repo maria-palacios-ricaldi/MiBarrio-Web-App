@@ -181,6 +181,8 @@ def new_search_view(request):
         context['search_profiles'] = search_profiles  # Set search_profiles
 
         action_type = request.POST.get('action_type', None)
+        print(request.POST)
+
 
         if request.method == 'POST':
             print("POST received")
@@ -189,6 +191,11 @@ def new_search_view(request):
             print(f"Received selected_profile_id from POST request: {selected_profile_id}")
             request.session['selected_profile_id'] = selected_profile_id
             context['selected_profile_id'] = selected_profile_id  # Set selected_profile_id
+
+            print(action_type)
+
+            print(f'action_type: {action_type}, selected_profile_id: {selected_profile_id}')
+
 
             if action_type == 'search' and selected_profile_id:
 
@@ -237,6 +244,7 @@ def new_search_view(request):
                         #saves new Search to Searches model
                         new_search.save()
                         print("new Search is saved")
+
                     except Exception as e:
                         print(f"Exception occurred: {e}")
 
@@ -524,14 +532,17 @@ def new_search_3_view(request):
 
                 if record_data['sale_rent'] == 'sale':
                     property_record = PropertiesToBuy(
-                        **common_properties,
+                        user=request.user,
                         sale_price=sanitized_price,
-                        )
+                        **common_properties
+                    )
                 else:
                     property_record = PropertiesToRent(
-                        **common_properties,
-                    rental_price=sanitized_price,
+                        user=request.user,
+                        rental_price=sanitized_price,
+                        **common_properties
                     )
+
 
                 property_record.save()
 
@@ -687,6 +698,6 @@ def get_crime_data(request, suburb_name):
         return JsonResponse({'error': 'Suburb not found'}, status=404)
 
 def sanitize_price(price):
-    # Remove any non-numeric characters from price string
-    sanitized_price = ''.join(char for char in price if char.isdigit())
+    # Convert price to string, then remove any non-numeric characters from price string
+    sanitized_price = ''.join(char for char in str(price) if char.isdigit())
     return int(sanitized_price) if sanitized_price else None

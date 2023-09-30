@@ -220,6 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('action_type').value = 'profile_change';
         console.log("Setting action_type to 'profile_change'");  // Debugging Line
         document.getElementById('searchProfileForm').submit();
+        localStorage.removeItem('searchInitiated');  // Clear the flag
       });
     }
 
@@ -489,6 +490,7 @@ function setSearchActionType() {
   console.log("Inside setSearchActionType function");  // Debugging Line
   document.getElementById('action_type').value = 'search';
   console.log("Setting action_type to 'search'");  // Debugging Line
+  localStorage.setItem('searchInitiated', 'true'); // flag
   if (map) {
     map.setView([-33.9249, 18.4241], 10);  // 10 is the zoom level, you can adjust this
     console.log("Map changed to CPT");  // Debugging Line
@@ -689,3 +691,35 @@ function updateProfileNameCell() {
     document.getElementById('profile-name-cell').innerText = storedProfileName;
   }
 }
+
+// Function to handle the button click
+function handleSearchButtonClick(event) {
+  const searchInitiated = localStorage.getItem('searchInitiated');
+  if (searchInitiated === 'true') {
+      event.preventDefault();  // Prevent form submission if a search has been initiated
+      setSearchActionType();
+      getNearestSuburbs();
+      localStorage.removeItem('searchInitiated');  // Clear the flag
+  } else {
+      setSearchActionType();
+      getNearestSuburbs();
+  }
+}
+
+// Run this code after the page reloads
+window.onload = function() {
+
+  console.log("window is reloaded")
+
+  if (window.location.pathname.endsWith('newSearch')) {
+      // ... Your existing code ...
+
+      const button = document.querySelector('.btn-dark');
+      button.onclick = handleSearchButtonClick;  // Set the new onclick handler
+
+      const searchInitiated = localStorage.getItem('searchInitiated');
+      if (searchInitiated === 'true') {
+          button.click();  // Programmatically click the button if a search has been initiated
+      }
+  }
+};

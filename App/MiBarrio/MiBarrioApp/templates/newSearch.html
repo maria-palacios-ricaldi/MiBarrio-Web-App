@@ -73,7 +73,7 @@
 
       <!-- Step 1 Form -->
       <div class="col-md-6">
-        <form id="searchProfileForm" method="post" action="{% url 'MiBarrioApp:newSearch' %}">
+        <form id="searchProfileForm" action="{% url 'MiBarrioApp:newSearch' %}" method="post" >
           {% csrf_token %}
           <br>
           <!--Set up search profile - get list of search profile names from database-->
@@ -82,6 +82,7 @@
             <div class="d-flex justify-content-center">
               <select class="form-select" name="selected_profile" id="searchProfileSelect"
                 style="max-width: 350px; width: 100%;">
+                <option value="" disabled {% if not selected_profile_id %}selected{% endif %}>Select a profile</option>
                 {% for profile in search_profiles %}
                 <option value="{{ profile.search_profileID }}" {% if profile.search_profileID == selected_profile_id %}selected{% endif %}>
                   {{ profile.sp_name }}
@@ -165,12 +166,12 @@
           </div>
       </div>
 
-      <input type="hidden" name="action_type" value="search">
 
       <div class="mt-4">
-        <button type="submit" class="btn btn-dark" onclick="event.preventDefault(); setSearchActionType(); getNearestSuburbs(); ">Search</button>
+        <button type="submit" class="btn btn-dark" onclick="handleSearchButtonClick(event);">Search</button>
         <input type="hidden" name="action_type" id="action_type" value="profile_change">
       </div>
+
 
         </form>
 
