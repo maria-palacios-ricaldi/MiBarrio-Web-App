@@ -75,7 +75,7 @@
 
       <!-- Account Details Section -->
       <div class="col-md-6 border-end pr-7 border-secondary">
-        <h2>Account Details</h2>
+        <h2>User Account Details</h2>
         <form id="accountDetailsForm" action="{% url 'MiBarrioApp:profile' %}" method="post">
           {% csrf_token %}
           <input type="hidden" name="form_type" value="profile">
@@ -101,6 +101,11 @@
             <input type="password" class="form-control" name="password" id="password" value="********" disabled>
           </div>
 
+          <br>
+          <br>
+          <br>
+          <br>
+
           <div class="mb-3">
             <button type="button" class="btn btn-dark" id="editSaveBtn">Edit</button>
             <button type="button" class="btn btn-secondary disabled" id="cancelBtn">Cancel</button>
@@ -112,6 +117,15 @@
       <!-- Search Profiles Section -->
       <div class="col-md-6 pl-5">
         <h2>Search Profiles</h2>
+
+        <p style="background-color: #f5f5f5; padding: 10px;">
+          Create and save your personalised search profiles to streamline your searches.
+          <br>
+          Find out what goes into personalising your searches
+          <a href="#" tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" title="Personalisation Details" data-bs-html="true" data-bs-content="The personalisation considers the following main factors based on proximity & density:<ul><li>Social and cultural amenities</li><li>Health & Wellness amenities</li><li>Leisure and Recreational areas</li><li>Community and services amenities</li></ul>These factors can be further specialised by selecting specific sub-tags from each of these factors.">
+            <i class="fas fa-info-circle" style="color: black;"></i>
+          </a>
+        </p>
 
         <!-- List of search profiles -->
         <div id="searchProfilesList">
@@ -282,7 +296,7 @@
                                 <input type="checkbox" value="Sports Centres" id="sports_centres"
                                   name="leisure_recreation[]"> <label for="sports_centres" data-bs-toggle="tooltip" data-bs-placement="top" title="Included in this tag: Stadiums, sports centres, pitches">Sports Centres</label>
                                 <input type="checkbox" value="Leisure Areas" id="leisure_areas"
-                                  name="leisure_recreation[]"> <label for="leisure_areas" data-bs-toggle="tooltip" data-bs-placement="top" title="Included in this tag: Parks, gardens, swimming areas, playgrounds, nature reserves, marinas, and forests">Leisure Areas</label>
+                                  name="leisure_recreation[]"> <label for="leisure_areas" data-bs-toggle="tooltip" data-bs-placement="top" title="Included in this tag: Parks, gardens, swimming areas, playgrounds, nature reserves, marinas, and forests">Nature</label>
                                 <!-- Add more checkboxes here -->
                               </div>
                             </div>
@@ -506,6 +520,7 @@
                     </div>
                   </div>
               </div>
+
                   <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       <button type="button" class="btn btn-dark" id="saveProfileBtn">Save</button>

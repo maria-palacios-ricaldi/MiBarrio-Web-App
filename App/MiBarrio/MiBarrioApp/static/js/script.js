@@ -24,6 +24,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (window.location.pathname.endsWith('profile')) {
 
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+      return new bootstrap.Popover(popoverTriggerEl)
+    })
+
+
     //code for editSaveBtn
     const editSaveBtn = document.getElementById('editSaveBtn');
     if (editSaveBtn) {
@@ -211,6 +217,36 @@ document.addEventListener('DOMContentLoaded', function () {
     // Code that applies to newSearch.html
     initializeMap();
 
+    // Check if the modal has been shown before
+    const modalShown = localStorage.getItem('initialModalShown');
+
+    if (!modalShown) {
+        var initialModal = new bootstrap.Modal(document.getElementById('initialModal'), {
+            keyboard: false,
+            backdrop: 'static'
+        });
+
+        initialModal.show();
+
+        // Set the flag in localStorage
+        localStorage.setItem('initialModalShown', 'true');
+    }
+
+    var popover = new bootstrap.Popover(document.querySelector('.map-help a'), {
+      trigger: 'focus',
+      title: 'How to complete Step 1',
+      html: true, // Enable HTML content
+      content: `In Step 1 of your search you will do the following:
+                <ul>
+                  <li>Select your preferred search profile that you have created (you need to create at least one)</li>
+                  <li>Select your city</li>
+                  <li>Click Search</li>
+                </ul>
+                Now you may view your updated Map with your Top 5 suburbs!
+                Click “Next” to continue to the next step.`,
+      placement: 'left'
+    });
+
     // Listen for changes in the dropdown to switch profiles
     const searchProfileSelect = document.getElementById('searchProfileSelect');
     if (searchProfileSelect) {
@@ -319,6 +355,7 @@ document.addEventListener('DOMContentLoaded', function () {
         suburbSelect.add(option);
       });
     }
+
 
     // Retrieve selectedProfileData from session storage
     const selectedProfile = JSON.parse(sessionStorage.getItem("selectedProfileData"));
@@ -633,6 +670,8 @@ function placeMarker(coordinates, name) {
   const marker = L.marker([centroidLat, centroidLon]).addTo(map).bindPopup(name).openPopup();
   markers.push(marker);
 }
+
+
 
 function calculateCentroid(coordinates) {
   const centroidLat = coordinates.reduce((acc, val) => acc + val[0], 0) / coordinates.length;

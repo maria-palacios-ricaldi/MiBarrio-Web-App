@@ -384,7 +384,7 @@ def new_search_2_view(request):
         if property_type == "Apartment or Flat":
             file_path = os.path.join(data_dir, 'Apartments_cpt.csv')
         else:
-            file_path = os.path.join(data_dir, 'Apartments_cpt_updated.csv')
+            file_path = os.path.join(data_dir, 'houses_cpt.csv')
 
         # Load the CSV file into a pandas DataFrame
         df = pd.read_csv(file_path, delimiter=';')
@@ -512,6 +512,8 @@ def new_search_3_view(request):
             if isinstance(record_index, int):
                 record_index = int(record_index)  # Convert to integer
                 record_data = records[record_index]  # Get record data by index
+                print(record_data)
+                print("URL from source data:", record_data['source_url'])
 
                 # Create a string representation of the search parameters
                 property_search_parameters = ", ".join(f"{key}: {value}" for key, value in search_params.items())
@@ -526,6 +528,7 @@ def new_search_3_view(request):
                     'has_power_solutions': record_data['backup_power'] == 'Yes',
                     'has_water_solutions': record_data['backup_water'] == 'Yes',
                     'property_type': record_data['type_of_property'],
+                    'url': record_data['source_url'],
                 }
 
                 sanitized_price = sanitize_price(record_data['Price'])
@@ -568,7 +571,7 @@ def view_past_searches_view(request):
     past_searches_data = [
         {
             "timestamp": search.search_timestamp,
-            "suburb": SearchResult.suburb.name  # Assuming `Suburb` model has a field `name`
+            "suburb": SearchResult.suburb.name  
         }
         for search in user_searches
         for SearchResult in SearchResults.objects.filter(search=search)
@@ -581,10 +584,10 @@ def view_past_searches_view(request):
 
     saved_properties = Properties.objects.filter(user=request.user).order_by('-search_timestamp')
 
-    # Organizing the data in a list of dictionaries (optional, based on your needs)
+    # Organizing the data in a list of dictionaries
     saved_properties_data = [
         {
-            "suburb": property.suburb.name,  # Assuming suburb is a ForeignKey and has a field name
+            "suburb": property.suburb.name,
             "num_of_bedrooms": property.num_of_bedrooms,
             "num_of_bathrooms": property.num_of_bathrooms,
             "has_power_solutions": property.has_power_solutions,
@@ -593,12 +596,13 @@ def view_past_searches_view(request):
             "search_timestamp": property.search_timestamp,
             "sale_price": None if not hasattr(property, 'propertiestobuy') else property.propertiestobuy.sale_price,
             "rental_price": None if not hasattr(property, 'propertiestorent') else property.propertiestorent.rental_price,
+            "url": property.url,
         }
         for property in saved_properties
     ]
 
     # Paginating saved properties data
-    saved_properties_paginator = Paginator(saved_properties_data, 15)  # Show 15 properties per page
+    saved_properties_paginator = Paginator(saved_properties_data, 10)  # Show 15 properties per page
     saved_properties_page_number = request.GET.get('saved_properties_page')
     saved_properties_page_obj = saved_properties_paginator.get_page(saved_properties_page_number)
 

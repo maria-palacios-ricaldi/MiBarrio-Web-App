@@ -106,7 +106,7 @@ class Suburbs(models.Model):
 
 class Properties(models.Model):
     propertyID = models.AutoField(primary_key=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE) 
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     suburb = models.ForeignKey(Suburbs, on_delete=models.CASCADE)
     property_search_parameters = models.TextField()
     num_of_bedrooms = models.FloatField()
@@ -115,6 +115,7 @@ class Properties(models.Model):
     has_water_solutions = models.BooleanField()
     property_type = models.CharField(max_length=255)
     search_timestamp = models.DateTimeField(auto_now_add=True)
+    url = models.URLField(blank=True, null=True)
 
 
 class PropertiesToBuy(Properties):
