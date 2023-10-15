@@ -39,3 +39,9 @@ Start the development server.
 
 
 You should now be able to access the web app by visiting http://127.0.0.1:8000/ in your web browser.
+
+login details:
+username: maria_palacios
+password: raven_23
+
+or you may create your own account.
