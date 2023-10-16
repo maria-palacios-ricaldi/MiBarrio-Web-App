@@ -30,6 +30,7 @@ To create a virtual environment to manage the project dependencies separately
 4. Database Migrations:
 Ensure that the database is up-to-date with the necessary migrations.
 
+`cd App/MiBarrio`
 `python manage.py migrate`
 
 5. Running the Web App:
