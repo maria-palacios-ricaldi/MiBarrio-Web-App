@@ -1,6 +1,8 @@
 # MiBarrio-Web-App
 A Web Application assisting in Residential Location Decision-Making
 
+Info & Demonstration Video: https://drive.google.com/file/d/1-4t2o9Kh0pPrCOQzRd8spJYSk4u_HjDq/view?usp=sharing
+
 This README provides a step-by-step guide on how to set up and run the web app on your local machine.
 
 
